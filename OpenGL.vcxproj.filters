@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Deps">
+      <UniqueIdentifier>{D115847C-BD4C-850D-6639-6B10524F010F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\glad">
+      <UniqueIdentifier>{78336CD6-E49D-204D-2DDC-D1F29985FEA1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\glad\src">
+      <UniqueIdentifier>{8FEDE4CF-FBAD-6006-C4E8-A9833068A5E2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{8A864AC8-7628-759E-5FE3-88F24B24FCEE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\src">
+      <UniqueIdentifier>{A179FA5F-8D31-3CAD-F638-1509E20FD79D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Deps\glad\src\glad.c">
+      <Filter>Deps\glad\src</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\src\Game.cpp">
+      <Filter>OpenGL\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

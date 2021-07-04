@@ -1,0 +1,7 @@
+.idea/
+.vs/
+bin/
+bin-int/
+*.bat
+premake5.*
+Deps/
