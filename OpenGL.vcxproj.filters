@@ -18,10 +18,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="OpenGL\src\Window.h">
+      <Filter>OpenGL\src</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\src\pch.h">
+      <Filter>OpenGL\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="Deps\glad\src\glad.c">
       <Filter>Deps\glad\src</Filter>
     </ClCompile>
     <ClCompile Include="OpenGL\src\Game.cpp">
+      <Filter>OpenGL\src</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\src\pch.cpp">
       <Filter>OpenGL\src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,12 +1,4 @@
-#include <iostream>
-
-// GLAD
-#include <glad/glad.h>
-
-// GLFW
-#include <GLFW/glfw3.h>
-
-
+#include "pch.h"
 // This example is taken from https://learnopengl.com/
 // https://learnopengl.com/code_viewer.php?code=getting-started/hellowindow2
 // The code originally used GLEW, I replaced it with Glad
