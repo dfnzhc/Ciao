@@ -66,6 +66,10 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>/NODEFAULTLIB:msvcrt.lib
+/NODEFAULTLIB:libcmtd.lib</Command>
+    </CustomBuildStep>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -88,6 +92,10 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>/NODEFAULTLIB:msvcrt.lib
+/NODEFAULTLIB:libcmtd.lib</Command>
+    </CustomBuildStep>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -97,11 +105,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="OpenGL\src\Window.h" />
+    <ClInclude Include="OpenGL\src\Application.h" />
+    <ClInclude Include="OpenGL\src\Common.h" />
     <ClInclude Include="OpenGL\src\pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OpenGL\src\Game.cpp" />
+    <ClCompile Include="OpenGL\src\Application.cpp" />
+    <ClCompile Include="OpenGL\src\main.cpp" />
     <ClCompile Include="OpenGL\src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
