@@ -5,3 +5,4 @@ bin-int/
 *.bat
 premake5.*
 Deps/
+imgui.ini

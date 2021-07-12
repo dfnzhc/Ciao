@@ -1,39 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Deps">
-      <UniqueIdentifier>{D115847C-BD4C-850D-6639-6B10524F010F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Deps\glad">
-      <UniqueIdentifier>{78336CD6-E49D-204D-2DDC-D1F29985FEA1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Deps\glad\src">
-      <UniqueIdentifier>{8FEDE4CF-FBAD-6006-C4E8-A9833068A5E2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGL">
-      <UniqueIdentifier>{8A864AC8-7628-759E-5FE3-88F24B24FCEE}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGL\src">
-      <UniqueIdentifier>{A179FA5F-8D31-3CAD-F638-1509E20FD79D}</UniqueIdentifier>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{F68B420E-62A0-6ABF-2B22-0E1F97F566F0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OpenGL\src\Window.h">
-      <Filter>OpenGL\src</Filter>
+    <ClInclude Include="OpenGL\src\Application.h" />
+    <ClInclude Include="OpenGL\src\Common.h" />
+    <ClInclude Include="OpenGL\src\Utils\imgui_impl_glfw.h">
+      <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenGL\src\pch.h">
-      <Filter>OpenGL\src</Filter>
+    <ClInclude Include="OpenGL\src\Utils\imgui_impl_opengl3.h">
+      <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="OpenGL\src\pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Deps\glad\src\glad.c">
-      <Filter>Deps\glad\src</Filter>
+    <ClCompile Include="OpenGL\src\Application.cpp" />
+    <ClCompile Include="OpenGL\src\Utils\imgui_impl_glfw.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL\src\Game.cpp">
-      <Filter>OpenGL\src</Filter>
+    <ClCompile Include="OpenGL\src\Utils\imgui_impl_opengl3.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL\src\pch.cpp">
-      <Filter>OpenGL\src</Filter>
-    </ClCompile>
+    <ClCompile Include="OpenGL\src\main.cpp" />
+    <ClCompile Include="OpenGL\src\pch.cpp" />
   </ItemGroup>
 </Project>
