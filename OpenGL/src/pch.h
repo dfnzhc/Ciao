@@ -18,6 +18,9 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+#include <gtc/type_ptr.hpp>
+#include <gtc/matrix_transform.hpp>
+
 // GLAD
 #include <glad/glad.h>
 

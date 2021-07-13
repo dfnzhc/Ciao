@@ -1,9 +1,19 @@
 #pragma once
 
+/// 使用类的前置声明
 struct GLFWwindow;
+class Shader;
+class ShaderProgram;
 
 class App
 {
+private:
+    glm::vec4 m_bgColor;
+    glm::vec4 m_triColor;
+    ShaderProgram* m_pShaderProgram;
+    GLuint m_VAO;
+
+
 private:
     GLFWwindow* m_pGlfwWindow;
     

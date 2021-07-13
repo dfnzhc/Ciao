@@ -107,12 +107,14 @@
   <ItemGroup>
     <ClInclude Include="OpenGL\src\Application.h" />
     <ClInclude Include="OpenGL\src\Common.h" />
+    <ClInclude Include="OpenGL\src\Shader.h" />
     <ClInclude Include="OpenGL\src\Utils\imgui_impl_glfw.h" />
     <ClInclude Include="OpenGL\src\Utils\imgui_impl_opengl3.h" />
     <ClInclude Include="OpenGL\src\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenGL\src\Application.cpp" />
+    <ClCompile Include="OpenGL\src\Shader.cpp" />
     <ClCompile Include="OpenGL\src\Utils\imgui_impl_glfw.cpp" />
     <ClCompile Include="OpenGL\src\Utils\imgui_impl_opengl3.cpp" />
     <ClCompile Include="OpenGL\src\main.cpp" />
