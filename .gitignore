@@ -6,3 +6,4 @@ bin-int/
 premake5.*
 Deps/
 imgui.ini
+HarmonyOS_Sans_SC_Bold.ttf

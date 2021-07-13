@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Application.h"
 #include "Common.h"
+#include "Shader.h"
 
 static App* GameInst = nullptr;
 
@@ -20,6 +21,10 @@ App::App()
     m_dt = 0.0;
     m_elapsedTime = 0.0;
     m_appState = AppState::RUNNING;
+    m_bgColor = glm::vec4{0.45f, 0.55f, 0.60f, 1.00f};
+    m_triColor = glm::vec4{0.0f};
+    m_pShaderProgram = nullptr;
+    m_VAO = 0;
 
     InitGlfwWindow();
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -30,7 +35,10 @@ App::App()
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->AddFontFromFileTTF("HarmonyOS_Sans_SC_Bold.ttf", 18.0f,
+        NULL, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+    (void)io;
 
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(m_pGlfwWindow, true);
@@ -39,7 +47,105 @@ App::App()
 
 App::~App()
 {
+    delete m_pShaderProgram;
 }
+
+void App::Init()
+{
+    m_pShaderProgram = new ShaderProgram;
+    // Load and compile shaders 
+    Shader shVertex, shFragment;	
+    shVertex.LoadShader("resources\\shaders\\shader.vert", GL_VERTEX_SHADER);
+    shFragment.LoadShader("resources\\shaders\\shader.frag", GL_FRAGMENT_SHADER);
+
+    // Create shader program and add shaders
+    m_pShaderProgram->CreateProgram();
+    m_pShaderProgram->AddShaderToProgram(&shVertex);
+    m_pShaderProgram->AddShaderToProgram(&shFragment);
+    m_pShaderProgram->LinkProgram();
+
+
+    float vertices[] = {
+        -0.5f, -0.5f, 0.0f, // left  
+         0.5f, -0.5f, 0.0f, // right 
+         0.0f,  0.5f, 0.0f  // top   
+    };
+    GLuint VBO;
+    glGenVertexArrays(1, &m_VAO);
+    glGenBuffers(1, &VBO);
+    glBindVertexArray(m_VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0); 
+
+    glBindVertexArray(0); 
+}
+
+void App::Update()
+{
+    if (glfwWindowShouldClose(m_pGlfwWindow))
+        m_appState = AppState::TERMINATE;
+
+    // Start the Dear ImGui frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    
+    {
+        ImGui::Begin("Settings");
+        ImGui::Text("FPS %.1f FPS (%.3f ms)", ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
+
+        ImGui::ColorEdit3("背景颜色", (float*)&m_bgColor);
+        ImGui::ColorEdit3("Triangle Color", (float*)&m_triColor);
+        ImGui::End();
+    }
+
+}
+
+void App::Render()
+{
+    // Rendering
+    glClearColor(m_bgColor.x, m_bgColor.y, m_bgColor.z, m_bgColor.w);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    m_pShaderProgram->UseProgram();
+    m_pShaderProgram->SetUniform("inColor", glm::vec3(m_triColor.r, m_triColor.g, m_triColor.b));
+    glBindVertexArray(m_VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    
+    // Render ImGui
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void App::Execute()
+{
+    Init();
+
+    while (m_appState == AppState::RUNNING) {
+        double t = glfwGetTime();
+        m_dt = t - m_elapsedTime;
+        m_elapsedTime = t;
+
+        Update();
+        Render();
+
+        glfwSwapBuffers(m_pGlfwWindow);
+
+        glfwPollEvents();
+    }
+
+    // Cleanup
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+    glfwTerminate();
+}
+
 
 void App::InitGlfwWindow()
 {
@@ -65,71 +171,3 @@ void App::InitGlfwWindow()
     // Set the required callback functions
     glfwSetKeyCallback(m_pGlfwWindow, key_callback);
 }
-
-void App::Init()
-{
-}
-
-void App::Update()
-{
-    if (glfwWindowShouldClose(m_pGlfwWindow))
-        m_appState = AppState::TERMINATE;
-}
-
-void App::Render()
-{
-    // Start the Dear ImGui frame
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-    
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    {
-        static float f = 0.0f;
-        static int counter = 0;
-
-        ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-        ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-        ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-        if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-            counter++;
-        ImGui::SameLine();
-        ImGui::Text("counter = %d", counter);
-
-        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-        ImGui::End();
-    }
-
-    // Rendering
-    ImGui::Render();
-    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-    glClear(GL_COLOR_BUFFER_BIT);
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-}
-
-void App::Execute()
-{
-    Init();
-
-    while (m_appState == AppState::RUNNING) {
-        double t = glfwGetTime();
-        m_dt = t - m_elapsedTime;
-        m_elapsedTime = t;
-
-        Render();
-        Update();
-
-        glfwSwapBuffers(m_pGlfwWindow);
-
-        glfwPollEvents();
-    }
-
-    // Cleanup
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
-    glfwTerminate();
-}
-
