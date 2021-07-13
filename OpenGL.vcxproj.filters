@@ -1,30 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{F68B420E-62A0-6ABF-2B22-0E1F97F566F0}</UniqueIdentifier>
+    <Filter Include="Deps">
+      <UniqueIdentifier>{D115847C-BD4C-850D-6639-6B10524F010F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\FreeImage">
+      <UniqueIdentifier>{A512148A-91E0-0790-7A74-78B666E1E3F4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\FreeImage\include">
+      <UniqueIdentifier>{180FC82C-0409-F17E-ED75-878FD90E57EB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{8A864AC8-7628-759E-5FE3-88F24B24FCEE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\src">
+      <UniqueIdentifier>{A179FA5F-8D31-3CAD-F638-1509E20FD79D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\src\Shapes">
+      <UniqueIdentifier>{349DDD00-A0B3-DB96-E92A-67B85580AC1E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\src\Utils">
+      <UniqueIdentifier>{C16F7717-AD68-9669-D69A-7BEEC2F27575}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OpenGL\src\Application.h" />
-    <ClInclude Include="OpenGL\src\Common.h" />
+    <ClInclude Include="Deps\FreeImage\include\FreeImage.h">
+      <Filter>Deps\FreeImage\include</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\src\Application.h">
+      <Filter>OpenGL\src</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\src\Common.h">
+      <Filter>OpenGL\src</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\src\Shader.h">
+      <Filter>OpenGL\src</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\src\Shapes\Cube.h">
+      <Filter>OpenGL\src\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\src\Shapes\Plane.h">
+      <Filter>OpenGL\src\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\src\Shapes\Sphere.h">
+      <Filter>OpenGL\src\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\src\Texture.h">
+      <Filter>OpenGL\src</Filter>
+    </ClInclude>
     <ClInclude Include="OpenGL\src\Utils\imgui_impl_glfw.h">
-      <Filter>Utils</Filter>
+      <Filter>OpenGL\src\Utils</Filter>
     </ClInclude>
     <ClInclude Include="OpenGL\src\Utils\imgui_impl_opengl3.h">
-      <Filter>Utils</Filter>
+      <Filter>OpenGL\src\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenGL\src\pch.h" />
+    <ClInclude Include="OpenGL\src\VertexBufferObject.h">
+      <Filter>OpenGL\src</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\src\pch.h">
+      <Filter>OpenGL\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OpenGL\src\Application.cpp" />
+    <ClCompile Include="OpenGL\src\Application.cpp">
+      <Filter>OpenGL\src</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\src\Shader.cpp">
+      <Filter>OpenGL\src</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\src\Shapes\Cube.cpp">
+      <Filter>OpenGL\src\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\src\Shapes\Plane.cpp">
+      <Filter>OpenGL\src\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\src\Shapes\Sphere.cpp">
+      <Filter>OpenGL\src\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\src\Texture.cpp">
+      <Filter>OpenGL\src</Filter>
+    </ClCompile>
     <ClCompile Include="OpenGL\src\Utils\imgui_impl_glfw.cpp">
-      <Filter>Utils</Filter>
+      <Filter>OpenGL\src\Utils</Filter>
     </ClCompile>
     <ClCompile Include="OpenGL\src\Utils\imgui_impl_opengl3.cpp">
-      <Filter>Utils</Filter>
+      <Filter>OpenGL\src\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL\src\main.cpp" />
-    <ClCompile Include="OpenGL\src\pch.cpp" />
+    <ClCompile Include="OpenGL\src\VertexBufferObject.cpp">
+      <Filter>OpenGL\src</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\src\main.cpp">
+      <Filter>OpenGL\src</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\src\pch.cpp">
+      <Filter>OpenGL\src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

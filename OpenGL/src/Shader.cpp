@@ -164,7 +164,7 @@ bool ShaderProgram::LinkProgram()
         char sFinalMessage[1536];
         int iLogLength;
         glGetProgramInfoLog(m_ProgramID, 1024, &iLogLength, sInfoLog);
-        sprintf_s(sFinalMessage, "Error! Shader program %s wasn't linked! The linker returned:\n\n%s", sInfoLog);
+        sprintf_s(sFinalMessage, "Error! Shader program wasn't linked! The linker returned:\n\n%s", sInfoLog);
         return false;
     }
 
