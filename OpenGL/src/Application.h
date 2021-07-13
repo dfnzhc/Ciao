@@ -4,6 +4,8 @@
 struct GLFWwindow;
 class Shader;
 class ShaderProgram;
+class Cube;
+class Sphere;
 
 class App
 {
@@ -12,7 +14,8 @@ private:
     glm::vec4 m_triColor;
     ShaderProgram* m_pShaderProgram;
     GLuint m_VAO;
-
+    Cube* m_pCube;
+    Sphere* m_pSphere;
 
 private:
     GLFWwindow* m_pGlfwWindow;

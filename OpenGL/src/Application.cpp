@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "Common.h"
 #include "Shader.h"
+#include "Cube.h"
+#include "Sphere.h"
 
 static App* GameInst = nullptr;
 
@@ -18,14 +20,6 @@ App::App()
     GameInst = this;
     m_wWidth = CommonWindowSize[0].Width;
     m_wHeight = CommonWindowSize[0].Height;
-    m_dt = 0.0;
-    m_elapsedTime = 0.0;
-    m_appState = AppState::RUNNING;
-    m_bgColor = glm::vec4{0.45f, 0.55f, 0.60f, 1.00f};
-    m_triColor = glm::vec4{0.0f};
-    m_pShaderProgram = nullptr;
-    m_VAO = 0;
-
     InitGlfwWindow();
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -43,20 +37,39 @@ App::App()
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(m_pGlfwWindow, true);
     ImGui_ImplOpenGL3_Init("#version 460");
+
+    /// 属性
+    m_dt = 0.0;
+    m_elapsedTime = 0.0;
+    m_appState = AppState::RUNNING;
+    m_bgColor = glm::vec4{0.45f, 0.55f, 0.60f, 1.00f};
+    m_triColor = glm::vec4{0.0f};
+    m_pShaderProgram = nullptr;
+    m_VAO = 0;
+
+    /// 场景物体
+    m_pCube = nullptr;
+    m_pSphere = nullptr;
 }
 
 App::~App()
 {
     delete m_pShaderProgram;
+    delete m_pCube;
+    delete m_pSphere;
 }
 
 void App::Init()
 {
+    /// 创建物体
     m_pShaderProgram = new ShaderProgram;
+    m_pCube = new Cube;
+    m_pSphere = new Sphere;
+    
     // Load and compile shaders 
     Shader shVertex, shFragment;	
-    shVertex.LoadShader("resources\\shaders\\shader.vert", GL_VERTEX_SHADER);
-    shFragment.LoadShader("resources\\shaders\\shader.frag", GL_FRAGMENT_SHADER);
+    shVertex.LoadShader("resources\\Shaders\\shader.vert", GL_VERTEX_SHADER);
+    shFragment.LoadShader("resources\\Shaders\\shader.frag", GL_FRAGMENT_SHADER);
 
     // Create shader program and add shaders
     m_pShaderProgram->CreateProgram();
@@ -65,24 +78,8 @@ void App::Init()
     m_pShaderProgram->LinkProgram();
 
 
-    float vertices[] = {
-        -0.5f, -0.5f, 0.0f, // left  
-         0.5f, -0.5f, 0.0f, // right 
-         0.0f,  0.5f, 0.0f  // top   
-    };
-    GLuint VBO;
-    glGenVertexArrays(1, &m_VAO);
-    glGenBuffers(1, &VBO);
-    glBindVertexArray(m_VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0); 
-
-    glBindVertexArray(0); 
+    m_pCube->Create("resources\\Textures\\container.jpg");
+    m_pSphere->Create("resources\\Textures\\container.jpg", 25, 25);
 }
 
 void App::Update()
@@ -100,7 +97,7 @@ void App::Update()
         ImGui::Text("FPS %.1f FPS (%.3f ms)", ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
 
         ImGui::ColorEdit3("背景颜色", (float*)&m_bgColor);
-        ImGui::ColorEdit3("Triangle Color", (float*)&m_triColor);
+        //ImGui::ColorEdit3("Triangle Color", (float*)&m_triColor);
         ImGui::End();
     }
 
@@ -109,13 +106,25 @@ void App::Update()
 void App::Render()
 {
     // Rendering
+    glEnable(GL_DEPTH_TEST);
     glClearColor(m_bgColor.x, m_bgColor.y, m_bgColor.z, m_bgColor.w);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_pShaderProgram->UseProgram();
-    m_pShaderProgram->SetUniform("inColor", glm::vec3(m_triColor.r, m_triColor.g, m_triColor.b));
-    glBindVertexArray(m_VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    // create transformations
+    glm::mat4 model         = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+    glm::mat4 view          = glm::mat4(1.0f);
+    glm::mat4 projection    = glm::mat4(1.0f);
+    model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
+    model = glm::scale(model, glm::vec3(0.5f));
+    view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+    projection = glm::perspective(glm::radians(45.0f), (float)m_wWidth / (float)m_wHeight, 0.1f, 100.0f);
+    m_pShaderProgram->SetUniform("model", model);
+    m_pShaderProgram->SetUniform("view", view);
+    m_pShaderProgram->SetUniform("projection", projection);
+    m_pShaderProgram->SetUniform("tex1", 0);
+    m_pCube->Draw();
+    //m_pSphere->Draw();
     
     // Render ImGui
     ImGui::Render();

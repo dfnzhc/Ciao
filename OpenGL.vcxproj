@@ -60,7 +60,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>__DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>OpenGL\src;OpenGL\src\Utils;Deps\glfw\include;Deps\glad\include;Deps\imgui;Deps\glm\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>OpenGL\src;OpenGL\src\Utils;OpenGL\src\Shapes;Deps\glfw\include;Deps\glad\include;Deps\imgui;Deps\glm\glm;Deps\FreeImage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -73,8 +73,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;ImGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>Deps\glfw\lib;Deps\imgui\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;ImGui.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Deps\glfw\lib;Deps\imgui\bin\Debug;Deps\FreeImage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -83,7 +83,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>__RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>OpenGL\src;OpenGL\src\Utils;Deps\glfw\include;Deps\glad\include;Deps\imgui;Deps\glm\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>OpenGL\src;OpenGL\src\Utils;OpenGL\src\Shapes;Deps\glfw\include;Deps\glad\include;Deps\imgui;Deps\glm\glm;Deps\FreeImage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -100,23 +100,34 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;ImGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>Deps\glfw\lib;Deps\imgui\bin\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;ImGui.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Deps\glfw\lib;Deps\imgui\bin\Release;Deps\FreeImage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Deps\FreeImage\include\FreeImage.h" />
     <ClInclude Include="OpenGL\src\Application.h" />
     <ClInclude Include="OpenGL\src\Common.h" />
     <ClInclude Include="OpenGL\src\Shader.h" />
+    <ClInclude Include="OpenGL\src\Shapes\Cube.h" />
+    <ClInclude Include="OpenGL\src\Shapes\Plane.h" />
+    <ClInclude Include="OpenGL\src\Shapes\Sphere.h" />
+    <ClInclude Include="OpenGL\src\Texture.h" />
     <ClInclude Include="OpenGL\src\Utils\imgui_impl_glfw.h" />
     <ClInclude Include="OpenGL\src\Utils\imgui_impl_opengl3.h" />
+    <ClInclude Include="OpenGL\src\VertexBufferObject.h" />
     <ClInclude Include="OpenGL\src\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenGL\src\Application.cpp" />
     <ClCompile Include="OpenGL\src\Shader.cpp" />
+    <ClCompile Include="OpenGL\src\Shapes\Cube.cpp" />
+    <ClCompile Include="OpenGL\src\Shapes\Plane.cpp" />
+    <ClCompile Include="OpenGL\src\Shapes\Sphere.cpp" />
+    <ClCompile Include="OpenGL\src\Texture.cpp" />
     <ClCompile Include="OpenGL\src\Utils\imgui_impl_glfw.cpp" />
     <ClCompile Include="OpenGL\src\Utils\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="OpenGL\src\VertexBufferObject.cpp" />
     <ClCompile Include="OpenGL\src\main.cpp" />
     <ClCompile Include="OpenGL\src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
