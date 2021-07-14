@@ -66,3 +66,20 @@ private:
     glm::uint m_ProgramID;      // OpenGL Shader 程序的索引 
     bool m_isLinked;            // 是否链接了 Shader
 };
+
+
+static void ReadShaderFile(const std::vector<std::string>& shaderFileNames, std::vector<Shader>& shShaders)
+{
+    for (int i = 0; i < (int)shaderFileNames.size(); i++) {
+        std::string sExt = shaderFileNames[i].substr((int)shaderFileNames[i].size() - 4, 4);
+        int iShaderType;
+        if (sExt == "vert")			iShaderType = GL_VERTEX_SHADER;
+        else if (sExt == "frag")	iShaderType = GL_FRAGMENT_SHADER;
+        else if (sExt == "geom")	iShaderType = GL_GEOMETRY_SHADER;
+        else if (sExt == "tcnl")	iShaderType = GL_TESS_CONTROL_SHADER;
+        else						iShaderType = GL_TESS_EVALUATION_SHADER;
+        Shader shader;
+        shader.LoadShader("resources\\Shaders\\" + shaderFileNames[i], iShaderType);
+        shShaders.push_back(shader);
+    }
+}

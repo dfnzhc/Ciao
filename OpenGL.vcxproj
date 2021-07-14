@@ -107,7 +107,9 @@
   <ItemGroup>
     <ClInclude Include="Deps\FreeImage\include\FreeImage.h" />
     <ClInclude Include="OpenGL\src\Application.h" />
+    <ClInclude Include="OpenGL\src\Camera.h" />
     <ClInclude Include="OpenGL\src\Common.h" />
+    <ClInclude Include="OpenGL\src\MatrixStack.h" />
     <ClInclude Include="OpenGL\src\Shader.h" />
     <ClInclude Include="OpenGL\src\Shapes\Cube.h" />
     <ClInclude Include="OpenGL\src\Shapes\Plane.h" />
@@ -120,6 +122,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenGL\src\Application.cpp" />
+    <ClCompile Include="OpenGL\src\Camera.cpp" />
+    <ClCompile Include="OpenGL\src\MatrixStack.cpp" />
     <ClCompile Include="OpenGL\src\Shader.cpp" />
     <ClCompile Include="OpenGL\src\Shapes\Cube.cpp" />
     <ClCompile Include="OpenGL\src\Shapes\Plane.cpp" />

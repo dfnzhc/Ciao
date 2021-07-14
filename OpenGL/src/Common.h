@@ -9,10 +9,12 @@ struct WindowSize
 
 static WindowSize CommonWindowSize[] = {{1366, 768}, {1440, 900}, {1680, 1050}};
 
-// Is called whenever a key is pressed/released via GLFW
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
+
+glm::mat3 ComputeNormalMatrix(const glm::mat4 &modelViewMatrix)
 {
-    std::cout << key << std::endl;
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
+    return glm::transpose(glm::inverse(glm::mat3(modelViewMatrix)));
 }

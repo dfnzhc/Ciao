@@ -4,6 +4,8 @@
 #include "Shader.h"
 #include "Cube.h"
 #include "Sphere.h"
+#include "MatrixStack.h"
+#include "Camera.h"
 
 static App* GameInst = nullptr;
 
@@ -45,11 +47,13 @@ App::App()
     m_bgColor = glm::vec4{0.45f, 0.55f, 0.60f, 1.00f};
     m_triColor = glm::vec4{0.0f};
     m_pShaderProgram = nullptr;
+    m_MouseEnable = false;
     m_VAO = 0;
 
     /// 场景物体
     m_pCube = nullptr;
     m_pSphere = nullptr;
+    m_pCamera = nullptr;
 }
 
 App::~App()
@@ -57,26 +61,33 @@ App::~App()
     delete m_pShaderProgram;
     delete m_pCube;
     delete m_pSphere;
+    delete m_pCamera;
 }
 
 void App::Init()
 {
     /// 创建物体
-    m_pShaderProgram = new ShaderProgram;
     m_pCube = new Cube;
     m_pSphere = new Sphere;
+    m_pCamera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
+    m_pCamera->SetProjectionMatrix((float)m_wWidth / (float)m_wHeight, 0.1f, 1000.0f);
     
-    // Load and compile shaders 
-    Shader shVertex, shFragment;	
-    shVertex.LoadShader("resources\\Shaders\\shader.vert", GL_VERTEX_SHADER);
-    shFragment.LoadShader("resources\\Shaders\\shader.frag", GL_FRAGMENT_SHADER);
+    // 加载 Shader 文件
+    std::vector<Shader> Shaders;
+    std::vector<std::string> ShaderFileNames;
+    ShaderFileNames.push_back("shader.vert");
+    ShaderFileNames.push_back("shader.frag");
 
-    // Create shader program and add shaders
+    ReadShaderFile(ShaderFileNames, Shaders);
+
+    // 创建 OpenGL Shader 程序
+    m_pShaderProgram = new ShaderProgram;
     m_pShaderProgram->CreateProgram();
-    m_pShaderProgram->AddShaderToProgram(&shVertex);
-    m_pShaderProgram->AddShaderToProgram(&shFragment);
+    m_pShaderProgram->AddShaderToProgram(&Shaders[0]);
+    m_pShaderProgram->AddShaderToProgram(&Shaders[1]);
     m_pShaderProgram->LinkProgram();
-
+    
 
     m_pCube->Create("resources\\Textures\\container.jpg");
     m_pSphere->Create("resources\\Textures\\container.jpg", 25, 25);
@@ -94,7 +105,7 @@ void App::Update()
     
     {
         ImGui::Begin("Settings");
-        ImGui::Text("FPS %.1f FPS (%.3f ms)", ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
+        ImGui::Text("FPS %.1f FPS (%.3f ms/f)", ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
 
         ImGui::ColorEdit3("背景颜色", (float*)&m_bgColor);
         //ImGui::ColorEdit3("Triangle Color", (float*)&m_triColor);
@@ -110,25 +121,56 @@ void App::Render()
     glClearColor(m_bgColor.x, m_bgColor.y, m_bgColor.z, m_bgColor.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    /// 创建矩阵工具栈
+    glutil::MatrixStack viewModelMatrixStack;
+    viewModelMatrixStack.SetMatrix(m_pCamera->GetViewMatrix());
+
     m_pShaderProgram->UseProgram();
-    // create transformations
-    glm::mat4 model         = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-    glm::mat4 view          = glm::mat4(1.0f);
-    glm::mat4 projection    = glm::mat4(1.0f);
-    model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
-    model = glm::scale(model, glm::vec3(0.5f));
-    view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-    projection = glm::perspective(glm::radians(45.0f), (float)m_wWidth / (float)m_wHeight, 0.1f, 100.0f);
-    m_pShaderProgram->SetUniform("model", model);
-    m_pShaderProgram->SetUniform("view", view);
-    m_pShaderProgram->SetUniform("projection", projection);
     m_pShaderProgram->SetUniform("tex1", 0);
-    m_pCube->Draw();
-    //m_pSphere->Draw();
+    
+    m_pShaderProgram->SetUniform("projMatrix", m_pCamera->GetProjectionMatrix());
+
+
+    /// 立方体的渲染
+    viewModelMatrixStack.Push();
+        viewModelMatrixStack.Rotate(glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime());
+        viewModelMatrixStack.Scale(glm::vec3(0.5f));
+        m_pShaderProgram->SetUniform("viewModelMatrix", viewModelMatrixStack.Top());
+        m_pCube->Draw();
+    viewModelMatrixStack.Pop();
+    
     
     // Render ImGui
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void App::ProcessInput()
+{
+    if (glfwGetKey(m_pGlfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(m_pGlfwWindow, true);
+
+    /// 相机位置的操纵
+    if (glfwGetKey(m_pGlfwWindow, GLFW_KEY_W) == GLFW_PRESS)
+        m_pCamera->ProcessKeyboard(FORWARD, m_dt);
+    if (glfwGetKey(m_pGlfwWindow, GLFW_KEY_S) == GLFW_PRESS)
+        m_pCamera->ProcessKeyboard(BACKWARD, m_dt);
+    if (glfwGetKey(m_pGlfwWindow, GLFW_KEY_A) == GLFW_PRESS)
+        m_pCamera->ProcessKeyboard(LEFT, m_dt);
+    if (glfwGetKey(m_pGlfwWindow, GLFW_KEY_D) == GLFW_PRESS)
+        m_pCamera->ProcessKeyboard(RIGHT, m_dt);
+
+    /// 鼠标的捕获事件
+    if (glfwGetKey(m_pGlfwWindow, GLFW_KEY_LEFT_ALT) == GLFW_PRESS) {
+        if (m_MouseEnable) {
+            m_MouseEnable = false;
+            glfwSetInputMode(m_pGlfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        }
+        else {
+            m_MouseEnable = true;
+            glfwSetInputMode(m_pGlfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        }
+    }
 }
 
 void App::Execute()
@@ -140,6 +182,7 @@ void App::Execute()
         m_dt = t - m_elapsedTime;
         m_elapsedTime = t;
 
+        ProcessInput();
         Update();
         Render();
 
@@ -178,5 +221,39 @@ void App::InitGlfwWindow()
     }
 
     // Set the required callback functions
-    glfwSetKeyCallback(m_pGlfwWindow, key_callback);
+    glfwSetFramebufferSizeCallback(m_pGlfwWindow, framebuffer_size_callback);
+    glfwSetCursorPosCallback(m_pGlfwWindow, mouse_callback);
+    glfwSetScrollCallback(m_pGlfwWindow, scroll_callback);
+
+    // tell GLFW to capture our mouse
+    glfwSetInputMode(m_pGlfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //glfwSetKeyCallback(m_pGlfwWindow, key_callback);
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    if (GameInst->m_pCamera->IsFirstSetMouse())
+    {
+        GameInst->m_pCamera->SetMousePos(xpos, ypos);
+        GameInst->m_pCamera->SetMouseMode();
+    }
+
+    auto [mouseX, mouseY] = GameInst->m_pCamera->GetMousePos();
+    float xoffset = xpos - mouseX;
+    float yoffset = mouseY - ypos;
+
+    GameInst->m_pCamera->SetMousePos(xpos, ypos);
+    
+    if (!GameInst->m_MouseEnable)
+        GameInst->m_pCamera->ProcessMouseMovement(xoffset, yoffset);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    GameInst->m_pCamera->ProcessMouseScroll(yoffset);
 }
