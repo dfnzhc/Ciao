@@ -6,6 +6,7 @@
 #include "Sphere.h"
 #include "MatrixStack.h"
 #include "Camera.h"
+#include "OpenAssetImportMesh.h"
 
 static App* GameInst = nullptr;
 
@@ -20,8 +21,8 @@ App& App::GetInst()
 App::App()
 {
     GameInst = this;
-    m_wWidth = CommonWindowSize[0].Width;
-    m_wHeight = CommonWindowSize[0].Height;
+    m_wWidth = CommonWindowSize[1].Width;
+    m_wHeight = CommonWindowSize[1].Height;
     InitGlfwWindow();
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -54,6 +55,7 @@ App::App()
     m_pCube = nullptr;
     m_pSphere = nullptr;
     m_pCamera = nullptr;
+    m_pTest = nullptr;
 }
 
 App::~App()
@@ -62,6 +64,7 @@ App::~App()
     delete m_pCube;
     delete m_pSphere;
     delete m_pCamera;
+    delete m_pTest;
 }
 
 void App::Init()
@@ -69,8 +72,10 @@ void App::Init()
     /// 创建物体
     m_pCube = new Cube;
     m_pSphere = new Sphere;
-    m_pCamera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+    m_pTest = new OpenAssetImportMesh;
 
+    // 初始化摄像机
+    m_pCamera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
     m_pCamera->SetProjectionMatrix((float)m_wWidth / (float)m_wHeight, 0.1f, 1000.0f);
     
     // 加载 Shader 文件
@@ -87,10 +92,12 @@ void App::Init()
     m_pShaderProgram->AddShaderToProgram(&Shaders[0]);
     m_pShaderProgram->AddShaderToProgram(&Shaders[1]);
     m_pShaderProgram->LinkProgram();
-    
 
     m_pCube->Create("resources\\Textures\\container.jpg");
     m_pSphere->Create("resources\\Textures\\container.jpg", 25, 25);
+
+    //m_pTest->Load("resources\\Models\\b\\source\\Cyborg_ninja_sketchfab.fbx");
+    m_pTest->Load("resources\\Models\\House\\House.obj");
 }
 
 void App::Update()
@@ -122,8 +129,8 @@ void App::Render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     /// 创建矩阵工具栈
-    glutil::MatrixStack viewModelMatrixStack;
-    viewModelMatrixStack.SetMatrix(m_pCamera->GetViewMatrix());
+    glutil::MatrixStack modelViewMatrixStack;
+    modelViewMatrixStack.SetMatrix(m_pCamera->GetViewMatrix());
 
     m_pShaderProgram->UseProgram();
     m_pShaderProgram->SetUniform("tex1", 0);
@@ -132,12 +139,14 @@ void App::Render()
 
 
     /// 立方体的渲染
-    viewModelMatrixStack.Push();
-        viewModelMatrixStack.Rotate(glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime());
-        viewModelMatrixStack.Scale(glm::vec3(0.5f));
-        m_pShaderProgram->SetUniform("viewModelMatrix", viewModelMatrixStack.Top());
-        m_pCube->Draw();
-    viewModelMatrixStack.Pop();
+    modelViewMatrixStack.Push();
+        modelViewMatrixStack.Translate(glm::vec3(0.0f, -0.5f, 0.0f));
+        modelViewMatrixStack.Rotate(glm::vec3(0.0f, 1.0f, 0.0f), (float)glfwGetTime());
+        modelViewMatrixStack.Scale(glm::vec3(0.2f));
+        m_pShaderProgram->SetUniform("modelViewMatrix", modelViewMatrixStack.Top());
+        m_pShaderProgram->SetUniform("normalMatrix", ComputeNormalMatrix(modelViewMatrixStack.Top()));
+        m_pTest->Draw();
+    modelViewMatrixStack.Pop();
     
     
     // Render ImGui
@@ -211,7 +220,7 @@ void App::InitGlfwWindow()
 
     // Create a GLFWwindow object that we can use for GLFW's functions
     m_pGlfwWindow = glfwCreateWindow(m_wWidth, m_wHeight, "LearnOpenGL", NULL, NULL);
-    
+    glfwSetWindowPos(m_pGlfwWindow, 0, 0);
     glfwMakeContextCurrent(m_pGlfwWindow);
     if (m_pGlfwWindow == NULL)
     {

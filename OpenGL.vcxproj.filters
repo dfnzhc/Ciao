@@ -30,7 +30,16 @@
     <ClInclude Include="OpenGL\src\Application.h">
       <Filter>OpenGL\src</Filter>
     </ClInclude>
+    <ClInclude Include="OpenGL\src\Camera.h">
+      <Filter>OpenGL\src</Filter>
+    </ClInclude>
     <ClInclude Include="OpenGL\src\Common.h">
+      <Filter>OpenGL\src</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\src\MatrixStack.h">
+      <Filter>OpenGL\src</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\src\OpenAssetImportMesh.h">
       <Filter>OpenGL\src</Filter>
     </ClInclude>
     <ClInclude Include="OpenGL\src\Shader.h">
@@ -63,6 +72,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenGL\src\Application.cpp">
+      <Filter>OpenGL\src</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\src\Camera.cpp">
+      <Filter>OpenGL\src</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\src\MatrixStack.cpp">
+      <Filter>OpenGL\src</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\src\OpenAssetImportMesh.cpp">
       <Filter>OpenGL\src</Filter>
     </ClCompile>
     <ClCompile Include="OpenGL\src\Shader.cpp">

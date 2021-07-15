@@ -60,7 +60,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>__DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>OpenGL\src;OpenGL\src\Utils;OpenGL\src\Shapes;Deps\glfw\include;Deps\glad\include;Deps\imgui;Deps\glm\glm;Deps\FreeImage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>OpenGL\src;OpenGL\src\Utils;OpenGL\src\Shapes;Deps\glfw\include;Deps\glad\include;Deps\imgui;Deps\glm\glm;Deps\FreeImage\include;Deps\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -73,8 +73,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;ImGui.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>Deps\glfw\lib;Deps\imgui\bin\Debug;Deps\FreeImage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;ImGui.lib;FreeImage.lib;assimpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Deps\glfw\lib;Deps\imgui\bin\Debug;Deps\FreeImage\lib;Deps\assimp\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -83,7 +83,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>__RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>OpenGL\src;OpenGL\src\Utils;OpenGL\src\Shapes;Deps\glfw\include;Deps\glad\include;Deps\imgui;Deps\glm\glm;Deps\FreeImage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>OpenGL\src;OpenGL\src\Utils;OpenGL\src\Shapes;Deps\glfw\include;Deps\glad\include;Deps\imgui;Deps\glm\glm;Deps\FreeImage\include;Deps\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -100,8 +100,8 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;ImGui.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>Deps\glfw\lib;Deps\imgui\bin\Release;Deps\FreeImage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;ImGui.lib;FreeImage.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Deps\glfw\lib;Deps\imgui\bin\Release;Deps\FreeImage\lib;Deps\assimp\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -110,6 +110,7 @@
     <ClInclude Include="OpenGL\src\Camera.h" />
     <ClInclude Include="OpenGL\src\Common.h" />
     <ClInclude Include="OpenGL\src\MatrixStack.h" />
+    <ClInclude Include="OpenGL\src\OpenAssetImportMesh.h" />
     <ClInclude Include="OpenGL\src\Shader.h" />
     <ClInclude Include="OpenGL\src\Shapes\Cube.h" />
     <ClInclude Include="OpenGL\src\Shapes\Plane.h" />
@@ -124,6 +125,7 @@
     <ClCompile Include="OpenGL\src\Application.cpp" />
     <ClCompile Include="OpenGL\src\Camera.cpp" />
     <ClCompile Include="OpenGL\src\MatrixStack.cpp" />
+    <ClCompile Include="OpenGL\src\OpenAssetImportMesh.cpp" />
     <ClCompile Include="OpenGL\src\Shader.cpp" />
     <ClCompile Include="OpenGL\src\Shapes\Cube.cpp" />
     <ClCompile Include="OpenGL\src\Shapes\Plane.cpp" />

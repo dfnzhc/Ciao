@@ -7,6 +7,7 @@ class ShaderProgram;
 class Cube;
 class Sphere;
 class Camera;
+class OpenAssetImportMesh;
 
 class App
 {
@@ -21,6 +22,8 @@ private:
     Cube* m_pCube;
     Sphere* m_pSphere;
     Camera* m_pCamera;
+
+    OpenAssetImportMesh* m_pTest;
 
 private:
     GLFWwindow* m_pGlfwWindow;

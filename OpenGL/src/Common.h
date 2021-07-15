@@ -7,7 +7,7 @@ struct WindowSize
     uint32_t Width, Height;
 };
 
-static WindowSize CommonWindowSize[] = {{1366, 768}, {1440, 900}, {1680, 1050}};
+static WindowSize CommonWindowSize[] = {{1366, 768}, {1600, 1024}, {1680, 1050}};
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
