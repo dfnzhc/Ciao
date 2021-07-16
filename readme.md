@@ -15,12 +15,13 @@ https://learnopengl.com/
 + [x] 纹理
 + [x] 模型载入
 + [ ] 多纹理加载
++ [ ] 材质
++ [ ] 地面网格
++ [ ] 天空盒
 
 
 
 ### Gallery
-
-![带纹理的箱子](https://i.loli.net/2021/07/15/dHLrpYiA6oaFEMh.png)
 
 ![模型](https://i.loli.net/2021/07/15/GBtslbide2VRYmU.png)
 
