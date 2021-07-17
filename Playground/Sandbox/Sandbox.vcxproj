@@ -11,10 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8A864AC8-7628-759E-5FE3-88F24B24FCEE}</ProjectGuid>
+    <ProjectGuid>{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>OpenGL</RootNamespace>
+    <RootNamespace>Sandbox</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -42,48 +42,43 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>bin\Debug\</OutDir>
-    <IntDir>bin-int\Debug\</IntDir>
-    <TargetName>OpenGL</TargetName>
+    <OutDir>..\..\bin\Debug\Sandbox\</OutDir>
+    <IntDir>..\..\bin-int\Debug\Sandbox\</IntDir>
+    <TargetName>Sandbox</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>bin\Release\</OutDir>
-    <IntDir>bin-int\Release\</IntDir>
-    <TargetName>OpenGL</TargetName>
+    <OutDir>..\..\bin\Release\Sandbox\</OutDir>
+    <IntDir>..\..\bin-int\Release\Sandbox\</IntDir>
+    <TargetName>Sandbox</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>__DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>OpenGL\src;OpenGL\src\Utils;OpenGL\src\Shapes;Deps\glfw\include;Deps\glad\include;Deps\imgui;Deps\glm\glm;Deps\FreeImage\include;Deps\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CIAO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\Ciao\src;..\..\Ciao\Deps\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
-    <CustomBuildStep>
-      <Command>/NODEFAULTLIB:msvcrt.lib
-/NODEFAULTLIB:libcmtd.lib</Command>
-    </CustomBuildStep>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;ImGui.lib;FreeImage.lib;assimpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>Deps\glfw\lib;Deps\imgui\bin\Debug;Deps\FreeImage\lib;Deps\assimp\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>true</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>__RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>OpenGL\src;OpenGL\src\Utils;OpenGL\src\Shapes;Deps\glfw\include;Deps\glad\include;Deps\imgui;Deps\glm\glm;Deps\FreeImage\include;Deps\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CIAO_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\Ciao\src;..\..\Ciao\Deps\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -92,56 +87,21 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
-    <CustomBuildStep>
-      <Command>/NODEFAULTLIB:msvcrt.lib
-/NODEFAULTLIB:libcmtd.lib</Command>
-    </CustomBuildStep>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;ImGui.lib;FreeImage.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>Deps\glfw\lib;Deps\imgui\bin\Release;Deps\FreeImage\lib;Deps\assimp\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Deps\FreeImage\include\FreeImage.h" />
-    <ClInclude Include="OpenGL\src\Application.h" />
-    <ClInclude Include="OpenGL\src\Camera.h" />
-    <ClInclude Include="OpenGL\src\Common.h" />
-    <ClInclude Include="OpenGL\src\MatrixStack.h" />
-    <ClInclude Include="OpenGL\src\OpenAssetImportMesh.h" />
-    <ClInclude Include="OpenGL\src\Shader.h" />
-    <ClInclude Include="OpenGL\src\Shapes\Cube.h" />
-    <ClInclude Include="OpenGL\src\Shapes\Plane.h" />
-    <ClInclude Include="OpenGL\src\Shapes\Sphere.h" />
-    <ClInclude Include="OpenGL\src\Texture.h" />
-    <ClInclude Include="OpenGL\src\Utils\imgui_impl_glfw.h" />
-    <ClInclude Include="OpenGL\src\Utils\imgui_impl_opengl3.h" />
-    <ClInclude Include="OpenGL\src\VertexBufferObject.h" />
-    <ClInclude Include="OpenGL\src\pch.h" />
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OpenGL\src\Application.cpp" />
-    <ClCompile Include="OpenGL\src\Camera.cpp" />
-    <ClCompile Include="OpenGL\src\MatrixStack.cpp" />
-    <ClCompile Include="OpenGL\src\OpenAssetImportMesh.cpp" />
-    <ClCompile Include="OpenGL\src\Shader.cpp" />
-    <ClCompile Include="OpenGL\src\Shapes\Cube.cpp" />
-    <ClCompile Include="OpenGL\src\Shapes\Plane.cpp" />
-    <ClCompile Include="OpenGL\src\Shapes\Sphere.cpp" />
-    <ClCompile Include="OpenGL\src\Texture.cpp" />
-    <ClCompile Include="OpenGL\src\Utils\imgui_impl_glfw.cpp" />
-    <ClCompile Include="OpenGL\src\Utils\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="OpenGL\src\VertexBufferObject.cpp" />
-    <ClCompile Include="OpenGL\src\main.cpp" />
-    <ClCompile Include="OpenGL\src\pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Deps\glad\Glad.vcxproj">
-      <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
+    <ProjectReference Include="..\..\Ciao\Ciao.vcxproj">
+      <Project>{8198837C-6DCF-840D-16BC-6A1002D2000F}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
