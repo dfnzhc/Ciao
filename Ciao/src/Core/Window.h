@@ -20,18 +20,24 @@ namespace Ciao {
     public:
         Window();
         ~Window();
+        
+        uint32_t GetWidth() const;
+        uint32_t GetHeight() const;
+        
+        bool Create(const WindowProps& props = WindowProps());
 
-        bool Create(const WindowProps& props);
         void Shutdown();
-
         void HadleEvents();
 
         void BeginRender();
         void EndRender();
-
+    
     private:
         SDL_Window* m_pWindow;
         SDL_GLContext m_GLContext;
+
+        uint32_t m_Width;
+        uint32_t m_Height;
     };
     
 }

@@ -507,7 +507,7 @@
     <ClInclude Include="src\Ciao.h" />
     <ClInclude Include="src\Core\Common.h" />
     <ClInclude Include="src\Core\Log.h" />
-    <ClInclude Include="src\Core\Renderer.h" />
+    <ClInclude Include="src\Core\Scence.h" />
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\EntryPoint.h" />
   </ItemGroup>

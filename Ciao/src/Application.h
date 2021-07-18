@@ -2,7 +2,7 @@
 
 namespace Ciao
 {
-    class Renderer;
+    class Scence;
     class Window;
     
     class Application
@@ -12,18 +12,18 @@ namespace Ciao
         
         ~Application();
 
-        void Execute(Renderer* renderer);
+        void Execute(Scence* scence);
         inline void Shutdown() { m_isRunning = false; }
+    
     private:
         bool Init();
         void Terminate();
         void Update();
         void Render();
 
-
     private:
         Window* m_pWindow;
-        Renderer* m_pRenderer;
+        Scence* m_pScence;
 
         bool m_isRunning;
 

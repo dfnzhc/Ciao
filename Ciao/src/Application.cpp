@@ -1,5 +1,5 @@
 ﻿#include "Application.h"
-#include "Renderer.h"
+#include "Scence.h"
 #include "Window.h"
 
 #include "Log.h"
@@ -19,7 +19,7 @@ namespace Ciao
     }
 
     Application::Application()
-        : m_pRenderer(nullptr), m_isRunning(false), m_pWindow(nullptr)
+        : m_pScence(nullptr), m_isRunning(false), m_pWindow(nullptr)
     {
         m_pWindow = new Window;
     }
@@ -30,9 +30,9 @@ namespace Ciao
         m_pWindow = nullptr;
     }
 
-    void Application::Execute(Renderer* renderer)
+    void Application::Execute(Scence* scence)
     {
-        m_pRenderer = renderer;
+        m_pScence = scence;
         if (Init()) {
             while (m_isRunning) {
                 Update();
@@ -56,14 +56,14 @@ namespace Ciao
             SDL_VERSION(&version);
             CIAO_CORE_INFO("SDL version: {}.{}.{}", (int32_t)version.major, (int32_t)version.minor, (int32_t)version.patch);
             
-            WindowProps props = m_pRenderer->GetWindowProps();
+            WindowProps props = m_pScence->GetWindowProps();
             if (m_pWindow->Create(props)) {
                 CIAO_CORE_INFO("Window initializing SUCCESSED..");
                 
                 succ = true;
                 m_isRunning = true;
 
-                m_pRenderer->Init();
+                m_pScence->Init();
             }
         }
 
@@ -79,7 +79,7 @@ namespace Ciao
     {
         m_isRunning = false;
         
-        m_pRenderer->Shutdown();
+        m_pScence->Shutdown();
         m_pWindow->Shutdown();
 
         SDL_Quit();
@@ -88,13 +88,13 @@ namespace Ciao
     void Application::Update()
     {
         m_pWindow->HadleEvents();
-        m_pRenderer->Update();
+        m_pScence->Update();
     }
 
     void Application::Render()
     {
         m_pWindow->BeginRender();
-        m_pRenderer->Render();
+        m_pScence->Render();
         m_pWindow->EndRender();
     }
 

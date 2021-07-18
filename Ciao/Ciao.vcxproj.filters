@@ -1266,7 +1266,7 @@
     <ClInclude Include="src\Core\Log.h">
       <Filter>src\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Renderer.h">
+    <ClInclude Include="src\Core\Scence.h">
       <Filter>src\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Window.h">

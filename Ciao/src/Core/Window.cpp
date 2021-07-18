@@ -1,10 +1,10 @@
 ﻿#include "Window.h"
-#include "Log.h"
-#include <windows.h>
-#include <SDL.h>
-#include <glad/glad.h>
-
 #include "Application.h"
+#include "Log.h"
+
+#include <glad/glad.h>
+#include <SDL.h>
+#include <glm.hpp>
 
 namespace Ciao
 {
@@ -15,9 +15,8 @@ namespace Ciao
     
     }
 
-    Window::Window() : m_pWindow(nullptr)
+    Window::Window() : m_pWindow(nullptr), m_Width(0), m_Height(0)
     {
-    
     }
 
     Window::~Window()
@@ -27,6 +26,16 @@ namespace Ciao
         }
     }
 
+    uint32_t Window::GetWidth() const
+    {
+        return m_Width;
+    }
+
+    uint32_t Window::GetHeight() const
+    {
+        return m_Height;
+    }
+
     bool Window::Create(const WindowProps& props)
     {
         m_pWindow = SDL_CreateWindow(props.Title.c_str(), props.XPos, props.YPos, props.Width, props.Height, props.WindowFlags);
@@ -34,8 +43,10 @@ namespace Ciao
             CIAO_CORE_ERROR("Create window FAILED: {}", SDL_GetError());
             return false;
         }
-        
-        CIAO_CORE_INFO("Create window SUCCESSED: Width - {} Height - {}", props.Width, props.Height);
+
+        m_Width = props.Width;
+        m_Height = props.Height;
+        CIAO_CORE_INFO("Create window SUCCESSED: Width - {} Height - {}", m_Width, m_Height);
 
         SDL_DisplayMode current;
         SDL_GetCurrentDisplayMode(0, &current);
@@ -53,8 +64,8 @@ namespace Ciao
             return false;
         }
         
-
         gladLoadGLLoader(SDL_GL_GetProcAddress);
+        
 
         return true;
     }
@@ -84,7 +95,8 @@ namespace Ciao
 
     void Window::BeginRender()
     {
-        
+        glClearColor(0.2f, 0.3f, 0.5f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
     void Window::EndRender()

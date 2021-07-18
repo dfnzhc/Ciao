@@ -1,18 +1,18 @@
 ﻿#pragma once
 
 #include "Application.h"
-#include "Core/Renderer.h"
+#include "Core/Scence.h"
 #include "Core/Log.h"
 
-extern Ciao::Renderer* Ciao::CreateRenderer();
+extern Ciao::Scence* Ciao::CreateScence();
 
 int main()
 {
     Ciao::Log::Init();
     
-    Ciao::Renderer* renderer = Ciao::CreateRenderer();
-    Ciao::Application::GetAppInst().Execute(renderer);
+    Ciao::Scence* scence = Ciao::CreateScence();
+    Ciao::Application::GetAppInst().Execute(scence);
     
-    delete renderer;
+    delete scence;
     return 0;
 }

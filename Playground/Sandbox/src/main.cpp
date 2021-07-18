@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Ciao.h>
 
-class Sandbox : public Ciao::Renderer
+class Sandbox : public Ciao::Scence
 {
 public:
     void Init() override
@@ -21,11 +21,12 @@ public:
 
     void Render() override
     {
+        
         //CIAO_INFO("Sandbox::Render()");
     }
 };
 
-Ciao::Renderer* Ciao::CreateRenderer()
+Ciao::Scence* Ciao::CreateScence()
 {
     return new Sandbox();
 }
