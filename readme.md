@@ -1,6 +1,6 @@
 ### Ciao
 
-Ciao 是一个光栅化渲染器。目前的渲染 API 选用的是 OpenGL。
+Ciao 是一个光栅化渲染器。目前的 API 选用的是 OpenGL。
 
 
 
