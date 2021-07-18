@@ -1,8 +1,9 @@
 ﻿#include "Application.h"
 #include "Scence.h"
 #include "Window.h"
-
 #include "Log.h"
+
+#include <Renderer/RenderManager.h>
 
 #include <SDL.h>
 
@@ -22,11 +23,14 @@ namespace Ciao
         : m_pScence(nullptr), m_isRunning(false), m_pWindow(nullptr)
     {
         m_pWindow = new Window;
+        m_renderMgr = new RenderManager;
     }
 
     Application::~Application()
     {
         delete m_pWindow;
+        delete m_renderMgr;
+        
         m_pWindow = nullptr;
     }
 
@@ -59,6 +63,7 @@ namespace Ciao
             WindowProps props = m_pScence->GetWindowProps();
             if (m_pWindow->Create(props)) {
                 CIAO_CORE_INFO("Window initializing SUCCESSED..");
+                m_renderMgr->Init();
                 
                 succ = true;
                 m_isRunning = true;
@@ -78,7 +83,8 @@ namespace Ciao
     void Application::Terminate()
     {
         m_isRunning = false;
-        
+
+        m_renderMgr->Shutdown();
         m_pScence->Shutdown();
         m_pWindow->Shutdown();
 

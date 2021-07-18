@@ -20,6 +20,8 @@
 #include <unordered_set>
 #include <assert.h>
 #include <stdexcept>
+#include <queue>
+#include <stack>
 
 #ifdef CIAO_DEBUG
     #if defined(CIAO_PLATFORM_WINDOWS)

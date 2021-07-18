@@ -6,6 +6,8 @@
 #include <SDL.h>
 #include <glm.hpp>
 
+#include "Renderer/RenderManager.h"
+
 namespace Ciao
 {
     WindowProps::WindowProps()
@@ -95,12 +97,16 @@ namespace Ciao
 
     void Window::BeginRender()
     {
-        glClearColor(0.2f, 0.3f, 0.5f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        auto rm = Application::GetAppInst().GetRenderManager();
+        rm->Clear();
     }
 
     void Window::EndRender()
     {
+        auto rm = Application::GetAppInst().GetRenderManager();
+        rm->Flush();
+
+        
         SDL_GL_SwapWindow(m_pWindow);
     }
 } 

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Common.h"
+#include "Core/Common.h"
 
 struct SDL_Window;
 using SDL_GLContext = void*;

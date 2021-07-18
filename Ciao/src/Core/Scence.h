@@ -7,7 +7,7 @@ namespace Ciao
     {
     public:
         Scence(){}
-        ~Scence(){}
+        virtual ~Scence(){}
 
         virtual WindowProps GetWindowProps() { return WindowProps(); }
 
