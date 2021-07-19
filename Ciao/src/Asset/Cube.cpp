@@ -1,7 +1,5 @@
-﻿#include "Cube.h"
-
-#include "glm.hpp"
-#include "Log.h"
+﻿#include "pch.h"
+#include "Cube.h"
 
 namespace Ciao
 {

@@ -34,6 +34,9 @@
     <Filter Include="src\Renderer">
       <UniqueIdentifier>{73D1DFBF-5F34-6F64-08BA-A71AF4FB3AE7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Util">
+      <UniqueIdentifier>{9AC626CF-8693-81DA-AFAC-6F829BD8B668}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Deps\glm\glm\common.hpp">
@@ -1284,6 +1287,9 @@
     <ClInclude Include="src\Core\Log.h">
       <Filter>src\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Mouse.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Scence.h">
       <Filter>src\Core</Filter>
     </ClInclude>
@@ -1292,6 +1298,9 @@
     </ClInclude>
     <ClInclude Include="src\EntryPoint.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Camera.h">
+      <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\Framebuffer.h">
       <Filter>src\Renderer</Filter>
@@ -1307,6 +1316,12 @@
     </ClInclude>
     <ClInclude Include="src\Renderer\Shader.h">
       <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\MatrixStack.h">
+      <Filter>src\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pch.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1328,8 +1343,14 @@
     <ClCompile Include="src\Core\Log.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Mouse.cpp">
+      <Filter>src\Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Core\Window.cpp">
       <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Camera.cpp">
+      <Filter>src\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Framebuffer.cpp">
       <Filter>src\Renderer</Filter>
@@ -1345,6 +1366,12 @@
     </ClCompile>
     <ClCompile Include="src\Renderer\Shader.cpp">
       <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Util\MatrixStack.cpp">
+      <Filter>src\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pch.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

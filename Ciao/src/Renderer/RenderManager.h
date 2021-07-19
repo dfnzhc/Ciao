@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Core/Common.h"
+#include <queue>
 #include "RenderCommand.h"
 
 #define CIAO_SUBMIT_RC(type, ...) std::move(std::make_unique<type>(__VA_ARGS__))
@@ -14,7 +14,7 @@ namespace Ciao
         ~RenderManager();
 
         void Init();
-        void Shutdown();
+        void Shutdown();  
 
         void Clear();
         void SetClearColour(const glm::vec4 color);

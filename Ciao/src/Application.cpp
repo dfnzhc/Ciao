@@ -1,17 +1,15 @@
-﻿#include "Application.h"
+﻿#include "pch.h"
+#include "Application.h"
 #include "Scence.h"
 #include "Window.h"
-#include "Log.h"
 
-#include <Renderer/RenderManager.h>
-
-#include <SDL.h>
+#include "Renderer/RenderManager.h"
 
 #include "Mouse.h"
 #include "Camera.h"
 
 namespace Ciao
-{
+{ 
     Application* Application::m_pAppInst = nullptr;
     
     Application& Application::GetAppInst()

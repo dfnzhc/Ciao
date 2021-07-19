@@ -1,6 +1,7 @@
-﻿#include "RenderCommand.h"
+﻿#include "pch.h"
+
+#include "RenderCommand.h"
 #include "Asset/Object.h"
-#include "Log.h"
 
 namespace Ciao
 {

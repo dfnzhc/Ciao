@@ -1,11 +1,9 @@
-﻿#include "Mouse.h"
+﻿#include "pch.h"
+#include "Mouse.h"
 
 #include <SDL_events.h>
 #include <SDL_mouse.h>
 #include <SDL_stdinc.h>
-
-#include "Camera.h"
-#include "Log.h"
 
 namespace Ciao
 {

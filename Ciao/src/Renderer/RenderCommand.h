@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include <memory>
 
 #include "Shader.h"
-#include <glad/glad.h>
+
+#include <memory>
 
 namespace Ciao
 {
@@ -14,7 +14,7 @@ namespace Ciao
         virtual void Draw() = 0;
     };
 
-    class VAORenderCommand : public RenderCommand
+    class VAORenderCommand : public RenderCommand 
     {
     public:
         VAORenderCommand(GLuint vao, GLuint type, GLuint count, std::shared_ptr<ShaderProgram> shader)

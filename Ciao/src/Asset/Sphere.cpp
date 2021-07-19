@@ -1,7 +1,5 @@
-﻿#include "Sphere.h"
-#include "Core/Common.h"
-
-#include "glm.hpp"
+﻿#include "pch.h"
+#include "Sphere.h"
 
 namespace Ciao
 {

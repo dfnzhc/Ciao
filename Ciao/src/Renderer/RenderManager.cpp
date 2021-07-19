@@ -1,4 +1,5 @@
-﻿#include "RenderManager.h"
+﻿#include "pch.h"
+#include "RenderManager.h"
 
 namespace Ciao
 {
@@ -14,7 +15,7 @@ namespace Ciao
     {
         // Initialize OpenGL
         glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LEQUAL);
+        glDepthFunc(GL_LEQUAL); 
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

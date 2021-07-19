@@ -1,8 +1,8 @@
-﻿#include "Camera.h"
+﻿#include "pch.h"
 
-#include "Application.h"
-#include "Log.h"
+#include "Camera.h"
 #include "Mouse.h"
+#include "Application.h"
 
 namespace Ciao
 {

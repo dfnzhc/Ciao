@@ -1,13 +1,9 @@
-﻿#include "Window.h"
+﻿#include "pch.h"
+#include "Window.h"
 #include "Application.h"
-#include "Log.h"
-
-#include <glad/glad.h>
-#include <SDL.h>
-#include <glm.hpp>
 
 #include "Mouse.h"
-#include <Renderer/Camera.h>
+#include "Renderer/Camera.h"
 #include "Renderer/RenderManager.h"
 
 namespace Ciao

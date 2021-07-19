@@ -1,8 +1,6 @@
 ﻿#pragma once
-#include "Core/Common.h"
 
 #include "glm.hpp"
-#include <glad/glad.h>
 
 namespace Ciao
 {

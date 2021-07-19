@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "gtc/matrix_transform.hpp"
-#include <glad/glad.h>
 
 namespace Ciao
 {

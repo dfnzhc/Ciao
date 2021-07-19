@@ -1,7 +1,7 @@
-[21:54:46] [info] CIAO: SDL initializing SUCCESSED..
-[21:54:46] [info] CIAO: SDL version: 2.0.14
-[21:54:46] [info] CIAO: Create window SUCCESSED: Width - 1600 Height - 980
-[21:54:46] [info] CIAO: Display #0: current display mode is 1920x1080px @ 120hz.
-[21:54:46] [info] CIAO: Window initializing SUCCESSED..
-[21:54:46] [info] CLIENT: Sandbox::Init()
-[21:54:48] [info] CLIENT: Sandbox::Shutdown()
+[22:21:17] [info] CIAO: SDL initializing SUCCESSED..
+[22:21:17] [info] CIAO: SDL version: 2.0.14
+[22:21:17] [info] CIAO: Create window SUCCESSED: Width - 1600 Height - 980
+[22:21:17] [info] CIAO: Display #0: current display mode is 1920x1080px @ 120hz.
+[22:21:17] [info] CIAO: Window initializing SUCCESSED..
+[22:21:17] [info] CLIENT: Sandbox::Init()
+[22:21:18] [info] CLIENT: Sandbox::Shutdown()

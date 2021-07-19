@@ -1,8 +1,5 @@
-﻿#include "Framebuffer.h"
-
-#include <glad/glad.h>
-
-#include "Log.h"
+﻿#include "pch.h"
+#include "Framebuffer.h"
 
 namespace Ciao
 {

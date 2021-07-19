@@ -1,4 +1,5 @@
-﻿#include "GLBuffer.h"
+﻿#include "pch.h"
+#include "GLBuffer.h"
 
 namespace Ciao
 {
@@ -9,7 +10,7 @@ namespace Ciao
     
     VertexBufferObject::~VertexBufferObject()
     {
-        
+         
     }
     
     void VertexBufferObject::Create()

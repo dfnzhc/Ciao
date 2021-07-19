@@ -1,8 +1,7 @@
 //Copyright (C) 2011 by Jason L. McKesson
 //This file is licensed by the MIT License.
-
+#include "pch.h"
 #include "MatrixStack.h"
-#include "gtc\matrix_transform.hpp"
 
 namespace glutil
 {
