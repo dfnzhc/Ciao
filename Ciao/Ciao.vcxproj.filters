@@ -25,6 +25,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Asset">
+      <UniqueIdentifier>{7C4D95B2-E8B7-4929-31F6-FACE9D9F277E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Core">
       <UniqueIdentifier>{A5D31CCF-91A0-77DA-BAB9-6582A6E5AC68}</UniqueIdentifier>
     </Filter>
@@ -1260,6 +1263,18 @@
     <ClInclude Include="src\Application.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Asset\Cube.h">
+      <Filter>src\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Asset\Object.h">
+      <Filter>src\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Asset\Sphere.h">
+      <Filter>src\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Asset\Texture.h">
+      <Filter>src\Asset</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ciao.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -1281,6 +1296,9 @@
     <ClInclude Include="src\Renderer\Framebuffer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\GLBuffer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Renderer\RenderCommand.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
@@ -1295,6 +1313,15 @@
     <ClCompile Include="src\Application.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Asset\Cube.cpp">
+      <Filter>src\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Asset\Sphere.cpp">
+      <Filter>src\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Asset\Texture.cpp">
+      <Filter>src\Asset</Filter>
+    </ClCompile>
     <ClCompile Include="src\Core\Common.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
@@ -1305,6 +1332,9 @@
       <Filter>src\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Framebuffer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\GLBuffer.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\RenderCommand.cpp">

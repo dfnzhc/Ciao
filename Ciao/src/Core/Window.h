@@ -5,7 +5,7 @@ struct SDL_Window;
 using SDL_GLContext = void*;
 
 namespace Ciao {
-
+    
     struct WindowProps
     {
         std::string Title;
@@ -33,9 +33,9 @@ namespace Ciao {
         void EndRender();
     
     private:
-        SDL_Window* m_pWindow;
+        SDL_Window* m_Window;
         SDL_GLContext m_GLContext;
-
+        
         uint32_t m_Width;
         uint32_t m_Height;
     };

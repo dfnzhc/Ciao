@@ -6,6 +6,8 @@
 #include <SDL.h>
 #include <glm.hpp>
 
+#include "Mouse.h"
+#include <Renderer/Camera.h>
 #include "Renderer/RenderManager.h"
 
 namespace Ciao
@@ -17,13 +19,14 @@ namespace Ciao
     
     }
 
-    Window::Window() : m_pWindow(nullptr), m_Width(0), m_Height(0)
+    Window::Window() : m_Window(nullptr), m_Width(0), m_Height(0)
     {
+        
     }
 
     Window::~Window()
     {
-        if (m_pWindow) {
+        if (m_Window) {
             Shutdown();
         }
     }
@@ -40,8 +43,8 @@ namespace Ciao
 
     bool Window::Create(const WindowProps& props)
     {
-        m_pWindow = SDL_CreateWindow(props.Title.c_str(), props.XPos, props.YPos, props.Width, props.Height, props.WindowFlags);
-        if (!m_pWindow) {
+        m_Window = SDL_CreateWindow(props.Title.c_str(), props.XPos, props.YPos, props.Width, props.Height, props.WindowFlags);
+        if (!m_Window) {
             CIAO_CORE_ERROR("Create window FAILED: {}", SDL_GetError());
             return false;
         }
@@ -60,7 +63,7 @@ namespace Ciao
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
         SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-        m_GLContext = SDL_GL_CreateContext(m_pWindow);
+        m_GLContext = SDL_GL_CreateContext(m_Window);
         if (m_GLContext == nullptr) {
             CIAO_CORE_ERROR("Create OpenGL context FAILED: {}", SDL_GetError());
             return false;
@@ -74,9 +77,9 @@ namespace Ciao
 
     void Window::Shutdown()
     {
-        SDL_DestroyWindow(m_pWindow);
+        SDL_DestroyWindow(m_Window);
         SDL_GL_DeleteContext(m_GLContext);
-        m_pWindow = nullptr;
+        m_Window = nullptr;
     }
 
     void Window::HadleEvents()
@@ -88,11 +91,22 @@ namespace Ciao
                 // 窗口关闭
                 Application::GetAppInst().Shutdown();
                 break;
+            case SDL_KEYDOWN:
+                if (e.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+                    Application::GetAppInst().Shutdown();
+                }
+                break;
+            case SDL_MOUSEWHEEL:
+                if (e.wheel.y > 0) Camera::UpdateDistance(-0.5);
+                if (e.wheel.y < 0) Camera::UpdateDistance(0.5);
+                break;
                 
             default:
                 break;
             }
         }
+
+        Mouse::Update();
     }
 
     void Window::BeginRender()
@@ -107,6 +121,6 @@ namespace Ciao
         rm->Flush();
 
         
-        SDL_GL_SwapWindow(m_pWindow);
+        SDL_GL_SwapWindow(m_Window);
     }
 } 

@@ -44,9 +44,9 @@ namespace Ciao
         glClearColor(color.r, color.g, color.b, color.a);
     }
 
-    void RenderManager::Submit(std::unique_ptr<RenderCommand> rc)
+    void RenderManager::Submit(std::shared_ptr<RenderCommand> rc)
     {
-        m_renderCommands.push(std::move(rc));
+        m_renderCommands.push(rc);
     }
 
     void RenderManager::Flush()

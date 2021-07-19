@@ -18,7 +18,7 @@ namespace Ciao
 
         void Clear();
         void SetClearColour(const glm::vec4 color);
-        void Submit(std::unique_ptr<RenderCommand> rc);
+        void Submit(std::shared_ptr<RenderCommand> rc);
         void Flush();
     private:
         std::queue<std::shared_ptr<RenderCommand>> m_renderCommands;

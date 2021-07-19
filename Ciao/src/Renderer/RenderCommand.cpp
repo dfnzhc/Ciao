@@ -1,16 +1,14 @@
 ﻿#include "RenderCommand.h"
-
+#include "Asset/Object.h"
 #include "Log.h"
 
 namespace Ciao
 {
     void VAORenderCommand::Draw()
     {
-        std::shared_ptr<ShaderProgram> shader = m_Shader.lock();
-
-        if (shader) {
+        if (m_Shader) {
             glBindVertexArray(m_VAO);
-            shader->UseProgram();
+            m_Shader->UseProgram();
 
             if (m_primSize > 0) {
                 glDrawArrays(m_primType, 0, m_primSize);
@@ -22,7 +20,18 @@ namespace Ciao
             glBindVertexArray(0);
         }
         else {
-            CIAO_CORE_ERROR("Invalid shader program!");
+            CIAO_CORE_ERROR("Invalid shader program setting!");
+        }
+    }
+
+    void ObjRenderCommand::Draw()
+    {
+        if (m_Obj && m_Shader) {
+            m_Shader->UseProgram();
+            m_Obj->Draw();
+        }
+        else {
+            CIAO_CORE_ERROR("Invalid object or shader program setting!");
         }
     }
 }

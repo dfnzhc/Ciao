@@ -7,6 +7,9 @@
 
 #include <SDL.h>
 
+#include "Mouse.h"
+#include "Camera.h"
+
 namespace Ciao
 {
     Application* Application::m_pAppInst = nullptr;
@@ -20,23 +23,20 @@ namespace Ciao
     }
 
     Application::Application()
-        : m_pScence(nullptr), m_isRunning(false), m_pWindow(nullptr)
+        : m_Scence(nullptr), m_isRunning(false), m_Window(nullptr)
     {
-        m_pWindow = new Window;
-        m_renderMgr = new RenderManager;
+        m_Window    = CreateScope<Window>();
+        m_renderMgr = CreateRef<RenderManager>();
+        m_Camera    = CreateRef<Camera>();
     }
 
     Application::~Application()
     {
-        delete m_pWindow;
-        delete m_renderMgr;
-        
-        m_pWindow = nullptr;
     }
 
     void Application::Execute(Scence* scence)
     {
-        m_pScence = scence;
+        m_Scence = std::shared_ptr<Scence>(scence);
         if (Init()) {
             while (m_isRunning) {
                 Update();
@@ -44,6 +44,14 @@ namespace Ciao
             }
             
             Terminate();
+        }
+    }
+
+    void Application::GetWindowSize(uint32_t& w, uint32_t& h)
+    {
+        if (m_Window) {
+            w = m_Window->GetWidth();
+            h = m_Window->GetHeight();
         }
     }
 
@@ -60,15 +68,21 @@ namespace Ciao
             SDL_VERSION(&version);
             CIAO_CORE_INFO("SDL version: {}.{}.{}", (int32_t)version.major, (int32_t)version.minor, (int32_t)version.patch);
             
-            WindowProps props = m_pScence->GetWindowProps();
-            if (m_pWindow->Create(props)) {
+            WindowProps props = m_Scence->GetWindowProps();
+            if (m_Window->Create(props)) {
                 CIAO_CORE_INFO("Window initializing SUCCESSED..");
                 m_renderMgr->Init();
                 
                 succ = true;
                 m_isRunning = true;
 
-                m_pScence->Init();
+                Mouse::Init();
+                m_Camera->Init();
+                m_Camera->SetProjectionMatrix(60.0f,
+                    (float)m_Window->GetWidth() / (float)m_Window->GetHeight(),
+                    0.01, 1000);
+
+                m_Scence->Init();
             }
         }
 
@@ -85,23 +99,24 @@ namespace Ciao
         m_isRunning = false;
 
         m_renderMgr->Shutdown();
-        m_pScence->Shutdown();
-        m_pWindow->Shutdown();
+        m_Scence->Shutdown();
+        m_Window->Shutdown();
 
         SDL_Quit();
     }
 
     void Application::Update()
     {
-        m_pWindow->HadleEvents();
-        m_pScence->Update();
+        m_Window->HadleEvents();
+        m_Camera->Update();
+        m_Scence->Update();
     }
 
     void Application::Render()
     {
-        m_pWindow->BeginRender();
-        m_pScence->Render();
-        m_pWindow->EndRender();
+        m_Window->BeginRender();
+        m_Scence->Render();
+        m_Window->EndRender();
     }
 
     

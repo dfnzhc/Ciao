@@ -84,7 +84,8 @@ namespace Ciao
             else if (sExt == "tcnl") iShaderType = GL_TESS_CONTROL_SHADER;
             else iShaderType = GL_TESS_EVALUATION_SHADER;
             Shader shader;
-            shader.LoadShader("resources\\Shaders\\" + shaderFileNames[i], iShaderType);
+
+            shader.LoadShader("..\\..\\Resources\\Shaders\\" + shaderFileNames[i], iShaderType);
             shShaders.push_back(shader);
         }
     }

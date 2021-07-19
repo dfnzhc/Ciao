@@ -22,6 +22,7 @@
 #include <stdexcept>
 #include <queue>
 #include <stack>
+#include <array>
 
 #ifdef CIAO_DEBUG
     #if defined(CIAO_PLATFORM_WINDOWS)
