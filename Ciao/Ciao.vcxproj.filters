@@ -1269,7 +1269,13 @@
     <ClInclude Include="src\Asset\Cube.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
+    <ClInclude Include="src\Asset\Mesh.h">
+      <Filter>src\Asset</Filter>
+    </ClInclude>
     <ClInclude Include="src\Asset\Object.h">
+      <Filter>src\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Asset\OpenAssetImportMesh.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
     <ClInclude Include="src\Asset\Sphere.h">
@@ -1282,6 +1288,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Common.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ImguiWindow.h">
       <Filter>src\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Log.h">
@@ -1305,9 +1314,6 @@
     <ClInclude Include="src\Renderer\Framebuffer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\GLBuffer.h">
-      <Filter>src\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Renderer\RenderCommand.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
@@ -1317,7 +1323,16 @@
     <ClInclude Include="src\Renderer\Shader.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\VertexBuffer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Util\MatrixStack.h">
+      <Filter>src\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\imgui_impl_opengl3.h">
+      <Filter>src\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\imgui_impl_sdl.h">
       <Filter>src\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h">
@@ -1331,13 +1346,19 @@
     <ClCompile Include="src\Asset\Cube.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
+    <ClCompile Include="src\Asset\Mesh.cpp">
+      <Filter>src\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Asset\OpenAssetImportMesh.cpp">
+      <Filter>src\Asset</Filter>
+    </ClCompile>
     <ClCompile Include="src\Asset\Sphere.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
     <ClCompile Include="src\Asset\Texture.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Common.cpp">
+    <ClCompile Include="src\Core\ImguiWindow.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Log.cpp">
@@ -1355,9 +1376,6 @@
     <ClCompile Include="src\Renderer\Framebuffer.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\GLBuffer.cpp">
-      <Filter>src\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="src\Renderer\RenderCommand.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
@@ -1367,7 +1385,16 @@
     <ClCompile Include="src\Renderer\Shader.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\VertexBuffer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Util\MatrixStack.cpp">
+      <Filter>src\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Util\imgui_impl_opengl3.cpp">
+      <Filter>src\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Util\imgui_impl_sdl.cpp">
       <Filter>src\Util</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp">

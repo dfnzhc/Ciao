@@ -3,11 +3,14 @@
 bin/
 bin-int/
 *.bat
-premake5.*
+premake5.exe
 Deps/
 imgui.ini
-HarmonyOS_Sans_SC_Bold.ttf
-resources/Textures/
 Image/
+resources/Textures/
 resources/Models/
+resources/Fonts/
 Archive/
+**.vcxproj
+**.vcxproj.filters
+**.sln

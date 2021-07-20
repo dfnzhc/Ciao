@@ -16,6 +16,7 @@ namespace Ciao
 
         virtual void Update() {}
         virtual void Render() {}
+        virtual void ImguiRender() {}
     private:
         
     };

@@ -9,6 +9,9 @@ namespace Ciao
         bool Load(std::string path, bool generateMipMaps = true);
         void Bind(int textureUnit = 0);
 
+        void SetTextureName(const std::string& name) { m_TexName = name; }
+        const std::string& GetTextureName() const { return m_TexName; }
+            
         void SetSamplerObjectParameter(GLenum parameter, GLenum value);
         void SetSamplerObjectParameterf(GLenum parameter, float value);
 
@@ -26,6 +29,8 @@ namespace Ciao
         GLuint m_textureID;                 // Texture id
         GLuint m_samplerObjectID;           // Sampler id
         bool m_mipMapsGenerated;
+
+        std::string m_TexName;
 
         std::string m_path;
     };

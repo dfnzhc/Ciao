@@ -12,7 +12,7 @@ namespace Ciao
 
     Texture::~Texture()
     {
-        
+        Release();
     }
 
     /// 用 data 中的数据创建纹理

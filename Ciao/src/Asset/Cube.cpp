@@ -100,8 +100,8 @@ namespace Ciao
 
 			for (int j = 0; j < 6; j++) {
 				m_VBO.AddVertexData(&points[j], sizeof(glm::vec3));
-				m_VBO.AddVertexData(&texCoords[j], sizeof(glm::vec2));
 				m_VBO.AddVertexData(&normal, sizeof(glm::vec3));
+				m_VBO.AddVertexData(&texCoords[j], sizeof(glm::vec2));
 				indices[i + j] = i + j;
 			}
 
@@ -114,15 +114,15 @@ namespace Ciao
 
 		GLsizei stride = 2 * sizeof(glm::vec3)+sizeof(glm::vec2);
 
-		// Vertex positions
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, 0);
-		// Texture coordinates
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride, (void*)sizeof(glm::vec3));
-		// Normal vectors
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(glm::vec3)+sizeof(glm::vec2)));
+    	// Vertex positions
+    	glEnableVertexAttribArray(0);
+    	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, 0);
+    	// Normal vectors
+    	glEnableVertexAttribArray(1);
+    	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(glm::vec3)));
+    	// Texture coordinates
+    	glEnableVertexAttribArray(2);
+    	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(glm::vec3)+sizeof(glm::vec3)));
     }
 
     void Cube::Draw()

@@ -26,7 +26,7 @@ namespace Ciao
         m_ViewMat = glm::lookAt(m_Position, m_ViewPoint, m_UpDir);
         
         uint32_t w, h;
-        Application::GetAppInst().GetWindowSize(w, h);
+        Application::GetInst().GetWindowSize(w, h);
         m_HalfWindowSize = glm::vec2(0.5f * w, 0.5f * h);
 
         m_Yaw = -90.0f;

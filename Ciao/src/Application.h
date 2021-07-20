@@ -11,7 +11,7 @@ namespace Ciao
     class Application
     {
     public:
-        static Application& GetAppInst();
+        static Application& GetInst();
         
         ~Application();
 
@@ -20,6 +20,9 @@ namespace Ciao
         
         inline std::shared_ptr<RenderManager> GetRenderManager() { return m_renderMgr; }
         inline std::shared_ptr<Camera> GetCamera() { return m_Camera; }
+        inline std::shared_ptr<Window> GetWindow() { return m_Window; }
+        inline std::shared_ptr<Scence> GetScence() { return m_Scence; }
+        
         void GetWindowSize(uint32_t& w, uint32_t& h);
     private:
         bool Init();
@@ -31,7 +34,7 @@ namespace Ciao
         std::shared_ptr<Scence> m_Scence;
         std::shared_ptr<RenderManager> m_renderMgr;
         std::shared_ptr<Camera> m_Camera;
-        std::unique_ptr<Window> m_Window;
+        std::shared_ptr<Window> m_Window;
 
         bool m_isRunning;
 

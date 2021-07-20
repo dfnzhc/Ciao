@@ -2,7 +2,7 @@
 
 #include "Object.h"
 
-#include "Renderer/GLBuffer.h"
+#include "Renderer/VertexBuffer.h"
 #include "Texture.h"
 
 namespace Ciao

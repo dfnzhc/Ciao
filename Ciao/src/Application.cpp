@@ -12,7 +12,7 @@ namespace Ciao
 { 
     Application* Application::m_pAppInst = nullptr;
     
-    Application& Application::GetAppInst()
+    Application& Application::GetInst()
     {
         if (m_pAppInst == nullptr) {
             m_pAppInst = new Application();
@@ -23,7 +23,7 @@ namespace Ciao
     Application::Application()
         : m_Scence(nullptr), m_isRunning(false), m_Window(nullptr)
     {
-        m_Window    = CreateScope<Window>();
+        m_Window    = CreateRef<Window>();
         m_renderMgr = CreateRef<RenderManager>();
         m_Camera    = CreateRef<Camera>();
     }

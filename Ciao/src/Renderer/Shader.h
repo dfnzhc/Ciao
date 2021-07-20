@@ -41,28 +41,28 @@ namespace Ciao
         glm::uint GetProgramID();
 
         // Setting vectors
-        void SetUniform(std::string sName, glm::vec2* vVectors, int iCount = 1);
-        void SetUniform(std::string sName, const glm::vec2 vVector);
-        void SetUniform(std::string sName, glm::vec3* vVectors, int iCount = 1);
-        void SetUniform(std::string sName, const glm::vec3 vVector);
-        void SetUniform(std::string sName, glm::vec4* vVectors, int iCount = 1);
-        void SetUniform(std::string sName, const glm::vec4 vVector);
+        void SetUniform(const std::string& sName, glm::vec2* vVectors, int iCount = 1);
+        void SetUniform(const std::string& sName, const glm::vec2 vVector);
+        void SetUniform(const std::string& sName, glm::vec3* vVectors, int iCount = 1);
+        void SetUniform(const std::string& sName, const glm::vec3 vVector);
+        void SetUniform(const std::string& sName, glm::vec4* vVectors, int iCount = 1);
+        void SetUniform(const std::string& sName, const glm::vec4 vVector);
 
         // Setting floats
-        void SetUniform(std::string sName, float* fValues, int iCount = 1);
-        void SetUniform(std::string sName, const float fValue);
+        void SetUniform(const std::string& sName, float* fValues, int iCount = 1);
+        void SetUniform(const std::string& sName, const float fValue);
 
         // Setting 3x3 matrices
-        void SetUniform(std::string sName, glm::mat3* mMatrices, int iCount = 1);
-        void SetUniform(std::string sName, const glm::mat3 mMatrix);
+        void SetUniform(const std::string& sName, glm::mat3* mMatrices, int iCount = 1);
+        void SetUniform(const std::string& sName, const glm::mat3 mMatrix);
 
         // Setting 4x4 matrices
-        void SetUniform(std::string sName, glm::mat4* mMatrices, int iCount = 1);
-        void SetUniform(std::string sName, const glm::mat4 mMatrix);
+        void SetUniform(const std::string& sName, glm::mat4* mMatrices, int iCount = 1);
+        void SetUniform(const std::string& sName, const glm::mat4 mMatrix);
 
         // Setting integers
-        void SetUniform(std::string sName, int* iValues, int iCount = 1);
-        void SetUniform(std::string sName, const int iValue);
+        void SetUniform(const std::string& sName, int* iValues, int iCount = 1);
+        void SetUniform(const std::string& sName, const int iValue);
 
 
     private:
@@ -83,7 +83,7 @@ namespace Ciao
             else iShaderType = GL_TESS_EVALUATION_SHADER;
             Shader shader;
 
-            shader.LoadShader("..\\..\\Resources\\Shaders\\" + shaderFileNames[i], iShaderType);
+            shader.LoadShader(Asset_Dir_For_Client + "Shaders\\" + shaderFileNames[i], iShaderType);
             shShaders.push_back(shader);
         }
     }

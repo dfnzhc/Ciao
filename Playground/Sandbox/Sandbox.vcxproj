@@ -59,7 +59,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CIAO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Ciao\src;..\..\Ciao\Deps\spdlog\include;..\..\Ciao\Deps\glm\glm;..\..\Ciao\Deps\glad\include;..\..\Ciao\Deps\FreeImage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Ciao\src;..\..\Ciao\Deps\spdlog\include;..\..\Ciao\Deps\glm\glm;..\..\Ciao\Deps\glad\include;..\..\Ciao\Deps\FreeImage\include;..\..\Ciao\Deps\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -74,7 +74,8 @@
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
     <PostBuildEvent>
-      <Command>xcopy /Q /E /Y /I "$(SolutionDir)\Ciao\Deps\FreeImage\bin" "..\..\bin\Debug\Sandbox"</Command>
+      <Command>xcopy /Q /E /Y /I "$(SolutionDir)\Ciao\Deps\FreeImage\bin" "..\..\bin\Debug\Sandbox"
+xcopy /Q /E /Y /I "$(SolutionDir)\Ciao\Deps\assimp\bin\Debug" "..\..\bin\Debug\Sandbox"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -82,7 +83,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CIAO_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Ciao\src;..\..\Ciao\Deps\spdlog\include;..\..\Ciao\Deps\glm\glm;..\..\Ciao\Deps\glad\include;..\..\Ciao\Deps\FreeImage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Ciao\src;..\..\Ciao\Deps\spdlog\include;..\..\Ciao\Deps\glm\glm;..\..\Ciao\Deps\glad\include;..\..\Ciao\Deps\FreeImage\include;..\..\Ciao\Deps\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -100,6 +101,10 @@
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
+    <PostBuildEvent>
+      <Command>xcopy /Q /E /Y /I "$(SolutionDir)\Ciao\Deps\FreeImage\bin" "..\..\bin\Release\Sandbox"
+xcopy /Q /E /Y /I "$(SolutionDir)\Ciao\Deps\assimp\bin\Release" "..\..\bin\Release\Sandbox"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />

@@ -13,6 +13,11 @@ namespace Ciao
 
     void RenderManager::Init()
     {
+        CIAO_CORE_INFO("OpenGL Info:\n  Vendor:\t{}\n  Device:\t{}\n  Version:\t{}",
+            glGetString(GL_VENDOR),
+            glGetString(GL_RENDERER),
+            glGetString(GL_VERSION));
+        
         // Initialize OpenGL
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL); 

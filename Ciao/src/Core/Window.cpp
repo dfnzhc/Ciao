@@ -3,6 +3,7 @@
 #include "Application.h"
 
 #include "Mouse.h"
+#include "Scence.h"
 #include "Renderer/Camera.h"
 #include "Renderer/RenderManager.h"
 
@@ -17,7 +18,7 @@ namespace Ciao
 
     Window::Window() : m_Window(nullptr), m_Width(0), m_Height(0)
     {
-        
+        m_ImguiWindow = CreateRef<ImguiWindow>();
     }
 
     Window::~Window()
@@ -66,7 +67,8 @@ namespace Ciao
         }
         
         gladLoadGLLoader(SDL_GL_GetProcAddress);
-        
+
+        m_ImguiWindow->Create(props.ImguiProps);
 
         return true;
     }
@@ -85,11 +87,11 @@ namespace Ciao
             switch (e.type) {
             case SDL_QUIT:
                 // 窗口关闭
-                Application::GetAppInst().Shutdown();
+                Application::GetInst().Shutdown();
                 break;
             case SDL_KEYDOWN:
                 if (e.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
-                    Application::GetAppInst().Shutdown();
+                    Application::GetInst().Shutdown();
                 }
                 break;
             case SDL_MOUSEWHEEL:
@@ -102,20 +104,25 @@ namespace Ciao
             }
         }
 
-        Mouse::Update();
+        if (!m_ImguiWindow->CaptureMouse()) {
+            Mouse::Update();
+        }
     }
 
     void Window::BeginRender()
     {
-        auto rm = Application::GetAppInst().GetRenderManager();
+        auto rm = Application::GetInst().GetRenderManager();
         rm->Clear();
     }
 
     void Window::EndRender()
     {
-        auto rm = Application::GetAppInst().GetRenderManager();
+        auto rm = Application::GetInst().GetRenderManager();
         rm->Flush();
 
+        m_ImguiWindow->BeginRender();
+        Application::GetInst().GetScence()->ImguiRender();
+        m_ImguiWindow->EndRender();
         
         SDL_GL_SwapWindow(m_Window);
     }

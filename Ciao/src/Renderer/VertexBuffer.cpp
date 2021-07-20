@@ -1,5 +1,5 @@
 ﻿#include "pch.h"
-#include "GLBuffer.h"
+#include "VertexBuffer.h"
 
 namespace Ciao
 {

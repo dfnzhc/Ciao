@@ -11,7 +11,7 @@ int main()
     Ciao::Log::Init();
     
     Ciao::Scence* scence = Ciao::CreateScence();
-    Ciao::Application::GetAppInst().Execute(scence);
+    Ciao::Application::GetInst().Execute(scence);
     
     delete scence;
     return 0;
