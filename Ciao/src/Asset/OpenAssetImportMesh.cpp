@@ -156,19 +156,75 @@ namespace Ciao
         // diffuse: texture_diffuseN
         // specular: texture_specularN
         // normal: texture_normalN
-
+            /** The texture is combined with the result of the diffuse
+     *  lighting equation.
+     */
+        
         // 1. diffuse maps
         auto diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
         // 2. specular maps
         auto specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-        // 3. normal maps
-        auto normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
-        textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-        // 4. height maps
-        auto heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+        // 3. ambient maps
+        auto ambientMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_ambient");
+        textures.insert(textures.end(), ambientMaps.begin(), ambientMaps.end());
+        // 4. emissive maps
+        auto emissiveMaps = loadMaterialTextures(material, aiTextureType_EMISSIVE, "texture_emissive");
+        textures.insert(textures.end(), emissiveMaps.begin(), emissiveMaps.end());
+        // 5 height maps
+        auto heightMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_height");
         textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+        // 6 normal maps
+        auto normalMaps = loadMaterialTextures(material, aiTextureType_NORMALS, "texture_normal");
+        textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+        // 7 shininess maps
+        auto shininessMaps = loadMaterialTextures(material, aiTextureType_SHININESS, "texture_shininess");
+        textures.insert(textures.end(), shininessMaps.begin(), shininessMaps.end());
+        // 8 opacity maps
+        auto opacityMaps = loadMaterialTextures(material, aiTextureType_OPACITY, "texture_opacity");
+        textures.insert(textures.end(), opacityMaps.begin(), opacityMaps.end());
+        // 9 displacement maps
+        auto displacementMaps = loadMaterialTextures(material, aiTextureType_DISPLACEMENT, "texture_displacement");
+        textures.insert(textures.end(), displacementMaps.begin(), displacementMaps.end());
+        // 10 lightMap maps
+        auto lightMapMaps = loadMaterialTextures(material, aiTextureType_LIGHTMAP, "texture_lightMap");
+        textures.insert(textures.end(), lightMapMaps.begin(), lightMapMaps.end());
+        // 11 reflection maps
+        auto reflectionMaps = loadMaterialTextures(material, aiTextureType_REFLECTION, "texture_reflection");
+        textures.insert(textures.end(), reflectionMaps.begin(), reflectionMaps.end());
+        // 12 baseColor maps
+        auto baseColorMaps = loadMaterialTextures(material, aiTextureType_BASE_COLOR, "texture_baseColor");
+        textures.insert(textures.end(), baseColorMaps.begin(), baseColorMaps.end());
+        // 13 normalCamera maps
+        auto normalCameraMaps = loadMaterialTextures(material, aiTextureType_NORMAL_CAMERA, "texture_normalCamera");
+        textures.insert(textures.end(), normalCameraMaps.begin(), normalCameraMaps.end());
+        // 14 emissionColor maps
+        auto emissionColorMaps = loadMaterialTextures(material, aiTextureType_EMISSION_COLOR, "texture_emissionColor");
+        textures.insert(textures.end(), emissionColorMaps.begin(), emissionColorMaps.end());
+        // 15 metalness maps
+        auto metalnessMaps = loadMaterialTextures(material, aiTextureType_METALNESS, "texture_metalness");
+        textures.insert(textures.end(), metalnessMaps.begin(), metalnessMaps.end());
+        // 16 diffuseRoughness maps
+        auto diffuseRoughnessMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE_ROUGHNESS, "texture_diffuseRoughness");
+        textures.insert(textures.end(), diffuseRoughnessMaps.begin(), diffuseRoughnessMaps.end());
+        // 17 AO maps
+        auto AOMaps = loadMaterialTextures(material, aiTextureType_AMBIENT_OCCLUSION, "texture_AO");
+        textures.insert(textures.end(), AOMaps.begin(), AOMaps.end());
+        // 17 unknown maps
+        auto unknownMaps = loadMaterialTextures(material, aiTextureType_UNKNOWN, "texture_unknown");
+        textures.insert(textures.end(), unknownMaps.begin(), unknownMaps.end());
+        // aiTextureType_SHININESS = 7,
+        // aiTextureType_OPACITY = 8,
+        // aiTextureType_DISPLACEMENT = 9,
+        // aiTextureType_LIGHTMAP = 10,
+        // aiTextureType_REFLECTION = 11,
+        // aiTextureType_BASE_COLOR = 12,
+        // aiTextureType_NORMAL_CAMERA = 13,
+        // aiTextureType_EMISSION_COLOR = 14,
+        // aiTextureType_METALNESS = 15,
+        // aiTextureType_DIFFUSE_ROUGHNESS = 16,
+        // aiTextureType_AMBIENT_OCCLUSION = 17,
         
         m_Textures = std::move(textures);
         // return a mesh object created from the extracted mesh data
@@ -192,7 +248,7 @@ namespace Ciao
                 if (m_LoadedTexs.count(str.C_Str()) > 0) {
                     continue;
                 }
-
+                
                 std::string FullPath = m_Directory + "\\" + str.data;
                 auto tex = new Texture();
 
@@ -207,10 +263,12 @@ namespace Ciao
                     data[2] = (BYTE)(color[0] * 255);
                     tex->CreateFromData(data, 1, 1, 24, GL_BGR, false);
                 }
-                std::string texName = typeName.append(std::to_string(j++));
+                std::string texName = typeName + std::to_string(j++);
+                
                 tex->SetTextureName(texName);
                 
                 textures.push_back(tex);
+                m_LoadedTexs.insert(str.C_Str());
             }
         }
 
