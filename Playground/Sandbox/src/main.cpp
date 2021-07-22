@@ -43,6 +43,7 @@ public:
         renderCommandVec.push_back(oc);
 
         m_Mesh = CreateRef<OpenAssetImportMesh>();
+        m_Mesh->SetTexNames({"Diffuse", "Emissive", "Normal", "LightMap", "Unknown"});
         m_Mesh->Load(Asset_Dir_For_Client + "Models\\DamagedHelmet\\glTF\\DamagedHelmet.gltf");
         m_Mesh->SetShader(m_refShader);
         renderCommandVec.push_back(std::make_shared<ObjRenderCommand>(m_Mesh, m_refShader));

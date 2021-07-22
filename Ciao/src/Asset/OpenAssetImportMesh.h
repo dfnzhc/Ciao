@@ -18,6 +18,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <map>
 #include <set>
 #include <vector>
 #include <assimp/Importer.hpp>         // C++ importer interface
@@ -46,7 +47,8 @@ namespace Ciao
         void Release() override;
 
         void SetShader(Ref<ShaderProgram> shader);
-        
+
+        void SetTexNames(std::vector<std::string>&& names);
     
     private:
         void processNode(aiNode *node, const aiScene *scene);
@@ -59,6 +61,9 @@ namespace Ciao
         std::string m_Directory;
         std::set<std::string> m_LoadedTexs;
         GLuint m_vao;
+
+        std::vector<std::string> m_TexNames;
+        static const std::map<std::string, aiTextureType> Tex_Type;
     };
 
 }
