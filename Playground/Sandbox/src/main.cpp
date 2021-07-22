@@ -23,6 +23,10 @@ public:
     void Init() override
     {
         CIAO_INFO("Sandbox::Init()");
+
+        uint32_t w, h;
+        w = h = 0;
+        Ciao::Application::GetInst().GetWindowSize(w, h);
         
         std::vector<Shader> Shaders;
         std::vector<std::string> ShaderFileNames;
@@ -30,12 +34,14 @@ public:
         ShaderFileNames.push_back("SkyboxShader.frag");
         ShaderFileNames.push_back("MainShader.vert");
         ShaderFileNames.push_back("MainShader.frag");
+        ShaderFileNames.push_back("AOShader.vert");
+        ShaderFileNames.push_back("AOShader.frag");
 
         ReadShaderFile(ShaderFileNames, Shaders);
         
         // 创建 OpenGL Shader 程序
 
-        /// 天空盒的 Shader
+        /// 0 --- 天空盒的 Shader
         auto skyShader = std::make_shared<ShaderProgram>();
         skyShader->CreateProgram();
         skyShader->AddShaderToProgram(&Shaders[0]);
@@ -43,7 +49,7 @@ public:
         skyShader->LinkProgram();
         m_Shaders.push_back(skyShader);
 
-        /// 主要的 Shader
+        /// 1 --- 主要的 Shader
         auto mainShader = std::make_shared<ShaderProgram>();
         mainShader->CreateProgram();
         mainShader->AddShaderToProgram(&Shaders[2]);
@@ -51,16 +57,31 @@ public:
         mainShader->LinkProgram();
         m_Shaders.push_back(mainShader);
 
+        /// 2 --- 主要的 Shader 
+        auto aoShader = std::make_shared<ShaderProgram>();
+        aoShader->CreateProgram();
+        aoShader->AddShaderToProgram(&Shaders[4]);
+        aoShader->AddShaderToProgram(&Shaders[5]);
+        aoShader->LinkProgram();
+        m_Shaders.push_back(aoShader);
+        
+
         m_Skybox = CreateRef<Skybox>();
         m_Skybox->Init(Asset_dir + "Textures\\skybox");
-        renderCommandVec.push_back(std::make_shared<ObjRenderCommand>(m_Skybox, skyShader));
+        // 0 ++++  
+        renderCommandVec.push_back(std::make_shared<DrawObject>(m_Skybox, skyShader));
 
         m_Mesh = CreateRef<OpenAssetImportMesh>();
         m_Mesh->SetTexNames({"Diffuse", "Emissive", "Normal", "LightMap", "Unknown"});
         m_Mesh->Load(Asset_dir + "Models\\DamagedHelmet\\glTF\\DamagedHelmet.gltf");
         m_Mesh->SetShader(mainShader);
-        renderCommandVec.push_back(std::make_shared<ObjRenderCommand>(m_Mesh, mainShader));
+        // 1 ++++ 
+        renderCommandVec.push_back(std::make_shared<DrawObject>(m_Mesh, mainShader));
+        // 2 ++++ 
+        renderCommandVec.push_back(std::make_shared<DrawObject>(m_Mesh, aoShader));
 
+
+        m_FBO = CreateRef<Framebuffer>(w, h);
     }
 
 private:
@@ -69,6 +90,7 @@ private:
     vector<shared_ptr<RenderCommand>> renderCommandVec;
     shared_ptr<OpenAssetImportMesh> m_Mesh;
     shared_ptr<Skybox> m_Skybox;
+    shared_ptr<Framebuffer> m_FBO;
 
 public:
     void Update() override
@@ -83,20 +105,31 @@ public:
 
         glutil::MatrixStack modelViewMatrixStack;
         modelViewMatrixStack.SetMatrix(Camera->GetViewMatrix());
-        
+
         m_Shaders[1]->UseProgram();
-        m_Shaders[1]->SetUniform("Texture1", 0);
         m_Shaders[1]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
-        
+
+        Ciao::Application::GetInst().GetRenderManager()->Submit(std::make_shared<PushFramebuffer>(m_FBO));
         modelViewMatrixStack.Push();
+            modelViewMatrixStack.Translate(glm::vec3(-2.0f, 0.0f, 0.0f));
             modelViewMatrixStack.RotateX(glm::radians(90.0f));
             modelViewMatrixStack.RotateZ(glm::radians(-120.0f));
             m_Shaders[1]->SetUniform("modelViewMatrix", modelViewMatrixStack.Top());
             Ciao::Application::GetInst().GetRenderManager()->Submit(renderCommandVec[1]);
         modelViewMatrixStack.Pop();
-
-
-
+        Ciao::Application::GetInst().GetRenderManager()->Submit(std::make_shared<PopFramebuffer>());
+        
+        // modelViewMatrixStack.Push();
+        //     modelViewMatrixStack.Translate(glm::vec3(2.0f, 0.0f, 0.0f));
+        //     modelViewMatrixStack.RotateX(glm::radians(90.0f));
+        //     modelViewMatrixStack.RotateZ(glm::radians(-120.0f));
+        //     m_Shaders[2]->SetUniform("modelViewMatrix", modelViewMatrixStack.Top());
+        //     
+        //     Ciao::Application::GetInst().GetRenderManager()->Submit(renderCommandVec[2]);
+        //     
+        // modelViewMatrixStack.Pop();
+        
+        
         // 最后渲染天空盒
         m_Shaders[0]->UseProgram();
         m_Shaders[0]->SetUniform("skybox", 0);
@@ -119,6 +152,11 @@ public:
     {
         if (ImGui::Begin("Hello World")) {
             ImGui::Text("FPS %.1f FPS (%.3f ms/f)", ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
+            
+            ImVec2 size = { 480, 320 };
+            ImVec2 uv0 = { 0, 1 };
+            ImVec2 uv1 = { 1, 0 };
+            ImGui::Image((void*)(intptr_t) m_FBO->GetTextureId(), size, uv0, uv1);
         }
         ImGui::End();
     }

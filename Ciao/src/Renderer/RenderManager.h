@@ -9,6 +9,8 @@ namespace Ciao
 {
     class RenderManager
     {
+        friend class PushFramebuffer;
+        friend class PopFramebuffer;
     public:
         RenderManager();
         ~RenderManager();
@@ -20,8 +22,14 @@ namespace Ciao
         void SetClearColour(const glm::vec4 color);
         void Submit(std::shared_ptr<RenderCommand> rc);
         void Flush();
+
+    private:
+        void PushFramebuffer(std::shared_ptr<Framebuffer> framebuffer);
+        void PopFramebuffer();
+
     private:
         std::queue<std::shared_ptr<RenderCommand>> m_renderCommands;
+        std::shared_ptr<Framebuffer> m_Framebuffer;
     };
 }
 

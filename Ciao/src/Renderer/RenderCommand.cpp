@@ -1,11 +1,15 @@
 ﻿#include "pch.h"
 
 #include "RenderCommand.h"
+
+#include "Application.h"
+#include "Framebuffer.h"
+#include "RenderManager.h"
 #include "Asset/Object.h"
 
 namespace Ciao
 {
-    void VAORenderCommand::Draw()
+    void DrawVao::Execute()
     {
         if (m_Shader) {
             glBindVertexArray(m_VAO);
@@ -25,7 +29,7 @@ namespace Ciao
         }
     }
 
-    void ObjRenderCommand::Draw()
+    void DrawObject::Execute()
     {
         if (m_Obj && m_Shader) {
             m_Shader->UseProgram();
@@ -34,5 +38,25 @@ namespace Ciao
         else {
             CIAO_CORE_ERROR("Invalid object or shader program setting!");
         }
+    }
+
+    void PushFramebuffer::Execute()
+    {
+        if (m_Framebuffer) {
+            Application::GetInst().GetRenderManager()->PushFramebuffer(m_Framebuffer);
+        }
+        else {
+            CIAO_CORE_ERROR("Invalid framebuffer Command!");
+        }
+    }
+
+    void PopFramebuffer::Execute()
+    {
+        Application::GetInst().GetRenderManager()->PopFramebuffer();
+    }
+
+    void FlushCommandQueue::Execute()
+    {
+        Application::GetInst().GetRenderManager()->Flush();
     }
 }

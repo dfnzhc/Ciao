@@ -11,16 +11,16 @@ namespace Ciao
     public:
         virtual ~RenderCommand() = default;
 
-        virtual void Draw() = 0;
+        virtual void Execute() = 0;
     };
 
-    class VAORenderCommand : public RenderCommand 
+    class DrawVao : public RenderCommand 
     {
     public:
-        VAORenderCommand(GLuint vao, GLuint type, GLuint count, std::shared_ptr<ShaderProgram> shader)
+        DrawVao(GLuint vao, GLuint type, GLuint count, std::shared_ptr<ShaderProgram> shader)
             : m_VAO(vao), m_primType(type), m_primSize(count), m_Shader(shader) {}
         
-        void Draw() override;
+        void Execute() override;
 
     private:
         GLuint m_VAO;
@@ -31,18 +31,51 @@ namespace Ciao
 
     
     class Object;
-    class ObjRenderCommand : public RenderCommand
+    class DrawObject : public RenderCommand
     {
     public:
-        ObjRenderCommand(std::shared_ptr<Object> obj, std::shared_ptr<ShaderProgram> shader)
+        DrawObject(std::shared_ptr<Object> obj, std::shared_ptr<ShaderProgram> shader)
             : m_Obj(obj), m_Shader(shader) {}
         
-        void Draw() override;
+        void Execute() override;
     
     private:
         std::shared_ptr<Object> m_Obj;
         std::shared_ptr<ShaderProgram> m_Shader;
     };
 
+    class Framebuffer;
+    class PushFramebuffer : public RenderCommand
+    {
+    public:
+        PushFramebuffer(std::shared_ptr<Framebuffer> framebuffer)
+            : m_Framebuffer(framebuffer) {}
+        
+        void Execute() override;
     
+    private:
+        std::shared_ptr<Framebuffer> m_Framebuffer;
+    };
+
+    class PopFramebuffer : public RenderCommand
+    {
+    public:
+        PopFramebuffer(){}
+        
+        void Execute() override;
+    
+    private:
+        
+    };
+
+    class FlushCommandQueue : public RenderCommand
+    {
+    public:
+        FlushCommandQueue(){}
+        
+        void Execute() override;
+    
+    private:
+        
+    };
 }
