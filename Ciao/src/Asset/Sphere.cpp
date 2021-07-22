@@ -9,6 +9,7 @@ namespace Ciao
 
     Sphere::~Sphere()
     {
+    	Release();
     }
 
     void Sphere::Init(std::string textureDirectory, int slicesIn, int stacksIn)
@@ -97,9 +98,15 @@ namespace Ciao
 
     void Sphere::Draw()
     {
+    	glBindVertexArray(m_VAO);
+    	m_Texture.Bind();
+    	glDrawElements(GL_TRIANGLES, m_NumTriangles*3, GL_UNSIGNED_INT, 0);
     }
 
     void Sphere::Release()
     {
+    	m_Texture.Release();
+    	glDeleteVertexArrays(1, &m_VAO);
+    	m_VBO.Release();
     }
 }

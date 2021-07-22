@@ -34,11 +34,7 @@ namespace Ciao
 
     OpenAssetImportMesh::~OpenAssetImportMesh()
     {
-        for (unsigned int i = 0; i < m_Meshes.size(); ++i) {
-            delete m_Meshes[i];
-
-            m_Meshes[i] = nullptr;
-        }
+        Release();
     }
 
     bool OpenAssetImportMesh::Load(const std::string& Filepath)
@@ -92,6 +88,17 @@ namespace Ciao
 
     void OpenAssetImportMesh::Release()
     {
+        for (unsigned int i = 0; i < m_Textures.size(); ++i) {
+            delete m_Textures[i];
+
+            m_Textures[i] = nullptr;
+        }
+        
+        for (unsigned int i = 0; i < m_Meshes.size(); ++i) {
+            delete m_Meshes[i];
+
+            m_Meshes[i] = nullptr;
+        }
     }
 
     void OpenAssetImportMesh::SetShader(Ref<ShaderProgram> shader)
@@ -102,7 +109,7 @@ namespace Ciao
     void OpenAssetImportMesh::SetTexNames(std::vector<std::string>&& names)
     {
         m_TexNames = std::move(names);
-        
+
         std::string prefix{"Tex_"};
         for (auto& str : m_TexNames) {
             str.insert(0, prefix.c_str());

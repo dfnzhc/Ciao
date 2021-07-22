@@ -23,6 +23,9 @@
 #include "Asset/Sphere.h"
 #include "Asset/OpenAssetImportMesh.h"
 #include "Asset/Mesh.h"
+#include "Asset/Plane.h"
+#include "Asset/CubeMap.h"
+#include "Asset/Skybox.h"
 
 #include "Util/MatrixStack.h"
 

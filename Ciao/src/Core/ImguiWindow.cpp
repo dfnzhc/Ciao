@@ -19,7 +19,7 @@ namespace Ciao {
         ImGuiIO& io = ImGui::GetIO();
         io.ConfigWindowsMoveFromTitleBarOnly = props.MoveFromTitleBarOnly;
         
-        std::string fontFile = Asset_Dir_For_Client + "Fonts\\HarmonyOS_Sans_SC_Bold.ttf";
+        std::string fontFile = GetAssetDir() + "Fonts\\HarmonyOS_Sans_SC_Bold.ttf";
         io.Fonts->AddFontFromFileTTF(fontFile.c_str(), 20.0f,
         NULL, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
         (void)io;

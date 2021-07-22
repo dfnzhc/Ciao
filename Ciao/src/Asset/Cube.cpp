@@ -9,6 +9,7 @@ namespace Ciao
 
     Cube::~Cube()
     {
+    	Release();
     }
 
     void Cube::Init(std::string textureDirectory)

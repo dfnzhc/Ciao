@@ -56,8 +56,7 @@ namespace Ciao
             dib = FreeImage_Load(fif, path.c_str());
 
         if(!dib) {
-            char message[1024];
-            sprintf_s(message, "Cannot load image\n%s\n", path.c_str());
+            CIAO_CORE_ERROR("Cannot load image\n{}\n", path.c_str());
             return false;
         }
 
@@ -70,9 +69,9 @@ namespace Ciao
 
         GLenum format;
         int bada = FreeImage_GetBPP(dib);
-        if(FreeImage_GetBPP(dib) == 32)format = GL_BGRA;
-        if(FreeImage_GetBPP(dib) == 24)format = GL_BGR;
-        if(FreeImage_GetBPP(dib) == 8)format = GL_LUMINANCE;
+        if(FreeImage_GetBPP(dib) == 32) format = GL_BGRA;
+        if(FreeImage_GetBPP(dib) == 24) format = GL_BGR;
+        if(FreeImage_GetBPP(dib) == 8)  format = GL_LUMINANCE;
         CreateFromData(pData, FreeImage_GetWidth(dib), FreeImage_GetHeight(dib), FreeImage_GetBPP(dib), format, generateMipMaps);
 	    
         FreeImage_Unload(dib);
