@@ -509,6 +509,7 @@
     <ClInclude Include="src\Asset\Cube.h" />
     <ClInclude Include="src\Asset\CubeMap.h" />
     <ClInclude Include="src\Asset\Mesh.h" />
+    <ClInclude Include="src\Asset\ModelEntity.h" />
     <ClInclude Include="src\Asset\Object.h" />
     <ClInclude Include="src\Asset\OpenAssetImportMesh.h" />
     <ClInclude Include="src\Asset\Plane.h" />
@@ -610,6 +611,7 @@
       <LibCompiled>true</LibCompiled>
     </ClCompile>
     <ClCompile Include="src\Asset\Mesh.cpp" />
+    <ClCompile Include="src\Asset\ModelEntity.cpp" />
     <ClCompile Include="src\Asset\OpenAssetImportMesh.cpp" />
     <ClCompile Include="src\Asset\Plane.cpp" />
     <ClCompile Include="src\Asset\Skybox.cpp" />

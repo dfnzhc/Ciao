@@ -6,7 +6,7 @@
 
 namespace Ciao
 {
-    float Camera::m_Distance = 4.0f;
+    float Camera::m_Distance = 10.0f;
     
     Camera::Camera(glm::vec3 position, glm::vec3 viewPoint, glm::vec3 up)
         : m_Position(position), m_ViewPoint(viewPoint), m_UpDir(up)

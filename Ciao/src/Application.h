@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <memory>
 
+#define CIAO_SUB_RC(x) Ciao::Application::GetInst().GetRenderManager()->Submit((x))
+
 namespace Ciao
 {
     class Scence;

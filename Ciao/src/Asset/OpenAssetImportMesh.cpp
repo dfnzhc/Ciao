@@ -75,12 +75,6 @@ namespace Ciao
 
     void OpenAssetImportMesh::Draw()
     {
-        for (int i = 0; i < m_Textures.size(); ++i) {
-            //glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
-            m_Textures[i]->Bind(i);
-            m_Shader->SetUniform(m_Textures[i]->GetTextureName(), i);
-        }
-
         for (unsigned int i = 0; i < m_Meshes.size(); ++i) {
             m_Meshes[i]->Draw();
         }
@@ -101,11 +95,6 @@ namespace Ciao
         }
     }
 
-    void OpenAssetImportMesh::SetShader(Ref<ShaderProgram> shader)
-    {
-        m_Shader = shader;
-    }
-
     void OpenAssetImportMesh::SetTexNames(std::vector<std::string>&& names)
     {
         m_TexNames = std::move(names);
@@ -113,6 +102,15 @@ namespace Ciao
         std::string prefix{"Tex_"};
         for (auto& str : m_TexNames) {
             str.insert(0, prefix.c_str());
+        }
+    }
+
+    void OpenAssetImportMesh::SetShaderTexUniform(std::shared_ptr<ShaderProgram> shader)
+    {
+        for (int i = 0; i < m_Textures.size(); ++i) {
+            //glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
+            m_Textures[i]->Bind(i);
+            shader->SetUniform(m_Textures[i]->GetTextureName(), i);
         }
     }
 

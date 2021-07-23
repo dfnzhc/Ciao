@@ -6,6 +6,7 @@
 #include "Framebuffer.h"
 #include "RenderManager.h"
 #include "Asset/Object.h"
+#include "Asset/ModelEntity.h"
 
 namespace Ciao
 {
@@ -37,6 +38,17 @@ namespace Ciao
         }
         else {
             CIAO_CORE_ERROR("Invalid object or shader program setting!");
+        }
+    }
+
+    void DrawModelEntity::Execute()
+    {
+        if (m_Model) {
+            m_Model->SetDrawShaderIdx(m_DrawIdx);
+            m_Model->Draw();
+        }
+        else {
+            CIAO_CORE_ERROR("Invalid model setting!");
         }
     }
 

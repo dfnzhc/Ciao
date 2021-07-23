@@ -44,6 +44,20 @@ namespace Ciao
         std::shared_ptr<ShaderProgram> m_Shader;
     };
 
+    class ModelEntity;
+    class DrawModelEntity : public RenderCommand
+    {
+    public:
+        DrawModelEntity(std::shared_ptr<ModelEntity> model, unsigned int shaderIdx)
+            : m_Model(model), m_DrawIdx(shaderIdx) {}
+        
+        void Execute() override;
+    
+    private:
+        std::shared_ptr<ModelEntity> m_Model;
+        unsigned int m_DrawIdx;
+    };
+
     class Framebuffer;
     class PushFramebuffer : public RenderCommand
     {

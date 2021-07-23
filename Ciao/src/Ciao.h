@@ -26,6 +26,7 @@
 #include "Asset/Plane.h"
 #include "Asset/CubeMap.h"
 #include "Asset/Skybox.h"
+#include "Asset/ModelEntity.h"
 
 #include "Util/MatrixStack.h"
 

@@ -46,9 +46,8 @@ namespace Ciao
         void Draw();
         void Release() override;
 
-        void SetShader(Ref<ShaderProgram> shader);
-
         void SetTexNames(std::vector<std::string>&& names);
+        void SetShaderTexUniform(std::shared_ptr<ShaderProgram> shader);
     
     private:
         void processNode(aiNode *node, const aiScene *scene);
@@ -57,7 +56,6 @@ namespace Ciao
     
         std::vector<Mesh*> m_Meshes;
         std::vector<Texture*> m_Textures;
-        Ref<ShaderProgram> m_Shader;
         std::string m_Directory;
         std::set<std::string> m_LoadedTexs;
         GLuint m_vao;
