@@ -530,6 +530,7 @@
     <ClInclude Include="src\Renderer\RenderManager.h" />
     <ClInclude Include="src\Renderer\Shader.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
+    <ClInclude Include="src\Util\MathUtils.h" />
     <ClInclude Include="src\Util\MatrixStack.h" />
     <ClInclude Include="src\Util\imgui_impl_opengl3.h" />
     <ClInclude Include="src\Util\imgui_impl_sdl.h" />

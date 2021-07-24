@@ -32,6 +32,7 @@ public:
 
         m_Skybox = CreateRef<Skybox>();
         m_Skybox->Init(Asset_dir + "Textures\\skybox");
+        m_Skybox->SetTextureUnit(9);
         // 0 ++++  
         renderCommandVec.push_back(std::make_shared<DrawObject>(m_Skybox, m_Shaders[0]));
 
@@ -81,13 +82,19 @@ public:
 
         glutil::MatrixStack modelViewMatrixStack;
         modelViewMatrixStack.SetMatrix(Camera->GetViewMatrix());
+        
 
         m_Shaders[1]->UseProgram();
         m_Shaders[1]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
+        m_Shaders[1]->SetUniform("camPos", Camera->GetPosition());
+        m_Shaders[1]->SetUniform("Tex_EnvMap", 9);
+        
         modelViewMatrixStack.Push();
             modelViewMatrixStack.RotateX(glm::radians(90.0f));
             modelViewMatrixStack.RotateZ(glm::radians(-120.0f));
             m_Shaders[1]->SetUniform("modelViewMatrix", modelViewMatrixStack.Top());
+            m_Shaders[1]->SetUniform("normalMatrix", ComputeNormalMatrix(modelViewMatrixStack.Top()));
+            m_Shaders[1]->SetUniform("modelMatrix", inverse(Camera->GetViewMatrix()) * modelViewMatrixStack.Top());
             CIAO_SUB_RC(renderCommandVec[1]);
         modelViewMatrixStack.Pop();
 
@@ -101,23 +108,20 @@ public:
         modelViewMatrixStack.Pop();
         
 
-        CIAO_SUB_RC(std::make_shared<PushFramebuffer>(m_FBO));
-        m_Shaders[2]->UseProgram();
-        m_Shaders[2]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
-        modelViewMatrixStack.Push();
-            modelViewMatrixStack.RotateX(glm::radians(90.0f));
-            modelViewMatrixStack.RotateZ(glm::radians(-120.0f));
-            m_Shaders[2]->SetUniform("modelViewMatrix", modelViewMatrixStack.Top());
-            CIAO_SUB_RC(renderCommandVec[2]);
-        modelViewMatrixStack.Pop();
-        CIAO_SUB_RC(std::make_shared<PopFramebuffer>());
-
-
-        
+        // CIAO_SUB_RC(std::make_shared<PushFramebuffer>(m_FBO));
+        // m_Shaders[2]->UseProgram();
+        // m_Shaders[2]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
+        // modelViewMatrixStack.Push();
+        //     modelViewMatrixStack.RotateX(glm::radians(90.0f));
+        //     modelViewMatrixStack.RotateZ(glm::radians(-120.0f));
+        //     m_Shaders[2]->SetUniform("modelViewMatrix", modelViewMatrixStack.Top());
+        //     CIAO_SUB_RC(renderCommandVec[2]);
+        // modelViewMatrixStack.Pop();
+        // CIAO_SUB_RC(std::make_shared<PopFramebuffer>());
         
         // 最后渲染天空盒
         m_Shaders[0]->UseProgram();
-        m_Shaders[0]->SetUniform("skybox", 0);
+        m_Shaders[0]->SetUniform("skybox", 9);
         m_Shaders[0]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
         
         modelViewMatrixStack.Push();
@@ -141,8 +145,8 @@ public:
         std::vector<std::string> ShaderFileNames;
         ShaderFileNames.push_back("SkyboxShader.vert");
         ShaderFileNames.push_back("SkyboxShader.frag");
-        ShaderFileNames.push_back("MainShader.vert");
-        ShaderFileNames.push_back("MainShader.frag");
+        ShaderFileNames.push_back("PBRShader.vert");
+        ShaderFileNames.push_back("PBRShader.frag");
         ShaderFileNames.push_back("AOShader.vert");
         ShaderFileNames.push_back("AOShader.frag");
         ShaderFileNames.push_back("FloorShader.vert");
@@ -189,10 +193,10 @@ public:
         if (ImGui::Begin("Hello World")) {
             ImGui::Text("FPS %.1f FPS (%.3f ms/f)", ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
             
-            ImVec2 size = { 480, 320 };
-            ImVec2 uv0 = { 0, 1 };
-            ImVec2 uv1 = { 1, 0 };
-            ImGui::Image((void*)(intptr_t) m_FBO->GetTextureId(), size, uv0, uv1);
+            // ImVec2 size = { 480, 320 };
+            // ImVec2 uv0 = { 0, 1 };
+            // ImVec2 uv1 = { 1, 0 };
+            // ImGui::Image((void*)(intptr_t) m_FBO->GetTextureId(), size, uv0, uv1);
         }
         ImGui::End();
     }

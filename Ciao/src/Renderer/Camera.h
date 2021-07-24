@@ -26,6 +26,8 @@ namespace Ciao
 
         static void UpdateDistance(float delta) { m_Distance += delta; }
 
+        glm::vec3 GetPosition() { return m_Position; }
+
     private:
         void UpdateCameraVectors();
 

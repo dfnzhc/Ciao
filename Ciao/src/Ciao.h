@@ -29,5 +29,6 @@
 #include "Asset/ModelEntity.h"
 
 #include "Util/MatrixStack.h"
+#include "Util/MathUtils.h"
 
 

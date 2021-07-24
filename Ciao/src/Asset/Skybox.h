@@ -19,6 +19,8 @@ namespace Ciao
         void Release() override;
 
         void SetTextureUnit(int texUnit = 0);
+        int GetTextureUnit() const { return m_TexUnit; }
+        
 
     private:
         static const std::vector<std::string> Faces;
