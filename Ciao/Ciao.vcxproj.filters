@@ -1302,6 +1302,9 @@
     <ClInclude Include="src\Asset\Sphere.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
+    <ClInclude Include="src\Asset\StbTexture.h">
+      <Filter>src\Asset</Filter>
+    </ClInclude>
     <ClInclude Include="src\Asset\Texture.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
@@ -1395,6 +1398,9 @@
       <Filter>src\Asset</Filter>
     </ClCompile>
     <ClCompile Include="src\Asset\Sphere.cpp">
+      <Filter>src\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Asset\StbTexture.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
     <ClCompile Include="src\Asset\Texture.cpp">

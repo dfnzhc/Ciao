@@ -517,6 +517,7 @@
     <ClInclude Include="src\Asset\Plane.h" />
     <ClInclude Include="src\Asset\Skybox.h" />
     <ClInclude Include="src\Asset\Sphere.h" />
+    <ClInclude Include="src\Asset\StbTexture.h" />
     <ClInclude Include="src\Asset\Texture.h" />
     <ClInclude Include="src\Ciao.h" />
     <ClInclude Include="src\Core\Common.h" />
@@ -550,6 +551,7 @@
     <ClCompile Include="src\Asset\Plane.cpp" />
     <ClCompile Include="src\Asset\Skybox.cpp" />
     <ClCompile Include="src\Asset\Sphere.cpp" />
+    <ClCompile Include="src\Asset\StbTexture.cpp" />
     <ClCompile Include="src\Asset\Texture.cpp" />
     <ClCompile Include="src\Core\ImguiWindow.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />

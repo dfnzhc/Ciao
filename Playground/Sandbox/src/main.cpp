@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Ciao.h>
 
-#include "../../../Ciao/Deps/imgui/imgui.h"
+#include "imgui.h"
 #include "gtc/matrix_transform.hpp"
 
 using namespace Ciao;
@@ -69,10 +69,13 @@ private:
     shared_ptr<Skybox> m_Skybox;
     shared_ptr<Framebuffer> m_FBO;
 
+    float m_Rot = 0.0f;
+
 public:
     void Update() override
     {
         // CIAO_INFO("Mouse Pos: {}, {}, Scroll: {}", Mouse::X(), Mouse::Y(), Mouse::GetScroll());
+        m_Rot += 0.5f;
     }
 
     void Render() override
@@ -90,6 +93,7 @@ public:
         m_Shaders[1]->SetUniform("Tex_EnvMap", 9);
         
         modelViewMatrixStack.Push();
+            // modelViewMatrixStack.RotateY(glm::radians(m_Rot));
             modelViewMatrixStack.RotateX(glm::radians(90.0f));
             modelViewMatrixStack.RotateZ(glm::radians(-120.0f));
             m_Shaders[1]->SetUniform("modelViewMatrix", modelViewMatrixStack.Top());

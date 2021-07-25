@@ -27,3 +27,5 @@ TODO：更换贴图载入方式，以支持HDR。
 
 ### Gallery
 
+![基础PBR光照](https://i.loli.net/2021/07/25/SVyNYe3FzGvrMhL.png)
+

@@ -11,11 +11,6 @@ project "Sandbox"
 	{
 		"src/**.h",
 		"src/**.cpp",
-
-        "Deps/glm/glm/**.hpp",
-		"Deps/glm/glm/**.inl",
-		"%{IncludeDir.Stb}/stb_image.h",
-		"%{IncludeDir.Stb}/stb_image_write.h",
 	}
 
 	includedirs
@@ -26,7 +21,7 @@ project "Sandbox"
         "%{IncludeDir.Glad}",
         "%{IncludeDir.FreeImage}",
         "%{IncludeDir.Assimp}",
-        "%{IncludeDir.Stb}",
+        "%{IncludeDir.ImGui}",
 	}
 
 	links

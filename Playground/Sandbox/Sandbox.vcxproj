@@ -59,7 +59,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CIAO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Ciao\src;..\..\Ciao\Deps\spdlog\include;..\..\Ciao\Deps\glm\glm;..\..\Ciao\Deps\glad\include;..\..\Ciao\Deps\FreeImage\include;..\..\Ciao\Deps\assimp\include;..\..\Ciao\Deps\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Ciao\src;..\..\Ciao\Deps\spdlog\include;..\..\Ciao\Deps\glm\glm;..\..\Ciao\Deps\glad\include;..\..\Ciao\Deps\FreeImage\include;..\..\Ciao\Deps\assimp\include;..\..\Ciao\Deps\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -83,7 +83,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Ciao\Deps\assimp\bin\Debug" "..\..\bin\Debug\S
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CIAO_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Ciao\src;..\..\Ciao\Deps\spdlog\include;..\..\Ciao\Deps\glm\glm;..\..\Ciao\Deps\glad\include;..\..\Ciao\Deps\FreeImage\include;..\..\Ciao\Deps\assimp\include;..\..\Ciao\Deps\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Ciao\src;..\..\Ciao\Deps\spdlog\include;..\..\Ciao\Deps\glm\glm;..\..\Ciao\Deps\glad\include;..\..\Ciao\Deps\FreeImage\include;..\..\Ciao\Deps\assimp\include;..\..\Ciao\Deps\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -106,10 +106,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Ciao\Deps\assimp\bin\Debug" "..\..\bin\Debug\S
 xcopy /Q /E /Y /I "$(SolutionDir)\Ciao\Deps\assimp\bin\Release" "..\..\bin\Release\Sandbox"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Ciao\Deps\stb\stb_image.h" />
-    <ClInclude Include="..\..\Ciao\Deps\stb\stb_image_write.h" />
-  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
