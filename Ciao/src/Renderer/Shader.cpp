@@ -13,8 +13,7 @@ namespace Ciao
         std::vector<std::string> sLines;
 
         if(!GetLinesFromFile(sFile, false, &sLines)) {
-            char message[1024];
-            sprintf_s(message, "Cannot load shader\n%s\n", sFile.c_str());
+            CIAO_CORE_ERROR("Cannot load shader\n{}\n", sFile.c_str());
             return false;
         }
 
@@ -45,11 +44,33 @@ namespace Ciao
                 sprintf_s(sShaderType, "fragment shader");
             else if (iType == GL_GEOMETRY_SHADER)
                 sprintf_s(sShaderType, "geometry shader");
+            else if (iType == GL_TESS_CONTROL_SHADER)
+                sprintf_s(sShaderType, "tess control shader");
+            else if (iType == GL_TESS_EVALUATION_SHADER)
+                sprintf_s(sShaderType, "tess evaluation shader");
+            else if (iType == GL_COMPUTE_SHADER)
+                sprintf_s(sShaderType, "compute shader");
             else
                 sprintf_s(sShaderType, "unknown shader type");
 
-            sprintf_s(sFinalMessage, "Error in %s!\n%s\nShader file not compiled.  The compiler returned:\n\n%s", sShaderType, sFile.c_str(), sInfoLog);
+            std::string lineNum{sInfoLog};
+            int l, r;
+            l = r = 0;
+            for (unsigned int i = 0; i < lineNum.size(); ++i) {
+                if (lineNum[i] == '(') l = i;
+                else if (lineNum[i] == ')') {
+                    r = i;
+                    break;
+                }
+            }
 
+            int line = 0;
+            if (l != r && l < r) {
+                lineNum = lineNum.substr(l + 1, r - l - 1);
+                line = atoi(lineNum.c_str()) - 3;
+            }
+
+            CIAO_CORE_ERROR("Error happens in {}!\n{}\nShader file can not be compiled. The compiler returned: \n\n[{}]{}", sShaderType, sFile.c_str(), line, sInfoLog);
             return false;
         }
         m_ShaderType = iType;
@@ -75,7 +96,7 @@ namespace Ciao
         std::string sDirectory;
         int slashIndex = -1;
 
-        for (int i = (int)sFile.size()-1; i == 0; i--)
+        for (int i = (int)sFile.size()-1; i >= 0; i--)
         {
             if(sFile[i] == '\\' || sFile[i] == '/')
             {
@@ -163,10 +184,9 @@ namespace Ciao
 
         if (LinkStatus == GL_FALSE) {
             char sInfoLog[1024];
-            char sFinalMessage[1536];
             int iLogLength;
             glGetProgramInfoLog(m_ProgramID, 1024, &iLogLength, sInfoLog);
-            sprintf_s(sFinalMessage, "Error! Shader program wasn't linked! The linker returned:\n\n%s", sInfoLog);
+            CIAO_CORE_ERROR("Error! Shader program wasn't linked! The linker returned:\n\n{}", sInfoLog);
             return false;
         }
 

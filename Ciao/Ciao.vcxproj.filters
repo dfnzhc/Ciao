@@ -22,6 +22,9 @@
     <Filter Include="Deps\glm\glm\gtx">
       <UniqueIdentifier>{D165D049-BD5E-EF9B-E690-D420D2E8CEA7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Deps\stb">
+      <UniqueIdentifier>{A95468A9-9521-C3B4-BE3A-B15CAA66F842}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
@@ -1263,19 +1266,37 @@
     <ClInclude Include="Deps\glm\glm\vector_relational.hpp">
       <Filter>Deps\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="Deps\stb\stb_image.h">
+      <Filter>Deps\stb</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\stb\stb_image_write.h">
+      <Filter>Deps\stb</Filter>
+    </ClInclude>
     <ClInclude Include="src\Application.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Asset\Cube.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
+    <ClInclude Include="src\Asset\CubeMap.h">
+      <Filter>src\Asset</Filter>
+    </ClInclude>
     <ClInclude Include="src\Asset\Mesh.h">
+      <Filter>src\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Asset\ModelEntity.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
     <ClInclude Include="src\Asset\Object.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
     <ClInclude Include="src\Asset\OpenAssetImportMesh.h">
+      <Filter>src\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Asset\Plane.h">
+      <Filter>src\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Asset\Skybox.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
     <ClInclude Include="src\Asset\Sphere.h">
@@ -1326,7 +1347,16 @@
     <ClInclude Include="src\Renderer\VertexBuffer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Util\Bitmap.h">
+      <Filter>src\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\MathUtils.h">
+      <Filter>src\Util</Filter>
+    </ClInclude>
     <ClInclude Include="src\Util\MatrixStack.h">
+      <Filter>src\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\Utils.h">
       <Filter>src\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\Util\imgui_impl_opengl3.h">
@@ -1346,10 +1376,22 @@
     <ClCompile Include="src\Asset\Cube.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
+    <ClCompile Include="src\Asset\CubeMap.cpp">
+      <Filter>src\Asset</Filter>
+    </ClCompile>
     <ClCompile Include="src\Asset\Mesh.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
+    <ClCompile Include="src\Asset\ModelEntity.cpp">
+      <Filter>src\Asset</Filter>
+    </ClCompile>
     <ClCompile Include="src\Asset\OpenAssetImportMesh.cpp">
+      <Filter>src\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Asset\Plane.cpp">
+      <Filter>src\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Asset\Skybox.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
     <ClCompile Include="src\Asset\Sphere.cpp">
@@ -1388,7 +1430,13 @@
     <ClCompile Include="src\Renderer\VertexBuffer.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Util\Bitmap.cpp">
+      <Filter>src\Util</Filter>
+    </ClCompile>
     <ClCompile Include="src\Util\MatrixStack.cpp">
+      <Filter>src\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Util\Utils.cpp">
       <Filter>src\Util</Filter>
     </ClCompile>
     <ClCompile Include="src\Util\imgui_impl_opengl3.cpp">

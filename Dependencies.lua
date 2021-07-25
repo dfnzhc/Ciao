@@ -7,6 +7,7 @@ IncludeDir["spdlog"]        = "%{wks.location}/Ciao/Deps/spdlog/include"
 IncludeDir["FreeImage"]     = "%{wks.location}/Ciao/Deps/FreeImage/include"
 IncludeDir["ImGui"]         = "%{wks.location}/Ciao/Deps/imgui"
 IncludeDir["Assimp"]        = "%{wks.location}/Ciao/Deps/assimp/include"
+IncludeDir["Stb"]           = "%{wks.location}/Ciao/Deps/stb"
 
 
 LibraryDir = {}

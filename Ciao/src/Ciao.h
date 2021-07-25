@@ -30,5 +30,6 @@
 
 #include "Util/MatrixStack.h"
 #include "Util/MathUtils.h"
+#include "Util/Bitmap.h"
 
 

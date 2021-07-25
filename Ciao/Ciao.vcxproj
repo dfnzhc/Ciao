@@ -58,7 +58,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;CIAO_PLATFORM_WINDOWS;CIAO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;src\Asset;src\Core;src\Renderer;src\Util;Deps\sdl2\include;Deps\glad\include;Deps\glm\glm;Deps\spdlog\include;Deps\FreeImage\include;Deps\imgui;Deps\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src\Asset;src\Core;src\Renderer;src\Util;Deps\sdl2\include;Deps\glad\include;Deps\glm\glm;Deps\spdlog\include;Deps\FreeImage\include;Deps\imgui;Deps\assimp\include;Deps\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -78,7 +78,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;CIAO_PLATFORM_WINDOWS;CIAO_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;src\Asset;src\Core;src\Renderer;src\Util;Deps\sdl2\include;Deps\glad\include;Deps\glm\glm;Deps\spdlog\include;Deps\FreeImage\include;Deps\imgui;Deps\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src\Asset;src\Core;src\Renderer;src\Util;Deps\sdl2\include;Deps\glad\include;Deps\glm\glm;Deps\spdlog\include;Deps\FreeImage\include;Deps\imgui;Deps\assimp\include;Deps\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -505,6 +505,8 @@
     <ClInclude Include="Deps\glm\glm\vec3.hpp" />
     <ClInclude Include="Deps\glm\glm\vec4.hpp" />
     <ClInclude Include="Deps\glm\glm\vector_relational.hpp" />
+    <ClInclude Include="Deps\stb\stb_image.h" />
+    <ClInclude Include="Deps\stb\stb_image_write.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Asset\Cube.h" />
     <ClInclude Include="src\Asset\CubeMap.h" />
@@ -530,8 +532,10 @@
     <ClInclude Include="src\Renderer\RenderManager.h" />
     <ClInclude Include="src\Renderer\Shader.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
+    <ClInclude Include="src\Util\Bitmap.h" />
     <ClInclude Include="src\Util\MathUtils.h" />
     <ClInclude Include="src\Util\MatrixStack.h" />
+    <ClInclude Include="src\Util\Utils.h" />
     <ClInclude Include="src\Util\imgui_impl_opengl3.h" />
     <ClInclude Include="src\Util\imgui_impl_sdl.h" />
     <ClInclude Include="src\pch.h" />
@@ -539,78 +543,7 @@
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Asset\Cube.cpp" />
-    <ClCompile Include="src\Asset\CubeMap.cpp">
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <Optimization>Disabled</Optimization>
-      <SupportJustMyCode>true</SupportJustMyCode>
-      <AssemblerOutput>NoListing</AssemblerOutput>
-      <AssemblerListingLocation>..\bin-int\Debug\Ciao\</AssemblerListingLocation>
-      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
-      <BrowseInformation>false</BrowseInformation>
-      <BrowseInformationFile>..\bin-int\Debug\Ciao\</BrowseInformationFile>
-      <CompileAs>Default</CompileAs>
-      <ConformanceMode>Default</ConformanceMode>
-      <DiagnosticsFormat>Column</DiagnosticsFormat>
-      <DisableLanguageExtensions>false</DisableLanguageExtensions>
-      <ErrorReporting>Prompt</ErrorReporting>
-      <ExpandAttributedSource>false</ExpandAttributedSource>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <EnableASAN>false</EnableASAN>
-      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-      <GenerateModuleDependencies>false</GenerateModuleDependencies>
-      <GenerateSourceDependencies>false</GenerateSourceDependencies>
-      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
-      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <IntrinsicFunctions>false</IntrinsicFunctions>
-      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <LanguageStandard_C>Default</LanguageStandard_C>
-      <MinimalRebuild>false</MinimalRebuild>
-      <ModuleDependenciesFile>..\bin-int\Debug\Ciao\</ModuleDependenciesFile>
-      <ModuleOutputFile>..\bin-int\Debug\Ciao\</ModuleOutputFile>
-      <OmitDefaultLibName>false</OmitDefaultLibName>
-      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <ObjectFileName>..\bin-int\Debug\Ciao\</ObjectFileName>
-      <CallingConvention>Cdecl</CallingConvention>
-      <ProgramDataBaseFileName>..\bin\Debug\Ciao\Ciao.pdb</ProgramDataBaseFileName>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>..\bin-int\Debug\Ciao\Ciao.pch</PrecompiledHeaderOutputFile>
-      <PreprocessToFile>false</PreprocessToFile>
-      <PreprocessKeepComments>false</PreprocessKeepComments>
-      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
-      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
-      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
-      <ShowIncludes>false</ShowIncludes>
-      <SourceDependenciesFile>..\bin-int\Debug\Ciao\</SourceDependenciesFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <SmallerTypeCheck>false</SmallerTypeCheck>
-      <SpectreMitigation>false</SpectreMitigation>
-      <StructMemberAlignment>Default</StructMemberAlignment>
-      <TrackerLogDirectory>..\bin-int\Debug\Ciao\Ciao.tlog\</TrackerLogDirectory>
-      <TranslateIncludes>false</TranslateIncludes>
-      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
-      <TreatWarningAsError>false</TreatWarningAsError>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <UseFullPaths>true</UseFullPaths>
-      <WarningLevel>Level3</WarningLevel>
-      <XMLDocumentationFileName>..\bin-int\Debug\Ciao\</XMLDocumentationFileName>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <IntelJCCErratum>false</IntelJCCErratum>
-      <ExternalDirectoriesEnv>EXTERNAL_INCLUDE;</ExternalDirectoriesEnv>
-      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
-      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
-      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
-      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;CIAO_PLATFORM_WINDOWS;CIAO_DEBUG;_UNICODE;UNICODE;</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;src\Asset;src\Core;src\Renderer;src\Util;Deps\sdl2\include;Deps\glad\include;Deps\glm\glm;Deps\spdlog\include;Deps\FreeImage\include;Deps\imgui;Deps\assimp\include;</AdditionalIncludeDirectories>
-      <LibCompiled>true</LibCompiled>
-    </ClCompile>
+    <ClCompile Include="src\Asset\CubeMap.cpp" />
     <ClCompile Include="src\Asset\Mesh.cpp" />
     <ClCompile Include="src\Asset\ModelEntity.cpp" />
     <ClCompile Include="src\Asset\OpenAssetImportMesh.cpp" />
@@ -628,7 +561,9 @@
     <ClCompile Include="src\Renderer\RenderManager.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
     <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Util\Bitmap.cpp" />
     <ClCompile Include="src\Util\MatrixStack.cpp" />
+    <ClCompile Include="src\Util\Utils.cpp" />
     <ClCompile Include="src\Util\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\Util\imgui_impl_sdl.cpp" />
     <ClCompile Include="src\pch.cpp">

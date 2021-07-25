@@ -79,8 +79,9 @@ namespace Ciao
             if (sExt == "vert") iShaderType = GL_VERTEX_SHADER;
             else if (sExt == "frag") iShaderType = GL_FRAGMENT_SHADER;
             else if (sExt == "geom") iShaderType = GL_GEOMETRY_SHADER;
-            else if (sExt == "tcnl") iShaderType = GL_TESS_CONTROL_SHADER;
-            else iShaderType = GL_TESS_EVALUATION_SHADER;
+            else if (sExt == "tesc") iShaderType = GL_TESS_CONTROL_SHADER;
+            else if (sExt == "tese") iShaderType = GL_TESS_EVALUATION_SHADER;
+            else iShaderType = GL_COMPUTE_SHADER;
             Shader shader;
 
             shader.LoadShader(GetAssetDir() + "Shaders\\" + shaderFileNames[i], iShaderType);

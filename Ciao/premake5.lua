@@ -13,8 +13,10 @@ project "Ciao"
     files { 
         "src/**.h", 
         "src/**.cpp",
-        "Deps/glm/glm/**.hpp",
-		"Deps/glm/glm/**.inl",
+        "%{IncludeDir.glm}/**.hpp",
+		"%{IncludeDir.glm}/**.inl",
+		"%{IncludeDir.Stb}/stb_image.h",
+		"%{IncludeDir.Stb}/stb_image_write.h",
     }
 
     includedirs
@@ -31,6 +33,7 @@ project "Ciao"
         "%{IncludeDir.FreeImage}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.Assimp}",
+        "%{IncludeDir.Stb}",
 	}
 
     links
