@@ -41,6 +41,19 @@ namespace Ciao
         }
     }
 
+    void DrawBuildInObj::Execute()
+    {
+        if (m_Shader && m_VertCnt > 0) {
+            glDepthFunc(GL_LEQUAL);
+            m_Shader->UseProgram();
+            glDrawArrays(GL_TRIANGLES, 0, m_VertCnt);
+            glDepthFunc(GL_LESS);
+        }
+        else {
+            CIAO_CORE_ERROR("Invalid vertices count or shader program setting!");
+        }
+    }
+
     void DrawModelEntity::Execute()
     {
         if (m_Model) {

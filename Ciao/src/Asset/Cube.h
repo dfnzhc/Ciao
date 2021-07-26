@@ -3,7 +3,6 @@
 #include "Object.h"
 
 #include "Renderer/VertexBuffer.h"
-#include "Texture.h"
 
 namespace Ciao
 {
@@ -13,7 +12,7 @@ namespace Ciao
         Cube();
         ~Cube();
 
-        void Init(std::string textureDirectory);
+        void Init();
         
         void Create() override;
         void Draw() override;
@@ -21,7 +20,6 @@ namespace Ciao
     private:
         GLuint m_VAO;
         VertexBufferObjectIndexed m_VBO;
-        Texture m_Texture;
 
         unsigned int m_NumTriangles;
     };

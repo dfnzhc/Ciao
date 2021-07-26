@@ -12,19 +12,11 @@ namespace Ciao
         Release();
     }
 
-    void Plane::Init(std::string textureDirectory, float w, float h, float texRepeat)
+    void Plane::Init(float w, float h, float texRepeat)
     {
         m_Width = w;
         m_Height = h;
         m_TexRepeat = texRepeat;
-
-        // Load the texture
-        m_Texture.Load(textureDirectory, true);
-        // Set parameters for texturing using sampler object
-        m_Texture.SetSamplerObjectParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        m_Texture.SetSamplerObjectParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        m_Texture.SetSamplerObjectParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
-        m_Texture.SetSamplerObjectParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
 
         // Use VAO to store state associated with vertices
         glGenVertexArrays(1, &m_VAO);
@@ -90,13 +82,11 @@ namespace Ciao
     void Plane::Draw()
     {
         glBindVertexArray(m_VAO);
-        m_Texture.Bind();
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
 
     void Plane::Release()
     {
-        m_Texture.Release();
         glDeleteVertexArrays(1, &m_VAO);
         m_VBO.Release();
     }

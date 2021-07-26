@@ -2,7 +2,7 @@
 IncludeDir = {}
 IncludeDir["SDL2"]          = "%{wks.location}/Ciao/Deps/sdl2/include"
 IncludeDir["Glad"]          = "%{wks.location}/Ciao/Deps/glad/include"
-IncludeDir["glm"]           = "%{wks.location}/Ciao/Deps/glm/glm"
+IncludeDir["glm"]           = "%{wks.location}/Ciao/Deps/glm"
 IncludeDir["spdlog"]        = "%{wks.location}/Ciao/Deps/spdlog/include"
 IncludeDir["FreeImage"]     = "%{wks.location}/Ciao/Deps/FreeImage/include"
 IncludeDir["ImGui"]         = "%{wks.location}/Ciao/Deps/imgui"

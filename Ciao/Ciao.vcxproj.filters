@@ -4,6 +4,36 @@
     <Filter Include="Deps">
       <UniqueIdentifier>{D115847C-BD4C-850D-6639-6B10524F010F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Deps\gli">
+      <UniqueIdentifier>{9C2068A9-88ED-C2B4-B106-B15C9D32F842}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\gli\external">
+      <UniqueIdentifier>{6E3E154B-DA54-13E1-23CC-9E028F21E468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\gli\external\glm">
+      <UniqueIdentifier>{BD4F6637-29BC-2132-F2AF-B98F5EDB439A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\gli\external\glm\detail">
+      <UniqueIdentifier>{DF908BF8-CB4B-7BA4-7403-F4EE609DC534}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\gli\external\glm\ext">
+      <UniqueIdentifier>{9D696D1D-092C-A1A7-52DC-2F34BEDD7985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\gli\external\glm\gtc">
+      <UniqueIdentifier>{8A716D1D-F633-A1A7-3FE4-2F34ABE57985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\gli\external\glm\gtx">
+      <UniqueIdentifier>{9F716D1D-0B34-A1A7-54E4-2F34C0E57985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\gli\gli">
+      <UniqueIdentifier>{E7989A6B-D3FB-2910-7C81-62C668C3F592}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\gli\gli\core">
+      <UniqueIdentifier>{BFF15B6A-2B08-5A00-747F-E521E0D42A88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deps\gli\test">
+      <UniqueIdentifier>{ABBAF4DE-177B-7015-E0B5-B9924C35B5F1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Deps\glm">
       <UniqueIdentifier>{A02068A9-8CED-C2B4-B506-B15CA132F842}</UniqueIdentifier>
     </Filter>
@@ -42,6 +72,1404 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Deps\gli\external\glm\common.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\_features.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\_fixes.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\_noise.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\_swizzle.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\_swizzle_func.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\_vectorize.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\compute_common.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\compute_vector_relational.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_common.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_common_simd.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_exponential.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_exponential_simd.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_geometric.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_geometric_simd.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_integer.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_integer_simd.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_matrix.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_matrix_simd.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_packing.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_packing_simd.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_trigonometric.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_trigonometric_simd.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_vector_relational.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\func_vector_relational_simd.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\qualifier.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\setup.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_float.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_half.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_half.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat2x2.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat2x2.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat2x3.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat2x3.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat2x4.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat2x4.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat3x2.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat3x2.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat3x3.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat3x3.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat3x4.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat3x4.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat4x2.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat4x2.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat4x3.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat4x3.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat4x4.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat4x4.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_mat4x4_simd.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_quat.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_quat.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_quat_simd.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_vec1.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_vec1.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_vec2.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_vec2.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_vec3.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_vec3.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_vec4.hpp">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_vec4.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\detail\type_vec4_simd.inl">
+      <Filter>Deps\gli\external\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\exponential.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_clip_space.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_clip_space.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double2x2.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double2x2_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double2x3.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double2x3_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double2x4.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double2x4_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double3x2.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double3x2_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double3x3.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double3x3_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double3x4.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double3x4_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double4x2.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double4x2_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double4x3.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double4x3_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double4x4.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_double4x4_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float2x2.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float2x2_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float2x3.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float2x3_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float2x4.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float2x4_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float3x2.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float3x2_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float3x3.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float3x3_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float3x4.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float3x4_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float4x2.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float4x2_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float4x3.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float4x3_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float4x4.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_float4x4_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_projection.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_projection.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_relational.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_relational.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_transform.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\matrix_transform.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_common.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_common.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_common_simd.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_double.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_double_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_exponential.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_exponential.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_float.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_float_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_geometric.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_geometric.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_relational.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_relational.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_transform.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_transform.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_trigonometric.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\quaternion_trigonometric.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\scalar_common.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\scalar_common.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\scalar_constants.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\scalar_constants.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\scalar_float_sized.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\scalar_int_sized.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\scalar_relational.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\scalar_relational.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\scalar_uint_sized.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\scalar_ulp.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\scalar_ulp.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_bool1.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_bool1_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_bool2.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_bool2_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_bool3.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_bool3_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_bool4.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_bool4_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_common.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_common.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_double1.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_double1_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_double2.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_double2_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_double3.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_double3_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_double4.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_double4_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_float1.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_float1_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_float2.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_float2_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_float3.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_float3_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_float4.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_float4_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_int1.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_int1_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_int2.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_int2_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_int3.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_int3_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_int4.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_int4_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_relational.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_relational.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_uint1.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_uint1_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_uint2.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_uint2_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_uint3.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_uint3_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_uint4.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_uint4_precision.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_ulp.hpp">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\ext\vector_ulp.inl">
+      <Filter>Deps\gli\external\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\fwd.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\geometric.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\glm.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\bitfield.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\bitfield.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\color_space.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\color_space.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\constants.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\constants.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\epsilon.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\epsilon.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\integer.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\integer.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\matrix_access.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\matrix_access.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\matrix_integer.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\matrix_inverse.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\matrix_inverse.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\matrix_transform.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\matrix_transform.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\noise.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\noise.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\packing.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\packing.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\quaternion.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\quaternion.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\quaternion_simd.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\random.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\random.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\reciprocal.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\reciprocal.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\round.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\round.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\type_aligned.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\type_precision.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\type_precision.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\type_ptr.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\type_ptr.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\ulp.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\ulp.inl">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtc\vec1.hpp">
+      <Filter>Deps\gli\external\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\associated_min_max.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\associated_min_max.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\bit.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\bit.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\closest_point.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\closest_point.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\color_encoding.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\color_encoding.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\color_space.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\color_space.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\color_space_YCoCg.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\color_space_YCoCg.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\common.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\common.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\compatibility.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\compatibility.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\component_wise.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\component_wise.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\dual_quaternion.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\dual_quaternion.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\easing.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\easing.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\euler_angles.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\euler_angles.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\extend.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\extend.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\extended_min_max.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\extended_min_max.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\exterior_product.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\exterior_product.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\fast_exponential.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\fast_exponential.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\fast_square_root.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\fast_square_root.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\fast_trigonometry.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\fast_trigonometry.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\float_notmalize.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\functions.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\functions.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\gradient_paint.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\gradient_paint.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\handed_coordinate_space.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\handed_coordinate_space.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\hash.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\hash.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\integer.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\integer.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\intersect.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\intersect.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\io.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\io.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\log_base.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\log_base.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_cross_product.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_cross_product.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_decompose.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_decompose.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_factorisation.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_factorisation.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_interpolation.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_interpolation.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_major_storage.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_major_storage.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_operation.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_operation.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_query.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_query.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_transform_2d.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\matrix_transform_2d.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\mixed_product.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\mixed_product.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\norm.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\norm.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\normal.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\normal.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\normalize_dot.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\normalize_dot.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\number_precision.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\number_precision.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\optimum_pow.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\optimum_pow.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\orthonormalize.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\orthonormalize.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\perpendicular.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\perpendicular.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\polar_coordinates.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\polar_coordinates.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\projection.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\projection.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\quaternion.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\quaternion.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\range.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\raw_data.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\raw_data.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\rotate_normalized_axis.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\rotate_normalized_axis.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\rotate_vector.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\rotate_vector.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\scalar_multiplication.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\scalar_relational.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\scalar_relational.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\spline.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\spline.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\std_based_type.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\std_based_type.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\string_cast.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\string_cast.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\texture.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\texture.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\transform.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\transform.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\transform2.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\transform2.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\type_aligned.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\type_aligned.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\type_trait.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\type_trait.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\vec_swizzle.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\vector_angle.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\vector_angle.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\vector_query.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\vector_query.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\wrap.hpp">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\gtx\wrap.inl">
+      <Filter>Deps\gli\external\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\integer.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\mat2x2.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\mat2x3.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\mat2x4.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\mat3x2.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\mat3x3.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\mat3x4.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\mat4x2.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\mat4x3.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\mat4x4.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\matrix.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\packing.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\trigonometric.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\vec2.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\vec3.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\vec4.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\external\glm\vector_relational.hpp">
+      <Filter>Deps\gli\external\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\clear.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\comparison.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\convert.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\copy.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\bc.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\bc.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\clear.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\clear.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\comparison.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\convert.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\convert_func.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\coord.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\copy.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\duplicate.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\dx.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\file.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\file.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\filter.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\filter.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\filter_compute.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\flip.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\flip.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\format.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\generate_mipmaps.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\gl.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\image.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\levels.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\load.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\load_dds.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\load_kmg.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\load_ktx.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\make_texture.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\mipmaps_compute.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\reduce.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\s3tc.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\s3tc.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\sampler.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\sampler1d.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\sampler1d_array.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\sampler2d.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\sampler2d_array.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\sampler3d.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\sampler_cube.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\sampler_cube_array.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\save.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\save_dds.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\save_kmg.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\save_ktx.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\storage.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\storage.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\storage_linear.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\storage_linear.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\texture.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\texture1d.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\texture1d_array.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\texture2d.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\texture2d_array.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\texture3d.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\texture_cube.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\texture_cube_array.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\transform.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\view.inl">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\core\workaround.hpp">
+      <Filter>Deps\gli\gli\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\duplicate.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\dx.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\format.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\generate_mipmaps.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\gl.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\gli.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\image.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\levels.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\load.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\load_dds.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\load_kmg.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\load_ktx.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\make_texture.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\reduce.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\sampler.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\sampler1d.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\sampler1d_array.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\sampler2d.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\sampler2d_array.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\sampler3d.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\sampler_cube.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\sampler_cube_array.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\save.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\save_dds.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\save_kmg.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\save_ktx.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\target.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\texture.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\texture1d.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\texture1d_array.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\texture2d.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\texture2d_array.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\texture3d.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\texture_cube.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\texture_cube_array.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\transform.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\type.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\gli\view.hpp">
+      <Filter>Deps\gli\gli</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\test\bug.hpp">
+      <Filter>Deps\gli\test</Filter>
+    </ClInclude>
+    <ClInclude Include="Deps\gli\test\core.hpp">
+      <Filter>Deps\gli\test</Filter>
+    </ClInclude>
     <ClInclude Include="Deps\glm\glm\common.hpp">
       <Filter>Deps\glm\glm</Filter>
     </ClInclude>

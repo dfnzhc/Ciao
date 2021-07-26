@@ -6,7 +6,7 @@ in vec2 TexCoord;
 in vec3 vNormal;
 
 // texture samplers
-uniform sampler2D Texture1;
+layout (binding=8) uniform sampler2D Texture1;
 
 void main()
 {

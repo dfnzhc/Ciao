@@ -44,6 +44,19 @@ namespace Ciao
         std::shared_ptr<ShaderProgram> m_Shader;
     };
 
+    class DrawBuildInObj : public RenderCommand
+    {
+    public:
+        DrawBuildInObj(GLuint count, std::shared_ptr<ShaderProgram> shader)
+            : m_VertCnt(count), m_Shader(shader) {}
+        
+        void Execute() override;
+    
+    private:
+        GLuint m_VertCnt;
+        std::shared_ptr<ShaderProgram> m_Shader;
+    };
+
     class ModelEntity;
     class DrawModelEntity : public RenderCommand
     {

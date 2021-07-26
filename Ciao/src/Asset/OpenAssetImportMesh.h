@@ -34,7 +34,6 @@
 namespace Ciao
 {
     class Mesh;
-    class Texture;
     
     class OpenAssetImportMesh : public Object
     {
@@ -45,23 +44,14 @@ namespace Ciao
         void Create() override;
         void Draw();
         void Release() override;
-
-        void SetTexNames(std::vector<std::string>&& names);
-        void SetShaderTexUniform(std::shared_ptr<ShaderProgram> shader);
     
     private:
         void processNode(aiNode *node, const aiScene *scene);
         Mesh* processMesh(aiMesh *mesh, const aiScene *scene);
-        std::vector<Texture*> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
     
         std::vector<Mesh*> m_Meshes;
-        std::vector<Texture*> m_Textures;
         std::string m_Directory;
-        std::set<std::string> m_LoadedTexs;
         GLuint m_vao;
-
-        std::vector<std::string> m_TexNames;
-        static const std::map<std::string, aiTextureType> Tex_Type;
     };
 
 }

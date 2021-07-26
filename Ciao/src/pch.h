@@ -35,9 +35,9 @@
 #include <stack>
 #include <array>
 
-#if defined(CIAO_PLATFORM_WINDOWS)
-    #include <windows.h>
-#endif
+
+#include <windows.h>
+
 
 #include "Core/Common.h"
 #include "Core/Log.h"
@@ -45,5 +45,5 @@
 #include <glad/glad.h>
 #include <SDL.h>
 
-#include <glm.hpp>
-#include <gtc/matrix_transform.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>

@@ -1,8 +1,6 @@
 ﻿#include "pch.h"
 #include "Mesh.h"
 
-#include "Texture.h"
-
 namespace Ciao
 {
     Mesh::Mesh()

@@ -7,13 +7,12 @@ layout (location = 2) in vec3 aNormal;
 out vec2 TexCoord;
 out vec3 vNormal;
 
-uniform mat4 modelViewMatrix;
+uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
-uniform mat3 normalMatrix;
+uniform mat4 modelMatrix;
 
 void main()
 {
-	gl_Position = projMatrix * modelViewMatrix * vec4(aPos, 1.0f);
+	gl_Position = projMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0f);
 	TexCoord = aTexCoord;
-	vNormal = normalize(normalMatrix * aNormal);
 }

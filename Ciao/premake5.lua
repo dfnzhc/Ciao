@@ -15,6 +15,8 @@ project "Ciao"
         "src/**.cpp",
         "%{IncludeDir.glm}/**.hpp",
 		"%{IncludeDir.glm}/**.inl",
+        "%{IncludeDir.Gli}/**.hpp",
+		"%{IncludeDir.Gli}/**.inl",
 		"%{IncludeDir.Stb}/stb_image.h",
 		"%{IncludeDir.Stb}/stb_image_write.h",
     }
@@ -34,6 +36,7 @@ project "Ciao"
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.Assimp}",
         "%{IncludeDir.Stb}",
+        "%{IncludeDir.Gli}",
 	}
 
     links

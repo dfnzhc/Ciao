@@ -1,38 +1,25 @@
 ﻿#pragma once
 
+
 namespace Ciao
 {
     class Texture
     {
     public:
-        void CreateFromData(BYTE* data, int width, int height, int bpp, GLenum format, bool generateMipMaps = false);
-        bool Load(std::string path, bool generateMipMaps = true);
-        void Bind(int textureUnit = 0);
-
-        void SetTextureName(const std::string& name) { m_TexName = name; }
-        const std::string& GetTextureName() const { return m_TexName; }
-            
-        void SetSamplerObjectParameter(GLenum parameter, GLenum value);
-        void SetSamplerObjectParameterf(GLenum parameter, float value);
-
-        int GetWidth();
-        int GetHeight();
-        int GetBPP();
-
-        void Release();
-
-        Texture();
+        Texture(GLenum type, const char* fileName);
+        Texture(GLenum type, int width, int height, GLenum internalFormat);
+        Texture(int w, int h, const void* img);
         ~Texture();
+        Texture(const Texture&) = delete;
+        Texture(Texture&&);
+        GLenum getType() const { return m_Type; }
+        GLuint getHandle() const { return m_Handle; }
+        GLuint64 getHandleBindless() const { return m_HandleBindless; }
 
     private:
-        int m_width, m_height, m_bpp;       // Texture width, height, and bytes per pixel
-        GLuint m_textureID;                 // Texture id
-        GLuint m_samplerObjectID;           // Sampler id
-        bool m_mipMapsGenerated;
-
-        std::string m_TexName;
-
-        std::string m_path;
+        GLenum m_Type = 0;
+        GLuint m_Handle = 0;
+        GLuint64 m_HandleBindless = 0;
     };
 }
 

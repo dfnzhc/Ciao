@@ -22,6 +22,8 @@ project "Sandbox"
         "%{IncludeDir.FreeImage}",
         "%{IncludeDir.Assimp}",
         "%{IncludeDir.ImGui}",
+        "%{IncludeDir.Stb}",
+        "%{IncludeDir.Gli}",
 	}
 
 	links

@@ -15,17 +15,16 @@ https://learnopengl.com/
 ### 功能
 
 + [x] 纹理
+
 + [x] 模型载入
-+ [x] 多纹理加载
+
 + [x] 天空盒 
 
-
-
-TODO：更换贴图载入方式，以支持HDR。
+  
 
 
 
 ### Gallery
 
-![基础PBR实现](https://i.loli.net/2021/07/25/a1qNxewdYRC3nXH.png)
+![PBR效果](https://i.loli.net/2021/07/26/ispG31AvLwuTEtK.png)
 

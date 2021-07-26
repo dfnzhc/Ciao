@@ -12,16 +12,8 @@ namespace Ciao
     	Release();
     }
 
-    void Sphere::Init(std::string textureDirectory, int slicesIn, int stacksIn)
+    void Sphere::Init(int slicesIn, int stacksIn)
     {
-        // check if filename passed in -- if so, load texture
-        m_Texture.Load(textureDirectory);
-
-        m_Texture.SetSamplerObjectParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        m_Texture.SetSamplerObjectParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        m_Texture.SetSamplerObjectParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
-        m_Texture.SetSamplerObjectParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
-	
         glGenVertexArrays(1, &m_VAO);
         glBindVertexArray(m_VAO);
 
@@ -99,13 +91,11 @@ namespace Ciao
     void Sphere::Draw()
     {
     	glBindVertexArray(m_VAO);
-    	m_Texture.Bind();
     	glDrawElements(GL_TRIANGLES, m_NumTriangles*3, GL_UNSIGNED_INT, 0);
     }
 
     void Sphere::Release()
     {
-    	m_Texture.Release();
     	glDeleteVertexArrays(1, &m_VAO);
     	m_VBO.Release();
     }

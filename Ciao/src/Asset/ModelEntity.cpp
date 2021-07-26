@@ -28,7 +28,6 @@ namespace Ciao
     void ModelEntity::Draw()
     {
         m_Shaders[m_ShaderIdx]->UseProgram();
-        m_Mesh->SetShaderTexUniform(m_Shaders[m_ShaderIdx]);
         m_Mesh->Draw();
     }
 

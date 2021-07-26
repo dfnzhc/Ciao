@@ -1,121 +1,138 @@
 ﻿#include "pch.h"
 #include "Texture.h"
-#include "FreeImage.h"
+#include "Util/Bitmap.h"
+#include "Util/Utils.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
+#include <gli/gli.hpp>
+#include <gli/load_ktx.hpp>
 
 namespace Ciao
 {
-    Texture::Texture()
+    Texture::Texture(GLenum type, int width, int height, GLenum internalFormat)
+        : m_Type(type)
     {
-        m_mipMapsGenerated = false;
+        glCreateTextures(type, 1, &m_Handle);
+        glTextureParameteri(m_Handle, GL_TEXTURE_MAX_LEVEL, 0);
+        glTextureParameteri(m_Handle, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTextureParameteri(m_Handle, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTextureStorage2D(m_Handle, getNumMipMapLevels2D(width, height), internalFormat, width, height);
+    }
+
+    Texture::Texture(GLenum type, const char* fileName)
+        : m_Type(type)
+    {
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glCreateTextures(type, 1, &m_Handle);
+        glTextureParameteri(m_Handle, GL_TEXTURE_MAX_LEVEL, 0);
+        glTextureParameteri(m_Handle, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTextureParameteri(m_Handle, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        const char* ext = strrchr(fileName, '.');
+
+        const bool isKTX = ext && !strcmp(ext, ".ktx");
+
+        switch (type) {
+        case GL_TEXTURE_2D:
+            {
+                int w = 0;
+                int h = 0;
+                int numMipmaps = 0;
+                if (isKTX) {
+                    gli::texture gliTex = gli::load_ktx(fileName);
+                    gli::gl GL(gli::gl::PROFILE_KTX);
+                    gli::gl::format const format = GL.translate(gliTex.format(), gliTex.swizzles());
+                    glm::tvec3<GLsizei> extent(gliTex.extent(0));
+                    w = extent.x;
+                    h = extent.y;
+                    numMipmaps = getNumMipMapLevels2D(w, h);
+                    glTextureStorage2D(m_Handle, numMipmaps, format.Internal, w, h);
+                    glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, format.External, format.Type, gliTex.data(0, 0, 0));
+                }
+                else {
+                    const uint8_t* img = stbi_load(fileName, &w, &h, nullptr, STBI_rgb_alpha);
+                    assert(img);
+                    numMipmaps = getNumMipMapLevels2D(w, h);
+                    glTextureStorage2D(m_Handle, numMipmaps, GL_RGBA8, w, h);
+                    glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, img);
+                    stbi_image_free((void*)img);
+                }
+                glGenerateTextureMipmap(m_Handle);
+                glTextureParameteri(m_Handle, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
+                glTextureParameteri(m_Handle, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+                glTextureParameteri(m_Handle, GL_TEXTURE_MAX_ANISOTROPY, 16);
+                break;
+            }
+        case GL_TEXTURE_CUBE_MAP:
+            {
+                int w, h, comp;
+                const float* img = stbi_loadf(fileName, &w, &h, &comp, 3);
+                CIAO_ASSERT(img, "Image load Faild: " + std::string(fileName));
+                Bitmap in(w, h, comp, BitmapFormat_Float, img);
+                const bool isEquirectangular = w == 2 * h;
+                Bitmap out = isEquirectangular ? convertEquirectangularMapToVerticalCross(in) : in;
+                stbi_image_free((void*)img);
+                Bitmap cubemap = convertVerticalCrossToCubeMapFaces(out);
+
+                const int numMipmaps = getNumMipMapLevels2D(cubemap.m_W, cubemap.m_H);
+
+                glTextureParameteri(m_Handle, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+                glTextureParameteri(m_Handle, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+                glTextureParameteri(m_Handle, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+                glTextureParameteri(m_Handle, GL_TEXTURE_BASE_LEVEL, 0);
+                glTextureParameteri(m_Handle, GL_TEXTURE_MAX_LEVEL, numMipmaps-1);
+                glTextureParameteri(m_Handle, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+                glTextureParameteri(m_Handle, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+                glTextureStorage2D(m_Handle, numMipmaps, GL_RGB32F, cubemap.m_W, cubemap.m_H);
+                const uint8_t* data = cubemap.m_Data.data();
+
+                for (unsigned i = 0; i != 6; ++i)
+                {
+                    glTextureSubImage3D(m_Handle, 0, 0, 0, i, cubemap.m_W, cubemap.m_H, 1, GL_RGB, GL_FLOAT, data);
+                    data += cubemap.m_W * cubemap.m_H * cubemap.m_Comp * Bitmap::GetBytesPerComponent(cubemap.m_Fmt);
+                }
+                glGenerateTextureMipmap(m_Handle);
+                break;
+            }
+            default:
+                CIAO_ASSERT(false, "No comparable texture format.");
+        }
+
+        // m_HandleBindless = glGetTextureHandleARB(m_Handle);
+        // glMakeTextureHandleResidentARB(m_HandleBindless);
+    }
+
+    Texture::Texture(int w, int h, const void* img)
+        : m_Type(GL_TEXTURE_2D)
+    {
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glCreateTextures(m_Type, 1, &m_Handle);
+        int numMipmaps = getNumMipMapLevels2D(w, h);
+        glTextureStorage2D(m_Handle, numMipmaps, GL_RGBA8, w, h);
+        glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, img);
+        glGenerateTextureMipmap(m_Handle);
+        glTextureParameteri(m_Handle, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
+        glTextureParameteri(m_Handle, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTextureParameteri(m_Handle, GL_TEXTURE_MAX_ANISOTROPY, 16);
+        // m_HandleBindless = glGetTextureHandleARB(m_Handle);
+        // glMakeTextureHandleResidentARB(m_HandleBindless);
     }
 
     Texture::~Texture()
     {
-        Release();
+        // if (m_HandleBindless)
+        //     glMakeTextureHandleNonResidentARB(m_HandleBindless);
+        glDeleteTextures(1, &m_Handle);
     }
 
-    /// 用 data 中的数据创建纹理
-    void Texture::CreateFromData(BYTE* data, int width, int height, int bpp, GLenum format, bool generateMipMaps)
+    Texture::Texture(Texture&& other)
+        : m_Type(other.m_Type), m_Handle(other.m_Handle)
     {
-        // Generate an OpenGL texture ID for this texture
-        glGenTextures(1, &m_textureID);
-        glBindTexture(GL_TEXTURE_2D, m_textureID);
-        if(format == GL_RGBA || format == GL_BGRA)
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-        // We must handle this because of internal format parameter
-        else if(format == GL_RGB || format == GL_BGR)
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-        else
-            glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-        if(generateMipMaps)glGenerateMipmap(GL_TEXTURE_2D);
-        glGenSamplers(1, &m_samplerObjectID);
-
-        m_path = "";
-        m_mipMapsGenerated = generateMipMaps;
-        m_width = width;
-        m_height = height;
-        m_bpp = bpp;
-    }
-
-    /// 从文件加载纹理
-    bool Texture::Load(std::string path, bool generateMipMaps)
-    {
-        FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
-        FIBITMAP* dib(0);
-
-        fif = FreeImage_GetFileType(path.c_str(), 0); // Check the file signature and deduce its format
-
-        if(fif == FIF_UNKNOWN) // If still unknown, try to guess the file format from the file extension
-            fif = FreeImage_GetFIFFromFilename(path.c_str());
-	    
-        if(fif == FIF_UNKNOWN) // If still unknown, return failure
-            return false;
-
-        if(FreeImage_FIFSupportsReading(fif)) // Check if the plugin has reading capabilities and load the file
-            dib = FreeImage_Load(fif, path.c_str());
-
-        if(!dib) {
-            CIAO_CORE_ERROR("Cannot load image\n{}\n", path.c_str());
-            return false;
-        }
-
-        BYTE* pData = FreeImage_GetBits(dib); // Retrieve the image data
-
-        // If somehow one of these failed (they shouldn't), return failure
-        if (pData == NULL || FreeImage_GetWidth(dib) == 0 || FreeImage_GetHeight(dib) == 0)
-            return false;
-	    
-
-        GLenum format;
-        int bada = FreeImage_GetBPP(dib);
-        if(FreeImage_GetBPP(dib) == 32) format = GL_BGRA;
-        if(FreeImage_GetBPP(dib) == 24) format = GL_BGR;
-        if(FreeImage_GetBPP(dib) == 8)  format = GL_LUMINANCE;
-        CreateFromData(pData, FreeImage_GetWidth(dib), FreeImage_GetHeight(dib), FreeImage_GetBPP(dib), format, generateMipMaps);
-	    
-        FreeImage_Unload(dib);
-
-        m_path = path;
-
-        return true;            // Success
-    }
-
-    void Texture::Bind(int textureUnit)
-    {
-        glActiveTexture(GL_TEXTURE0+textureUnit);
-        glBindTexture(GL_TEXTURE_2D, m_textureID);
-        glBindSampler(textureUnit, m_samplerObjectID);
-    }
-
-    void Texture::SetSamplerObjectParameter(GLenum parameter, GLenum value)
-    {
-        glSamplerParameteri(m_samplerObjectID, parameter, value);
-    }
-
-    void Texture::SetSamplerObjectParameterf(GLenum parameter, float value)
-    {
-        glSamplerParameterf(m_samplerObjectID, parameter, value);
-    }
-
-    int Texture::GetWidth()
-    {
-        return m_width;
-    }
-
-    int Texture::GetHeight()
-    {
-        return m_height;
-    }
-
-    int Texture::GetBPP()
-    {
-        return m_bpp;
-    }
-
-    void Texture::Release()
-    {
-        glDeleteSamplers(1, &m_samplerObjectID);
-        glDeleteTextures(1, &m_textureID);
+        other.m_Type = 0;
+        other.m_Handle = 0;
+        //other.m_HandleBindless = 0;
     }
 }
