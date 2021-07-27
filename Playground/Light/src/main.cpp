@@ -42,11 +42,13 @@ public:
         renderCommandVec.push_back(std::make_shared<DrawObject>(m_Sphere, m_Shaders[1]));
 
         m_Light = CreateRef<GLLight>();
-        m_Light->Position = glm::vec3{1};
-        m_Light->Direction = glm::vec3{1};
-        m_Light->ambient = glm::vec3{1};
-        m_Light->diffuse = glm::vec3{1};
+        m_Light->Position = glm::vec3{0.0, 1.0, 0.0};
+        m_Light->Direction = glm::vec3{0.0, -1.0, 0.0};
+        m_Light->ambient = glm::vec3{0.2f};
+        m_Light->diffuse = glm::vec3{0.8f};
         m_Light->specular = glm::vec3{1};
+        m_Light->cutOff = 60.0f;
+        m_Light->theta = 45.0f;
 
         // m_FBO = CreateRef<Framebuffer>(w, h);
         // m_FBO->SetClearColour(glm::vec4{0.0});
@@ -89,6 +91,8 @@ public:
         m_Shaders[0]->SetUniform("light.ambient", m_Light->ambient);
         m_Shaders[0]->SetUniform("light.diffuse", m_Light->diffuse);
         m_Shaders[0]->SetUniform("light.specular", m_Light->specular);
+        m_Shaders[0]->SetUniform("light.cutoff", cos(glm::radians(m_Light->cutOff)));
+        m_Shaders[0]->SetUniform("light.theta", cos(glm::radians(m_Light->theta)));
         m_Shaders[0]->SetUniform("LightType", LightType);
 
         modelMatrixStack.Push();
@@ -170,6 +174,8 @@ public:
     {
         if (ImGui::Begin("Hello World")) {
             ImGui::Text("FPS %.1f FPS (%.3f ms/f)", ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
+            auto Camera = Ciao::Application::GetInst().GetCamera();
+            ImGui::Text("Camera Pos %.1f, %.1f, %.1f", Camera->GetPosition().x, Camera->GetPosition().y, Camera->GetPosition().z);
 
             // ImVec2 size = { 480, 320 };
             // ImVec2 uv0 = { 0, 1 };
@@ -186,6 +192,9 @@ public:
             ImGui::ColorEdit3("Ambient", (float*)&m_Light->ambient);
             ImGui::ColorEdit3("Diffuse", (float*)&m_Light->diffuse);
             ImGui::ColorEdit3("Specular", (float*)&m_Light->specular);
+            
+            ImGui::SliderFloat("Cutoff", (float*)&m_Light->cutOff, 50, 80);
+            ImGui::SliderFloat("Theta", (float*)&m_Light->theta, 30, 50);
 
         }
         ImGui::End();

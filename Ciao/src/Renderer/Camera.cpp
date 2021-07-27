@@ -29,7 +29,7 @@ namespace Ciao
         Application::GetInst().GetWindowSize(w, h);
         m_HalfWindowSize = glm::vec2(0.5f * w, 0.5f * h);
 
-        m_Yaw = -90.0f;
+        m_Yaw = 90.0f;
         m_Pitch = 30.0f;
     }
 
