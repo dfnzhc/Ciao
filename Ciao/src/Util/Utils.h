@@ -9,4 +9,5 @@ namespace Ciao
     Bitmap convertVerticalCrossToCubeMapFaces(const Bitmap& b);
     
     int getNumMipMapLevels2D(int w, int h);
+
 }

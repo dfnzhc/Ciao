@@ -25,6 +25,7 @@
 #include "Asset/Mesh.h"
 #include "Asset/Plane.h"
 #include "Asset/ModelEntity.h"
+#include "Asset/Light.h"
 
 #include "Util/MatrixStack.h"
 #include "Util/MathUtils.h"

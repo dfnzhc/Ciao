@@ -9,7 +9,7 @@ using namespace std;
 
 const std::string Asset_dir{"..\\..\\Resources\\"};
 
-class Sandbox : public Ciao::Scence
+class Light : public Ciao::Scence
 {
 public:
     Ciao::WindowProps GetWindowProps() override
@@ -230,7 +230,7 @@ public:
 
 Ciao::Scence* Ciao::CreateScence()
 {
-    return new Sandbox();
+    return new Light();
 }
 
 

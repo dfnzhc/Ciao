@@ -2706,9 +2706,6 @@
     <ClInclude Include="src\Asset\Cube.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\Asset\CubeMap.h">
-      <Filter>src\Asset</Filter>
-    </ClInclude>
     <ClInclude Include="src\Asset\Mesh.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
@@ -2724,13 +2721,7 @@
     <ClInclude Include="src\Asset\Plane.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\Asset\Skybox.h">
-      <Filter>src\Asset</Filter>
-    </ClInclude>
     <ClInclude Include="src\Asset\Sphere.h">
-      <Filter>src\Asset</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Asset\StbTexture.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
     <ClInclude Include="src\Asset\Texture.h">
@@ -2807,9 +2798,6 @@
     <ClCompile Include="src\Asset\Cube.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="src\Asset\CubeMap.cpp">
-      <Filter>src\Asset</Filter>
-    </ClCompile>
     <ClCompile Include="src\Asset\Mesh.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
@@ -2822,13 +2810,7 @@
     <ClCompile Include="src\Asset\Plane.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="src\Asset\Skybox.cpp">
-      <Filter>src\Asset</Filter>
-    </ClCompile>
     <ClCompile Include="src\Asset\Sphere.cpp">
-      <Filter>src\Asset</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Asset\StbTexture.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
     <ClCompile Include="src\Asset\Texture.cpp">

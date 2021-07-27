@@ -294,4 +294,15 @@ namespace Ciao
     }
 
 
+
+    GLBuffer::GLBuffer(GLsizeiptr size, const void* data, GLbitfield flags)
+    {
+        glCreateBuffers(1, &m_Handle);
+        glNamedBufferStorage(m_Handle, size, data, flags);
+    }
+
+    GLBuffer::~GLBuffer()
+    {
+        glDeleteBuffers(1, &m_Handle);
+    }
 }

@@ -53,7 +53,7 @@ namespace Ciao
                 }
                 else {
                     const uint8_t* img = stbi_load(fileName, &w, &h, nullptr, STBI_rgb_alpha);
-                    assert(img);
+                    CIAO_ASSERT(img, "Image load Faild: " + std::string(fileName));
                     numMipmaps = getNumMipMapLevels2D(w, h);
                     glTextureStorage2D(m_Handle, numMipmaps, GL_RGBA8, w, h);
                     glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, img);

@@ -975,6 +975,7 @@
     <ClInclude Include="Deps\stb\stb_image_write.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Asset\Cube.h" />
+    <ClInclude Include="src\Asset\Light.h" />
     <ClInclude Include="src\Asset\Mesh.h" />
     <ClInclude Include="src\Asset\ModelEntity.h" />
     <ClInclude Include="src\Asset\Object.h" />

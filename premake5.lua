@@ -14,3 +14,4 @@ group ""
 
 include "Ciao"
 include "Playground/Sandbox"
+include "Playground/Light"

@@ -88,4 +88,16 @@ namespace Ciao
             shShaders.push_back(shader);
         }
     }
+
+    class GLBuffer
+    {
+    public:
+        GLBuffer(GLsizeiptr size, const void* data, GLbitfield flags);
+        ~GLBuffer();
+
+        GLuint getHandle() const { return m_Handle; }
+
+    private:
+        GLuint m_Handle;
+    };
 }

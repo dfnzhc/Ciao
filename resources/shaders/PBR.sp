@@ -201,7 +201,7 @@ mat3 cotangentFrame( vec3 N, vec3 p, vec2 uv )
 	vec3 T = dp2perp * duv1.x + dp1perp * duv2.x;
 	vec3 B = dp2perp * duv1.y + dp1perp * duv2.y;
 
-	// construct a scale-invariant frame
+	// construct a scale-invariant frame        
 	float invmax = inversesqrt( max( dot(T,T), dot(B,B) ) );
 
 	// calculate handedness of the resulting cotangent frame
