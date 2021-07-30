@@ -5,6 +5,7 @@ out vec4 FragColor;
 layout (location=0) in vec2 tc;
 layout (location=1) in vec3 normal;
 layout (location=2) in vec3 worldPos;
+layout (location=3) in vec4 FragPosLightSpace;
 
 struct Light
 {
@@ -24,10 +25,9 @@ uniform vec3 camPos;
 uniform Light light;
 
 // texture samplers
-layout (binding=0) uniform sampler2D texDiff;
-layout (binding=1) uniform sampler2D texDisp;
-layout (binding=2) uniform sampler2D texRough;
-layout (binding=3) uniform sampler2D texNor_gl;
+layout (binding=1) uniform sampler2D texDiff;
+layout (binding=2) uniform sampler2D texNorm;
+layout (binding=7) uniform sampler2D texShadow;
 
 // http://www.thetenthplanet.de/archives/1180
 // modified to fix handedness of the resulting cotangent frame
@@ -41,24 +41,26 @@ vec3 CalSpotLightColor(vec3 N, vec3 V);
 
 vec3 getNormalFromMap();
 
+float ShadowCalculation(vec4 fragPosLightSpace);
+
 void main()
 {
 	vec3 n = normalize(normal);
-	vec3 tnormal = texture(texNor_gl, tc).xyz;
+	vec3 tnormal = texture(texNorm, tc).xyz;
 	
-	n = getNormalFromMap();//normalize(perturbNormal(n, normalize(camPos - worldPos), tnormal, tc));
+	n = normalize(perturbNormal(n, normalize(camPos - worldPos), tnormal, tc));
 	
 	vec3 v = normalize(camPos - worldPos);
 
 	vec3 color = vec3(0);
 	if (LightType == 0) {
-		color += CalDirLightColor(normal, v);
+		color += CalDirLightColor(n, v);
 	}
 	else if (LightType == 1) {
-		color += CalPointLightColor(normal, v);
+		color += CalPointLightColor(n, v);
 	}
 	else if (LightType == 2) {
-		color += CalSpotLightColor(normal, v);
+		color += CalSpotLightColor(n, v);
 	}
 	
 
@@ -103,7 +105,7 @@ vec3 perturbNormal(vec3 n, vec3 v, vec3 normalSample, vec2 uv)
 
 vec3 getNormalFromMap()
 {
-	vec3 tangentNormal = texture(texNor_gl, tc).xyz * 2.0 - 1.0;
+	vec3 tangentNormal = texture(texNorm, tc).xyz * 2.0 - 1.0;
 
 	vec3 Q1  = dFdx(worldPos);
 	vec3 Q2  = dFdy(worldPos);
@@ -131,8 +133,10 @@ vec3 CalDirLightColor(vec3 N, vec3 V) {
 	vec3 ambient = light.ambient * albedo;
 	vec3 diffuse = light.diffuse * diff * albedo;
 	vec3 specular = light.specular * spec * vec3(1.0);
+
+	float shadow = ShadowCalculation(FragPosLightSpace);
 	
-	return (ambient + diffuse + specular);
+	return (ambient + (1 - shadow) * (diffuse + specular));
 }
 
 vec3 CalPointLightColor(vec3 N, vec3 V) 
@@ -153,7 +157,9 @@ vec3 CalPointLightColor(vec3 N, vec3 V)
 	vec3 diffuse = light.diffuse * diff * albedo;
 	vec3 specular = light.specular * spec * vec3(1.0);
 
-	return attenuation * (ambient + diffuse + specular);
+	float shadow = ShadowCalculation(FragPosLightSpace);
+
+	return (ambient + (1 - shadow) * (diffuse + specular));
 }
 
 vec3 CalSpotLightColor(vec3 N, vec3 V) {
@@ -178,9 +184,24 @@ vec3 CalSpotLightColor(vec3 N, vec3 V) {
 		vec3 diffuse = intensity * light.diffuse * diff * albedo;
 		vec3 specular = light.specular * spec * vec3(1.0);
 
-		return attenuation * (ambient + diffuse + specular);
+		float shadow = ShadowCalculation(FragPosLightSpace);
+		
+		return attenuation * (ambient + (1 - shadow) * (diffuse + specular));
 //	}
 //	else {
 //		return light.ambient * albedo;
 //	}
+}
+
+float ShadowCalculation(vec4 fragPosLightSpace)
+{
+	// 执行透视除法
+	vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+	projCoords = projCoords * 0.5 + 0.5;
+	float closestDepth = texture(texShadow, projCoords.xy).r;
+	
+	float currentDepth = projCoords.z;
+	float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;
+	
+	return shadow;
 }

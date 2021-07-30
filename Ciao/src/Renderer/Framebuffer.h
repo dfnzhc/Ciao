@@ -57,6 +57,7 @@ namespace Ciao
         inline uint32_t GetFbo() const { return mFbo; }
         inline uint32_t GetTextureId() const { return mTextureId; }
         inline uint32_t GetRenderbufferId() const { return mRenderbufferId; }
+        inline uint32_t GetDepthTexId() const { return mDepthMap; }
         inline const glm::ivec2& GetSize() { return mSize; }
         inline void SetClearColour(const glm::vec4& cc) { mClearColour = cc; }
         inline const glm::vec4& GetClearColour() { return mClearColour; }
@@ -65,6 +66,7 @@ namespace Ciao
         uint32_t mFbo;
         uint32_t mTextureId;
         uint32_t mRenderbufferId;
+        uint32_t mDepthMap;
 
         glm::ivec2 mSize;
         glm::vec4 mClearColour;

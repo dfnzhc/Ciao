@@ -147,14 +147,25 @@ namespace Ciao
     		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
     		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); 
     		glBindTexture(GL_TEXTURE_2D, 0); 
-    		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mTextureId, 0); 
+    		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mTextureId, 0);
+
+            glGenTextures(1, &mDepthMap);
+            glBindTexture(GL_TEXTURE_2D, mDepthMap);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, mSize.x, mSize.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, mDepthMap, 0);
+			// glDrawBuffer(GL_NONE);
+			// glReadBuffer(GL_NONE);
     
-    		// Create depth/stencil renderbuffer
-    		glGenRenderbuffers(1, &mRenderbufferId); 
-    		glBindRenderbuffer(GL_RENDERBUFFER, mRenderbufferId); 
-    		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, mSize.x, mSize.y); 
-    		glBindRenderbuffer(GL_RENDERBUFFER, 0);
-    		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, mRenderbufferId); 
+    		// // Create depth/stencil renderbuffer
+    		// glGenRenderbuffers(1, &mRenderbufferId); 
+    		// glBindRenderbuffer(GL_RENDERBUFFER, mRenderbufferId); 
+    		// glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, mSize.x, mSize.y); 
+    		// glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    		// glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, mRenderbufferId); 
     
     		// Check for completeness
     		int32_t completeStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER); 

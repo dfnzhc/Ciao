@@ -28,6 +28,7 @@ namespace Ciao
         void PopFramebuffer();
 
     private:
+        glm::vec4 m_clearColor;
         std::queue<std::shared_ptr<RenderCommand>> m_renderCommands;
         std::shared_ptr<Framebuffer> m_Framebuffer;
     };

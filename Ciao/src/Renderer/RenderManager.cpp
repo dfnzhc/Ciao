@@ -44,12 +44,14 @@ namespace Ciao
         while (m_renderCommands.size() > 0) {
             m_renderCommands.pop();
         }
+        
+        
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
     void RenderManager::SetClearColour(const glm::vec4 color)
     {
-        glClearColor(color.r, color.g, color.b, color.a);
+        m_clearColor = color;
     }
 
     void RenderManager::Submit(std::shared_ptr<RenderCommand> rc)
@@ -83,5 +85,7 @@ namespace Ciao
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         auto window = Application::GetInst().GetWindow();
         glViewport(0, 0, window->GetWidth(), window->GetHeight());
+        glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 }

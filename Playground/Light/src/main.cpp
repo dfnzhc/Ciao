@@ -33,8 +33,10 @@ public:
 
         m_Plane = CreateRef<Plane>();
         m_Plane->Init(20, 20, 5);
-        // 1 ++++ 
+        // 0 ++++ 
         renderCommandVec.push_back(std::make_shared<DrawObject>(m_Plane, m_Shaders[0]));
+        // 1 ++++ 
+        renderCommandVec.push_back(std::make_shared<DrawObject>(m_Plane, m_Shaders[3]));
 
         m_Sphere = CreateRef<Sphere>();
         m_Sphere->Init(25, 25);
@@ -42,16 +44,28 @@ public:
         renderCommandVec.push_back(std::make_shared<DrawObject>(m_Sphere, m_Shaders[1]));
 
         m_Light = CreateRef<GLLight>();
-        m_Light->Position = glm::vec3{0.0, 1.0, 0.0};
-        m_Light->Direction = glm::vec3{0.0, -1.0, 0.0};
+        m_Light->Position = glm::vec3{-2.0f, 4.0f, -1.0f};
+        m_Light->Direction = glm::vec3{-1.0};
         m_Light->ambient = glm::vec3{0.2f};
         m_Light->diffuse = glm::vec3{0.8f};
         m_Light->specular = glm::vec3{1};
         m_Light->cutOff = 60.0f;
         m_Light->theta = 45.0f;
 
-        // m_FBO = CreateRef<Framebuffer>(w, h);
-        // m_FBO->SetClearColour(glm::vec4{0.0});
+        m_Ajax = CreateRef<OpenAssetImportMesh>();
+        m_Ajax->Load(Asset_dir + "Models\\bunny.obj");
+
+        m_Entity1 = CreateRef<ModelEntity>();
+        m_Entity1->Init(m_Ajax);
+        m_Entity1->AddShader(m_Shaders[2]);
+        m_Entity1->AddShader(m_Shaders[3]);
+        // 3 ++++ 
+        renderCommandVec.push_back(std::make_shared<DrawModelEntity>(m_Entity1, 0));
+        // 4 ++++ 
+        renderCommandVec.push_back(std::make_shared<DrawModelEntity>(m_Entity1, 1));
+
+        m_FBO = CreateRef<Framebuffer>(w, h);
+        m_FBO->SetClearColour(glm::vec4{1.0});
     }
 
 private:
@@ -62,6 +76,9 @@ private:
     vector<shared_ptr<RenderCommand>> renderCommandVec;
     shared_ptr<Framebuffer> m_FBO;
 
+    shared_ptr<OpenAssetImportMesh> m_Ajax;
+    shared_ptr<ModelEntity> m_Entity1;
+
     shared_ptr<GLLight> m_Light;
     int LightType;
 
@@ -70,6 +87,7 @@ private:
 public:
     void Update() override
     {
+        glBindTextureUnit(7, m_FBO->GetDepthTexId());
         // CIAO_INFO("Mouse Pos: {}, {}, Scroll: {}", Mouse::X(), Mouse::Y(), Mouse::GetScroll());
         m_Rot += 0.5f;
     }
@@ -81,6 +99,28 @@ public:
 
         glutil::MatrixStack modelMatrixStack;
         modelMatrixStack.SetIdentity();
+
+        CIAO_SUB_RC(std::make_shared<PushFramebuffer>(m_FBO));
+        
+        m_Shaders[3]->UseProgram();
+        glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.5f);
+        glm::mat4 lightView = glm::lookAt(m_Light->Position, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        m_Shaders[3]->SetUniform("lightSpaceMatrix", lightProjection * lightView);
+        
+        modelMatrixStack.Push();
+            modelMatrixStack.Translate(glm::vec3(0, -1.5, 0));
+            m_Shaders[3]->SetUniform("modelMatrix", modelMatrixStack.Top());
+            CIAO_SUB_RC(renderCommandVec[1]);
+        modelMatrixStack.Pop();
+        
+        modelMatrixStack.Push();
+            modelMatrixStack.Scale(glm::vec3(15, 15, 15));
+            m_Shaders[3]->SetUniform("modelMatrix", modelMatrixStack.Top());
+            CIAO_SUB_RC(renderCommandVec[4]);
+        modelMatrixStack.Pop();
+        
+        CIAO_SUB_RC(std::make_shared<PopFramebuffer>());
+
 
         m_Shaders[0]->UseProgram();
         m_Shaders[0]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
@@ -94,12 +134,33 @@ public:
         m_Shaders[0]->SetUniform("light.cutoff", cos(glm::radians(m_Light->cutOff)));
         m_Shaders[0]->SetUniform("light.theta", cos(glm::radians(m_Light->theta)));
         m_Shaders[0]->SetUniform("LightType", LightType);
+        m_Shaders[0]->SetUniform("lightSpaceMatrix", lightProjection * lightView);
 
         modelMatrixStack.Push();
             modelMatrixStack.Translate(glm::vec3(0, -1.5, 0));
             m_Shaders[0]->SetUniform("modelMatrix", modelMatrixStack.Top());
             m_Shaders[0]->SetUniform("normalMatrix", ComputeNormalMatrix(modelMatrixStack.Top()));
             CIAO_SUB_RC(renderCommandVec[0]);
+        modelMatrixStack.Pop();
+
+        m_Shaders[2]->UseProgram();
+        m_Shaders[2]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
+        m_Shaders[2]->SetUniform("viewMatrix", Camera->GetViewMatrix());
+        m_Shaders[2]->SetUniform("camPos", Camera->GetPosition());
+        m_Shaders[2]->SetUniform("light.pos", m_Light->Position);
+        m_Shaders[2]->SetUniform("light.dir", m_Light->Direction);
+        m_Shaders[2]->SetUniform("light.ambient", m_Light->ambient);
+        m_Shaders[2]->SetUniform("light.diffuse", m_Light->diffuse);
+        m_Shaders[2]->SetUniform("light.specular", m_Light->specular);
+        m_Shaders[2]->SetUniform("light.cutoff", cos(glm::radians(m_Light->cutOff)));
+        m_Shaders[2]->SetUniform("light.theta", cos(glm::radians(m_Light->theta)));
+        m_Shaders[2]->SetUniform("LightType", LightType);
+
+        modelMatrixStack.Push();
+            modelMatrixStack.Scale(glm::vec3(15, 15, 15));
+            m_Shaders[2]->SetUniform("modelMatrix", modelMatrixStack.Top());
+            m_Shaders[2]->SetUniform("normalMatrix", ComputeNormalMatrix(modelMatrixStack.Top()));
+            CIAO_SUB_RC(renderCommandVec[3]);
         modelMatrixStack.Pop();
 
 
@@ -111,7 +172,7 @@ public:
             modelMatrixStack.Translate(m_Light->Position);
             modelMatrixStack.Scale(glm::vec3(0.3));
             m_Shaders[1]->SetUniform("modelMatrix", modelMatrixStack.Top());
-            CIAO_SUB_RC(renderCommandVec[1]);
+            CIAO_SUB_RC(renderCommandVec[2]);
         modelMatrixStack.Pop();
     }
 
@@ -129,6 +190,9 @@ public:
         ShaderFileNames.push_back("FloorShader.frag");
         ShaderFileNames.push_back("LightShader.vert");
         ShaderFileNames.push_back("LightShader.frag");
+        ShaderFileNames.push_back("AjaxShader.frag");
+        ShaderFileNames.push_back("shadowMapShader.vert");
+        ShaderFileNames.push_back("shadowMapShader.frag");
 
         ReadShaderFile(ShaderFileNames, Shaders);
 
@@ -149,22 +213,36 @@ public:
         lightShader->AddShaderToProgram(&Shaders[3]);
         lightShader->LinkProgram();
         m_Shaders.push_back(lightShader);
+
+        /// 2 --- Ajax 的 Shader 
+        auto ajaxShader = std::make_shared<ShaderProgram>();
+        ajaxShader->CreateProgram();
+        ajaxShader->AddShaderToProgram(&Shaders[0]);
+        ajaxShader->AddShaderToProgram(&Shaders[4]);
+        ajaxShader->LinkProgram();
+        m_Shaders.push_back(ajaxShader);
+
+        /// 3 --- shadow texture 的 Shader 
+        auto shadowTexShader = std::make_shared<ShaderProgram>();
+        shadowTexShader->CreateProgram();
+        shadowTexShader->AddShaderToProgram(&Shaders[5]);
+        shadowTexShader->AddShaderToProgram(&Shaders[6]);
+        shadowTexShader->LinkProgram();
+        m_Shaders.push_back(shadowTexShader);
     }
 
     void LoadTextures()
     {
         // 以 Textures 目录作为根目录
         std::vector<std::pair<GLenum, string>> TexInfo;
-        TexInfo.push_back({GL_TEXTURE_2D, "Textures\\FloorTiles\\broken_wall_diff_2k.jpg"});
-        TexInfo.push_back({GL_TEXTURE_2D, "Textures\\FloorTiles\\broken_wall_disp_2k.png"});
-        TexInfo.push_back({GL_TEXTURE_2D, "Textures\\FloorTiles\\broken_wall_rough_2k.jpg"});
-        TexInfo.push_back({GL_TEXTURE_2D, "Textures\\FloorTiles\\broken_wall_nor_gl_2k.hdr"});
+        TexInfo.push_back({GL_TEXTURE_2D, "Textures\\brickwall.jpg"});
+        TexInfo.push_back({GL_TEXTURE_2D, "Textures\\brickwall_normal.jpg"});
 
 
         for (unsigned int i = 0; i < TexInfo.size(); ++i) {
             auto Tex = CreateRef<Texture>(
                 TexInfo[i].first, std::string(Asset_dir + TexInfo[i].second).c_str());
-            glBindTextureUnit(i, Tex->getHandle());
+            glBindTextureUnit(i + 1, Tex->getHandle());
 
             m_Textures.push_back(Tex);
         }
@@ -175,7 +253,8 @@ public:
         if (ImGui::Begin("Hello World")) {
             ImGui::Text("FPS %.1f FPS (%.3f ms/f)", ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
             auto Camera = Ciao::Application::GetInst().GetCamera();
-            ImGui::Text("Camera Pos %.1f, %.1f, %.1f", Camera->GetPosition().x, Camera->GetPosition().y, Camera->GetPosition().z);
+            ImGui::Text("Camera Pos %.1f, %.1f, %.1f", Camera->GetPosition().x, Camera->GetPosition().y,
+                        Camera->GetPosition().z);
 
             // ImVec2 size = { 480, 320 };
             // ImVec2 uv0 = { 0, 1 };
@@ -192,9 +271,18 @@ public:
             ImGui::ColorEdit3("Ambient", (float*)&m_Light->ambient);
             ImGui::ColorEdit3("Diffuse", (float*)&m_Light->diffuse);
             ImGui::ColorEdit3("Specular", (float*)&m_Light->specular);
-            
+
             ImGui::SliderFloat("Cutoff", (float*)&m_Light->cutOff, 50, 80);
             ImGui::SliderFloat("Theta", (float*)&m_Light->theta, 30, 50);
+
+        }
+        ImGui::End();
+
+        if (ImGui::Begin("Shadow Texture")) {
+            ImVec2 size = { 480, 320 };
+            ImVec2 uv0 = { 0, 1 };
+            ImVec2 uv1 = { 1, 0 };
+            ImGui::Image((void*)(intptr_t) m_FBO->GetDepthTexId(), size, uv0, uv1);
 
         }
         ImGui::End();
