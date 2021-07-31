@@ -6,8 +6,21 @@
 
 using namespace Ciao;
 using namespace std;
+using namespace glm;
 
 const std::string Asset_dir{"..\\..\\Resources\\"};
+
+struct PerFrameData
+{
+    mat4 view;
+    mat4 proj;
+
+    PerFrameData(const mat4& v, const mat4& p) :
+        view(v), proj(p)
+    {}
+};
+
+const GLsizeiptr kUniformBufferSize = sizeof(PerFrameData);
 
 class Light : public Ciao::Scence
 {
@@ -32,23 +45,17 @@ public:
         LoadTextures();
 
         m_Plane = CreateRef<Plane>();
-        m_Plane->Init(20, 20, 5);
-        // 0 ++++ 
-        renderCommandVec.push_back(std::make_shared<DrawObject>(m_Plane, m_Shaders[0]));
-        // 1 ++++ 
-        renderCommandVec.push_back(std::make_shared<DrawObject>(m_Plane, m_Shaders[3]));
+        m_Plane->Init(10, 10, 5);
 
         m_Sphere = CreateRef<Sphere>();
         m_Sphere->Init(25, 25);
-        // 2 ++++ 
-        renderCommandVec.push_back(std::make_shared<DrawObject>(m_Sphere, m_Shaders[1]));
 
         m_Light = CreateRef<GLLight>();
-        m_Light->Position = glm::vec3{-2.0f, 4.0f, -1.0f};
-        m_Light->Direction = glm::vec3{-1.0};
-        m_Light->ambient = glm::vec3{0.2f};
-        m_Light->diffuse = glm::vec3{0.8f};
-        m_Light->specular = glm::vec3{1};
+        m_Light->Position = glm::vec4{-2.0f, 4.0f, -1.0f, 1.0};
+        m_Light->Direction = glm::vec4{-1.0};
+        m_Light->ambient = glm::vec4{0.2f};
+        m_Light->diffuse = glm::vec4{0.8f};
+        m_Light->specular = glm::vec4{1};
         m_Light->cutOff = 60.0f;
         m_Light->theta = 45.0f;
 
@@ -59,13 +66,15 @@ public:
         m_Entity1->Init(m_Ajax);
         m_Entity1->AddShader(m_Shaders[2]);
         m_Entity1->AddShader(m_Shaders[3]);
-        // 3 ++++ 
-        renderCommandVec.push_back(std::make_shared<DrawModelEntity>(m_Entity1, 0));
-        // 4 ++++ 
-        renderCommandVec.push_back(std::make_shared<DrawModelEntity>(m_Entity1, 1));
 
-        m_FBO = CreateRef<Framebuffer>(w, h);
+        m_FBO = CreateRef<Framebuffer>(2048, 2048);
         m_FBO->SetClearColour(glm::vec4{1.0});
+
+        m_testBuffer = CreateRef<GLBuffer>(kUniformBufferSize, nullptr, GL_DYNAMIC_STORAGE_BIT);
+        glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_testBuffer->getHandle(), 0, kUniformBufferSize);
+
+        m_lightBuffer = CreateRef<GLBuffer>(LightBufferSize, nullptr, GL_DYNAMIC_STORAGE_BIT);
+        glBindBufferRange(GL_UNIFORM_BUFFER, 1, m_lightBuffer->getHandle(), 0, LightBufferSize);
     }
 
 private:
@@ -73,11 +82,13 @@ private:
     shared_ptr<Plane> m_Plane;
     vector<shared_ptr<ShaderProgram>> m_Shaders;
     vector<shared_ptr<Texture>> m_Textures;
-    vector<shared_ptr<RenderCommand>> renderCommandVec;
     shared_ptr<Framebuffer> m_FBO;
 
     shared_ptr<OpenAssetImportMesh> m_Ajax;
     shared_ptr<ModelEntity> m_Entity1;
+    
+    shared_ptr<GLBuffer> m_testBuffer;
+    shared_ptr<GLBuffer> m_lightBuffer;
 
     shared_ptr<GLLight> m_Light;
     int LightType;
@@ -87,7 +98,15 @@ private:
 public:
     void Update() override
     {
-        glBindTextureUnit(7, m_FBO->GetDepthTexId());
+        auto Camera = Ciao::Application::GetInst().GetCamera();
+        
+        const PerFrameData perFrameData{Camera->GetViewMatrix(), Camera->GetProjectionMatrix()};
+        glNamedBufferSubData(m_testBuffer->getHandle(), 0, kUniformBufferSize, &perFrameData);
+
+        const GLLight lightData{*m_Light.get()};
+        glNamedBufferSubData(m_lightBuffer->getHandle(), 0, LightBufferSize, &lightData);
+        
+        glBindTextureUnit(7, m_FBO->getTextureDepth().getHandle());
         // CIAO_INFO("Mouse Pos: {}, {}, Scroll: {}", Mouse::X(), Mouse::Y(), Mouse::GetScroll());
         m_Rot += 0.5f;
     }
@@ -100,83 +119,82 @@ public:
         glutil::MatrixStack modelMatrixStack;
         modelMatrixStack.SetIdentity();
 
-        CIAO_SUB_RC(std::make_shared<PushFramebuffer>(m_FBO));
+        m_FBO->bind();
         
         m_Shaders[3]->UseProgram();
-        glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.5f);
-        glm::mat4 lightView = glm::lookAt(m_Light->Position, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 20.5f);
+        glm::mat4 lightView = glm::lookAt(glm::vec3(m_Light->Position), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         m_Shaders[3]->SetUniform("lightSpaceMatrix", lightProjection * lightView);
         
         modelMatrixStack.Push();
-            modelMatrixStack.Translate(glm::vec3(0, -1.5, 0));
+            //modelMatrixStack.Translate(glm::vec3(0, -1.5, 0));
             m_Shaders[3]->SetUniform("modelMatrix", modelMatrixStack.Top());
-            CIAO_SUB_RC(renderCommandVec[1]);
+            m_Plane->Draw(m_Shaders[3]);
         modelMatrixStack.Pop();
         
         modelMatrixStack.Push();
             modelMatrixStack.Scale(glm::vec3(15, 15, 15));
             m_Shaders[3]->SetUniform("modelMatrix", modelMatrixStack.Top());
-            CIAO_SUB_RC(renderCommandVec[4]);
+            m_Ajax->Draw(m_Shaders[3]);
         modelMatrixStack.Pop();
         
-        CIAO_SUB_RC(std::make_shared<PopFramebuffer>());
-
+        m_FBO->unbind();
 
         m_Shaders[0]->UseProgram();
-        m_Shaders[0]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
-        m_Shaders[0]->SetUniform("viewMatrix", Camera->GetViewMatrix());
+        // m_Shaders[0]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
+        // m_Shaders[0]->SetUniform("viewMatrix", Camera->GetViewMatrix());
         m_Shaders[0]->SetUniform("camPos", Camera->GetPosition());
-        m_Shaders[0]->SetUniform("light.pos", m_Light->Position);
-        m_Shaders[0]->SetUniform("light.dir", m_Light->Direction);
-        m_Shaders[0]->SetUniform("light.ambient", m_Light->ambient);
-        m_Shaders[0]->SetUniform("light.diffuse", m_Light->diffuse);
-        m_Shaders[0]->SetUniform("light.specular", m_Light->specular);
-        m_Shaders[0]->SetUniform("light.cutoff", cos(glm::radians(m_Light->cutOff)));
-        m_Shaders[0]->SetUniform("light.theta", cos(glm::radians(m_Light->theta)));
+        // m_Shaders[0]->SetUniform("light.pos", m_Light->Position);
+        // m_Shaders[0]->SetUniform("light.dir", m_Light->Direction);
+        // m_Shaders[0]->SetUniform("light.ambient", m_Light->ambient);
+        // m_Shaders[0]->SetUniform("light.diffuse", m_Light->diffuse);
+        // m_Shaders[0]->SetUniform("light.specular", m_Light->specular);
+        // m_Shaders[0]->SetUniform("light.cutoff", cos(glm::radians(m_Light->cutOff)));
+        // m_Shaders[0]->SetUniform("light.theta", cos(glm::radians(m_Light->theta)));
         m_Shaders[0]->SetUniform("LightType", LightType);
         m_Shaders[0]->SetUniform("lightSpaceMatrix", lightProjection * lightView);
 
         modelMatrixStack.Push();
-            modelMatrixStack.Translate(glm::vec3(0, -1.5, 0));
+            //modelMatrixStack.Translate(glm::vec3(0, -1.5, 0));
             m_Shaders[0]->SetUniform("modelMatrix", modelMatrixStack.Top());
             m_Shaders[0]->SetUniform("normalMatrix", ComputeNormalMatrix(modelMatrixStack.Top()));
-            CIAO_SUB_RC(renderCommandVec[0]);
+            m_Plane->Draw(m_Shaders[0]);
         modelMatrixStack.Pop();
 
         m_Shaders[2]->UseProgram();
-        m_Shaders[2]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
-        m_Shaders[2]->SetUniform("viewMatrix", Camera->GetViewMatrix());
+        // m_Shaders[2]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
+        // m_Shaders[2]->SetUniform("viewMatrix", Camera->GetViewMatrix());
         m_Shaders[2]->SetUniform("camPos", Camera->GetPosition());
-        m_Shaders[2]->SetUniform("light.pos", m_Light->Position);
-        m_Shaders[2]->SetUniform("light.dir", m_Light->Direction);
-        m_Shaders[2]->SetUniform("light.ambient", m_Light->ambient);
-        m_Shaders[2]->SetUniform("light.diffuse", m_Light->diffuse);
-        m_Shaders[2]->SetUniform("light.specular", m_Light->specular);
-        m_Shaders[2]->SetUniform("light.cutoff", cos(glm::radians(m_Light->cutOff)));
-        m_Shaders[2]->SetUniform("light.theta", cos(glm::radians(m_Light->theta)));
+        // m_Shaders[2]->SetUniform("light.pos", m_Light->Position);
+        // m_Shaders[2]->SetUniform("light.dir", m_Light->Direction);
+        // m_Shaders[2]->SetUniform("light.ambient", m_Light->ambient);
+        // m_Shaders[2]->SetUniform("light.diffuse", m_Light->diffuse);
+        // m_Shaders[2]->SetUniform("light.specular", m_Light->specular);
+        // m_Shaders[2]->SetUniform("light.cutoff", cos(glm::radians(m_Light->cutOff)));
+        // m_Shaders[2]->SetUniform("light.theta", cos(glm::radians(m_Light->theta)));
         m_Shaders[2]->SetUniform("LightType", LightType);
 
         modelMatrixStack.Push();
             modelMatrixStack.Scale(glm::vec3(15, 15, 15));
             m_Shaders[2]->SetUniform("modelMatrix", modelMatrixStack.Top());
             m_Shaders[2]->SetUniform("normalMatrix", ComputeNormalMatrix(modelMatrixStack.Top()));
-            CIAO_SUB_RC(renderCommandVec[3]);
+            m_Ajax->Draw(m_Shaders[2]);
         modelMatrixStack.Pop();
 
 
         m_Shaders[1]->UseProgram();
-        m_Shaders[1]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
-        m_Shaders[1]->SetUniform("viewMatrix", Camera->GetViewMatrix());
+        // m_Shaders[1]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
+        // m_Shaders[1]->SetUniform("viewMatrix", Camera->GetViewMatrix());
 
         modelMatrixStack.Push();
             modelMatrixStack.Translate(m_Light->Position);
             modelMatrixStack.Scale(glm::vec3(0.3));
             m_Shaders[1]->SetUniform("modelMatrix", modelMatrixStack.Top());
-            CIAO_SUB_RC(renderCommandVec[2]);
+            m_Sphere->Draw(m_Shaders[1]);
         modelMatrixStack.Pop();
     }
 
-
+    
     void Shutdown() override
     {
         CIAO_INFO("Light::Shutdown()");
@@ -278,14 +296,8 @@ public:
         }
         ImGui::End();
 
-        if (ImGui::Begin("Shadow Texture")) {
-            ImVec2 size = { 480, 320 };
-            ImVec2 uv0 = { 0, 1 };
-            ImVec2 uv1 = { 1, 0 };
-            ImGui::Image((void*)(intptr_t) m_FBO->GetDepthTexId(), size, uv0, uv1);
 
-        }
-        ImGui::End();
+        imguiTextureWindowGL("Depth", m_FBO->getTextureDepth().getHandle());
     }
 };
 

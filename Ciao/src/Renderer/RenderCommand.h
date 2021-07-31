@@ -65,7 +65,7 @@ namespace Ciao
             : m_Model(model), m_DrawIdx(shaderIdx) {}
         
         void Execute() override;
-    
+
     private:
         std::shared_ptr<ModelEntity> m_Model;
         unsigned int m_DrawIdx;

@@ -53,8 +53,9 @@ namespace Ciao
         glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(glm::vec3)+sizeof(glm::vec2)));
     }
 
-    void Mesh::Draw()
+    void Mesh::Draw(std::shared_ptr<ShaderProgram> shader)
     {
+        shader->UseProgram();
         glBindVertexArray(m_VAO);
         glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);

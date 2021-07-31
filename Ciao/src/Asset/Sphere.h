@@ -13,7 +13,7 @@ namespace Ciao
 
         void Init(int slicesIn, int stacksIn);
         void Create() override;
-        void Draw() override;
+        void Draw(std::shared_ptr<ShaderProgram> shader) override;
         void Release() override;
     
     private:

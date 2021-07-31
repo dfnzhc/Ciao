@@ -15,7 +15,7 @@ namespace Ciao
         void Init();
         
         void Create() override;
-        void Draw() override;
+        void Draw(std::shared_ptr<ShaderProgram> shader) override;
         void Release() override;
     private:
         GLuint m_VAO;

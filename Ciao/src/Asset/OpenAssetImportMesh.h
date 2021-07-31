@@ -42,7 +42,7 @@ namespace Ciao
         ~OpenAssetImportMesh();
         bool Load(const std::string& Filepath);
         void Create() override;
-        void Draw();
+        void Draw(std::shared_ptr<ShaderProgram> shader) override;
         void Release() override;
     
     private:

@@ -2,8 +2,12 @@
 
 layout (location = 0) in vec3 aPos;
 
-uniform mat4 viewMatrix;
-uniform mat4 projMatrix;
+layout(std140, binding = 0) uniform PerFrameData
+{
+	mat4 viewMatrix;
+	mat4 projMatrix;
+};
+
 uniform mat4 modelMatrix;
 
 void main()

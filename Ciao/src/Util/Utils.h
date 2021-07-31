@@ -10,4 +10,6 @@ namespace Ciao
     
     int getNumMipMapLevels2D(int w, int h);
 
+    void imguiTextureWindowGL(const char* title, uint32_t texId);
+
 }

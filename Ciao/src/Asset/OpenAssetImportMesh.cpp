@@ -51,10 +51,10 @@ namespace Ciao
     {
     }
 
-    void OpenAssetImportMesh::Draw()
+    void OpenAssetImportMesh::Draw(std::shared_ptr<ShaderProgram> shader)
     {
         for (unsigned int i = 0; i < m_Meshes.size(); ++i) {
-            m_Meshes[i]->Draw();
+            m_Meshes[i]->Draw(shader);
         }
     }
 

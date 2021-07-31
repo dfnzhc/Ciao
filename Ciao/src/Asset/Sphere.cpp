@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "Sphere.h"
 
+#include "Shader.h"
+
 namespace Ciao
 {
     Sphere::Sphere()
@@ -88,8 +90,9 @@ namespace Ciao
     	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(glm::vec3)+sizeof(glm::vec3)));
     }
 
-    void Sphere::Draw()
+    void Sphere::Draw(std::shared_ptr<ShaderProgram> shader)
     {
+    	shader->UseProgram();
     	glBindVertexArray(m_VAO);
     	glDrawElements(GL_TRIANGLES, m_NumTriangles*3, GL_UNSIGNED_INT, 0);
     }

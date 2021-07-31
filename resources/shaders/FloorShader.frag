@@ -7,14 +7,15 @@ layout (location=1) in vec3 normal;
 layout (location=2) in vec3 worldPos;
 layout (location=3) in vec4 FragPosLightSpace;
 
-struct Light
-{
-	vec3 pos;
-	vec3 dir;
 
-	vec3 ambient;
-	vec3 diffuse;
-	vec3 specular;
+layout(std140, binding = 1) uniform Light
+{
+	vec4 pos;
+	vec4 dir;
+
+	vec4 ambient;
+	vec4 diffuse;
+	vec4 specular;
 	
 	float cutoff;
 	float theta;
@@ -22,7 +23,6 @@ struct Light
 
 uniform int LightType;
 uniform vec3 camPos;
-uniform Light light;
 
 // texture samplers
 layout (binding=1) uniform sampler2D texDiff;
@@ -41,7 +41,7 @@ vec3 CalSpotLightColor(vec3 N, vec3 V);
 
 vec3 getNormalFromMap();
 
-float ShadowCalculation(vec4 fragPosLightSpace);
+float ShadowCalculation(vec4 fragPosLightSpace, float bias);
 
 void main()
 {
@@ -65,7 +65,7 @@ void main()
 	
 
 	FragColor = vec4(color, 1.0);
-	//FragColor = vec4(texture(texDiff, tc).xyz, 1.0);
+	//FragColor = vec4(texture(texShadow, tc).xyz, 1.0);
 }
 
 // http://www.thetenthplanet.de/archives/1180
@@ -121,7 +121,7 @@ vec3 getNormalFromMap()
 }
 
 vec3 CalDirLightColor(vec3 N, vec3 V) {
-	vec3 lightDir = normalize(-light.dir);
+	vec3 lightDir = normalize(-dir.xyz);
 	
 	float diff = max(dot(N, lightDir), 0.0);
 	
@@ -130,70 +130,73 @@ vec3 CalDirLightColor(vec3 N, vec3 V) {
 	
 	vec3 albedo = vec3(texture(texDiff, tc));
 	
-	vec3 ambient = light.ambient * albedo;
-	vec3 diffuse = light.diffuse * diff * albedo;
-	vec3 specular = light.specular * spec * vec3(1.0);
+	vec3 ambientCol = ambient.rgb * albedo;
+	vec3 diffuseCol = diffuse.rgb * diff * albedo;
+	vec3 specularCol = specular.rgb * spec * vec3(1.0);
 
-	float shadow = ShadowCalculation(FragPosLightSpace);
+	float bias = max(0.05 * (1.0 - dot(N, lightDir)), 0.005);
+	float shadow = ShadowCalculation(FragPosLightSpace, bias);
 	
-	return (ambient + (1 - shadow) * (diffuse + specular));
+	return (ambientCol + (1 - shadow) * (diffuseCol + specularCol));
 }
 
 vec3 CalPointLightColor(vec3 N, vec3 V) 
 {
-	vec3 lightDir = normalize(light.pos - worldPos);
+	vec3 lightDir = normalize(pos.xyz - worldPos);
 
 	float diff = max(dot(N, lightDir), 0.0);
 
 	vec3 halfwayDir = normalize(lightDir + V);
 	float spec = pow(max(dot(halfwayDir, N), 0.0), 32);
 	
-	float dist = length(light.pos - worldPos);
+	float dist = length(pos.xyz - worldPos);
 	float attenuation = 1.0 / (1.0f + 0.09 * dist + 0.032 * dist * dist);
 
 	vec3 albedo = vec3(texture(texDiff, tc));
 
-	vec3 ambient = light.ambient * albedo;
-	vec3 diffuse = light.diffuse * diff * albedo;
-	vec3 specular = light.specular * spec * vec3(1.0);
+	vec3 ambientCol = ambient.rgb * albedo;
+	vec3 diffuseCol = diffuse.rgb * diff * albedo;
+	vec3 specularCol = specular.rgb * spec * vec3(1.0);
 
-	float shadow = ShadowCalculation(FragPosLightSpace);
+	float bias = max(0.05 * (1.0 - dot(N, lightDir)), 0.005);
+	float shadow = ShadowCalculation(FragPosLightSpace, bias);
 
-	return (ambient + (1 - shadow) * (diffuse + specular));
+	return (ambientCol + (1 - shadow) * (diffuseCol + specularCol));
 }
 
 vec3 CalSpotLightColor(vec3 N, vec3 V) {
-	vec3 lightDir = normalize(light.pos - worldPos);
+	vec3 lightDir = normalize(pos.xyz - worldPos);
 	
-	float ang = dot(lightDir, normalize(-light.dir));
+	float ang = dot(lightDir, normalize(-dir.xyz));
 
 	vec3 albedo = vec3(texture(texDiff, tc));
 	
-//	if (ang < light.cutoff) {
+//	if (ang < cutoff) {
 		float diff = max(dot(N, lightDir), 0.0);
 
 		vec3 halfwayDir = normalize(lightDir + V);
 		float spec = pow(max(dot(halfwayDir, N), 0.0), 32);
 
-		float dist = length(light.pos - worldPos);
+		float dist = length(pos.xyz - worldPos);
 		float attenuation = 1.0 / (1.0f + 0.09 * dist + 0.032 * dist * dist);
 		
-		float intensity = clamp((ang - light.cutoff) / (light.theta - light.cutoff), 0.0, 1.0);
+		float intensity = clamp((ang - cutoff) / (theta - cutoff), 0.0, 1.0);
 		
-		vec3 ambient = intensity * light.ambient * albedo;
-		vec3 diffuse = intensity * light.diffuse * diff * albedo;
-		vec3 specular = light.specular * spec * vec3(1.0);
+		vec3 ambientCol = intensity * ambient.rgb * albedo;
+		vec3 diffuseCol = intensity * diffuse.rgb * diff * albedo;
+		vec3 specularCol = specular.rgb * spec * vec3(1.0);
 
-		float shadow = ShadowCalculation(FragPosLightSpace);
+		float bias = max(0.05 * (1.0 - dot(N, lightDir)), 0.005);
+		float shadow = ShadowCalculation(FragPosLightSpace, bias);
 		
-		return attenuation * (ambient + (1 - shadow) * (diffuse + specular));
+		return attenuation * (ambientCol + (1 - shadow) * (diffuseCol + specularCol));
 //	}
 //	else {
-//		return light.ambient * albedo;
+//		return ambient * albedo;
 //	}
 }
 
-float ShadowCalculation(vec4 fragPosLightSpace)
+float ShadowCalculation(vec4 fragPosLightSpace, float bias)
 {
 	// 执行透视除法
 	vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
@@ -201,7 +204,8 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 	float closestDepth = texture(texShadow, projCoords.xy).r;
 	
 	float currentDepth = projCoords.z;
-	float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;
+	
+	float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
 	
 	return shadow;
 }

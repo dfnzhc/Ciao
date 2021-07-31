@@ -27,7 +27,7 @@ namespace Ciao
 
         void Init(std::vector<Vertex>&& vertices, std::vector<UINT>&& indices);
         void Create() override;
-        void Draw() override;
+        void Draw(std::shared_ptr<ShaderProgram> shader) override;
         void Release() override;
 
         void SetShader(Ref<ShaderProgram> shader);

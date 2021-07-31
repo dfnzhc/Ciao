@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "Plane.h"
 
+#include "Shader.h"
+
 namespace Ciao
 {
     Plane::Plane(): m_VAO(0), m_Width(0), m_Height(0), m_TexRepeat(0)
@@ -79,8 +81,9 @@ namespace Ciao
         glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, istride, (void*)(sizeof(glm::vec3)+sizeof(glm::vec2)));
     }
 
-    void Plane::Draw()
+    void Plane::Draw(std::shared_ptr<ShaderProgram> shader)
     {
+        shader->UseProgram();
         glBindVertexArray(m_VAO);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }

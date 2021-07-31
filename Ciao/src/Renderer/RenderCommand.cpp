@@ -33,8 +33,7 @@ namespace Ciao
     void DrawObject::Execute()
     {
         if (m_Obj && m_Shader) {
-            m_Shader->UseProgram();
-            m_Obj->Draw();
+            m_Obj->Draw(m_Shader);
         }
         else {
             CIAO_CORE_ERROR("Invalid object or shader program setting!");

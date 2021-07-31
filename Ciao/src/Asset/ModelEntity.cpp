@@ -27,8 +27,7 @@ namespace Ciao
 
     void ModelEntity::Draw()
     {
-        m_Shaders[m_ShaderIdx]->UseProgram();
-        m_Mesh->Draw();
+        m_Mesh->Draw(m_Shaders[m_ShaderIdx]);
     }
 
     void ModelEntity::SetDrawShaderIdx(unsigned idx)

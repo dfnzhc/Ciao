@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "Framebuffer.h"
 #include "Window.h"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace Ciao
 {
@@ -41,11 +42,15 @@ namespace Ciao
 
     void RenderManager::Clear()
     {
-        while (m_renderCommands.size() > 0) {
-            m_renderCommands.pop();
-        }
-        
-        
+        // while (m_renderCommands.size() > 0) {
+        //     m_renderCommands.pop();
+        // }
+        //
+        //
+        // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        auto window = Application::GetInst().GetWindow();
+        glViewport(0, 0, window->GetWidth(), window->GetHeight());
+        glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
@@ -72,17 +77,23 @@ namespace Ciao
     void RenderManager::PushFramebuffer(std::shared_ptr<Framebuffer> framebuffer)
     {
         m_Framebuffer = framebuffer;
-        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer->GetFbo());
-        glViewport(0, 0, framebuffer->GetSize().x, framebuffer->GetSize().y);
-
+        m_Framebuffer->bind();
+        
         auto cc = framebuffer->GetClearColour();
-        glClearColor(cc.r, cc.g, cc.b, cc.a);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glEnable(GL_DEPTH_TEST);
+        glDisable(GL_BLEND);
+        
+        glClearNamedFramebufferfv(m_Framebuffer->getHandle(), GL_COLOR, 0, glm::value_ptr(glm::vec4(cc.r, cc.g, cc.b, cc.a)));
+        glClearNamedFramebufferfi(m_Framebuffer->getHandle(), GL_DEPTH_STENCIL, 0, 1.0f, 0);
+        // glClearColor(cc.r, cc.g, cc.b, cc.a);
+        // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
     void RenderManager::PopFramebuffer()
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        m_Framebuffer->unbind();
+        
         auto window = Application::GetInst().GetWindow();
         glViewport(0, 0, window->GetWidth(), window->GetHeight());
         glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);

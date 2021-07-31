@@ -9,8 +9,12 @@ layout (location=1) out vec3 normal;
 layout (location=2) out vec3 worldPos;
 layout (location=3) out vec4 FragPosLightSpace;
 
-uniform mat4 viewMatrix;
-uniform mat4 projMatrix;
+layout(std140, binding = 0) uniform PerFrameData
+{
+	mat4 viewMatrix;
+	mat4 projMatrix;
+};
+
 uniform mat4 modelMatrix;
 uniform mat3 normalMatrix;
 uniform mat4 lightSpaceMatrix;

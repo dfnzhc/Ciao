@@ -971,6 +971,7 @@
     <ClInclude Include="Deps\glm\glm\vec3.hpp" />
     <ClInclude Include="Deps\glm\glm\vec4.hpp" />
     <ClInclude Include="Deps\glm\glm\vector_relational.hpp" />
+    <ClInclude Include="Deps\json\single_include\nlohmann\json.hpp" />
     <ClInclude Include="Deps\stb\stb_image.h" />
     <ClInclude Include="Deps\stb\stb_image_write.h" />
     <ClInclude Include="src\Application.h" />

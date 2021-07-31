@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Utils.h"
 #include "Bitmap.h"
+#include "imgui.h"
 
 using namespace glm;
 
@@ -162,5 +163,21 @@ namespace Ciao
         while ((w | h) >> levels)
             levels += 1;
         return levels;
+    }
+
+    void imguiTextureWindowGL(const char* title, uint32_t texId)
+    {
+        ImGui::Begin(title, nullptr);
+
+        const ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+        const ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+
+        ImGui::Image(
+            (void*)(intptr_t)texId,
+            ImVec2(vMax.x - vMin.x, vMax.y - vMin.y),
+            ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f)
+        );
+
+        ImGui::End();
     }
 }
