@@ -971,16 +971,14 @@
     <ClInclude Include="Deps\glm\glm\vec3.hpp" />
     <ClInclude Include="Deps\glm\glm\vec4.hpp" />
     <ClInclude Include="Deps\glm\glm\vector_relational.hpp" />
-    <ClInclude Include="Deps\json\single_include\nlohmann\json.hpp" />
     <ClInclude Include="Deps\stb\stb_image.h" />
     <ClInclude Include="Deps\stb\stb_image_write.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Asset\Cube.h" />
     <ClInclude Include="src\Asset\Light.h" />
     <ClInclude Include="src\Asset\Mesh.h" />
-    <ClInclude Include="src\Asset\ModelEntity.h" />
+    <ClInclude Include="src\Asset\Model.h" />
     <ClInclude Include="src\Asset\Object.h" />
-    <ClInclude Include="src\Asset\OpenAssetImportMesh.h" />
     <ClInclude Include="src\Asset\Plane.h" />
     <ClInclude Include="src\Asset\Sphere.h" />
     <ClInclude Include="src\Asset\Texture.h" />
@@ -1010,8 +1008,7 @@
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Asset\Cube.cpp" />
     <ClCompile Include="src\Asset\Mesh.cpp" />
-    <ClCompile Include="src\Asset\ModelEntity.cpp" />
-    <ClCompile Include="src\Asset\OpenAssetImportMesh.cpp" />
+    <ClCompile Include="src\Asset\Model.cpp" />
     <ClCompile Include="src\Asset\Plane.cpp" />
     <ClCompile Include="src\Asset\Sphere.cpp" />
     <ClCompile Include="src\Asset\Texture.cpp" />

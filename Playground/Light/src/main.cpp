@@ -14,9 +14,10 @@ struct PerFrameData
 {
     mat4 view;
     mat4 proj;
+    vec4 camPos;
 
-    PerFrameData(const mat4& v, const mat4& p) :
-        view(v), proj(p)
+    PerFrameData(const mat4& v, const mat4& p, const vec4& cp) :
+        view(v), proj(p), camPos(cp)
     {}
 };
 
@@ -44,11 +45,11 @@ public:
         LoadShaders();
         LoadTextures();
 
-        m_Plane = CreateRef<Plane>();
-        m_Plane->Init(10, 10, 5);
+        plane = CreateRef<Plane>();
+        plane->Init(10, 10, 5);
 
-        m_Sphere = CreateRef<Sphere>();
-        m_Sphere->Init(25, 25);
+        sphere = CreateRef<Sphere>();
+        sphere->Init(25, 25);
 
         m_Light = CreateRef<GLLight>();
         m_Light->Position = glm::vec4{-2.0f, 4.0f, -1.0f, 1.0};
@@ -59,13 +60,8 @@ public:
         m_Light->cutOff = 60.0f;
         m_Light->theta = 45.0f;
 
-        m_Ajax = CreateRef<OpenAssetImportMesh>();
-        m_Ajax->Load(Asset_dir + "Models\\bunny.obj");
-
-        m_Entity1 = CreateRef<ModelEntity>();
-        m_Entity1->Init(m_Ajax);
-        m_Entity1->AddShader(m_Shaders[2]);
-        m_Entity1->AddShader(m_Shaders[3]);
+        bunny = CreateRef<Model>();
+        bunny->Load(Asset_dir + "Models\\bunny.obj");
 
         m_FBO = CreateRef<Framebuffer>(2048, 2048);
         m_FBO->SetClearColour(glm::vec4{1.0});
@@ -78,14 +74,13 @@ public:
     }
 
 private:
-    shared_ptr<Sphere> m_Sphere;
-    shared_ptr<Plane> m_Plane;
     vector<shared_ptr<ShaderProgram>> m_Shaders;
     vector<shared_ptr<Texture>> m_Textures;
     shared_ptr<Framebuffer> m_FBO;
-
-    shared_ptr<OpenAssetImportMesh> m_Ajax;
-    shared_ptr<ModelEntity> m_Entity1;
+    
+    shared_ptr<Sphere> sphere;
+    shared_ptr<Plane> plane;
+    shared_ptr<Model> bunny;
     
     shared_ptr<GLBuffer> m_testBuffer;
     shared_ptr<GLBuffer> m_lightBuffer;
@@ -100,14 +95,14 @@ public:
     {
         auto Camera = Ciao::Application::GetInst().GetCamera();
         
-        const PerFrameData perFrameData{Camera->GetViewMatrix(), Camera->GetProjectionMatrix()};
+        const PerFrameData perFrameData{Camera->GetViewMatrix(), Camera->GetProjectionMatrix(), vec4(Camera->GetPosition(), 1.0)};
         glNamedBufferSubData(m_testBuffer->getHandle(), 0, kUniformBufferSize, &perFrameData);
 
         const GLLight lightData{*m_Light.get()};
         glNamedBufferSubData(m_lightBuffer->getHandle(), 0, LightBufferSize, &lightData);
         
         glBindTextureUnit(7, m_FBO->getTextureDepth().getHandle());
-        // CIAO_INFO("Mouse Pos: {}, {}, Scroll: {}", Mouse::X(), Mouse::Y(), Mouse::GetScroll());
+        
         m_Rot += 0.5f;
     }
 
@@ -122,35 +117,26 @@ public:
         m_FBO->bind();
         
         m_Shaders[3]->UseProgram();
-        glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 20.5f);
-        glm::mat4 lightView = glm::lookAt(glm::vec3(m_Light->Position), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        mat4 lightProjection = ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 20.5f);
+        mat4 lightView = lookAt(vec3(m_Light->Position), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
         m_Shaders[3]->SetUniform("lightSpaceMatrix", lightProjection * lightView);
         
         modelMatrixStack.Push();
             //modelMatrixStack.Translate(glm::vec3(0, -1.5, 0));
             m_Shaders[3]->SetUniform("modelMatrix", modelMatrixStack.Top());
-            m_Plane->Draw(m_Shaders[3]);
+            plane->Draw(m_Shaders[3]);
         modelMatrixStack.Pop();
         
         modelMatrixStack.Push();
             modelMatrixStack.Scale(glm::vec3(15, 15, 15));
             m_Shaders[3]->SetUniform("modelMatrix", modelMatrixStack.Top());
-            m_Ajax->Draw(m_Shaders[3]);
+            bunny->Draw(m_Shaders[3]);
         modelMatrixStack.Pop();
         
         m_FBO->unbind();
 
         m_Shaders[0]->UseProgram();
-        // m_Shaders[0]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
-        // m_Shaders[0]->SetUniform("viewMatrix", Camera->GetViewMatrix());
-        m_Shaders[0]->SetUniform("camPos", Camera->GetPosition());
-        // m_Shaders[0]->SetUniform("light.pos", m_Light->Position);
-        // m_Shaders[0]->SetUniform("light.dir", m_Light->Direction);
-        // m_Shaders[0]->SetUniform("light.ambient", m_Light->ambient);
-        // m_Shaders[0]->SetUniform("light.diffuse", m_Light->diffuse);
-        // m_Shaders[0]->SetUniform("light.specular", m_Light->specular);
-        // m_Shaders[0]->SetUniform("light.cutoff", cos(glm::radians(m_Light->cutOff)));
-        // m_Shaders[0]->SetUniform("light.theta", cos(glm::radians(m_Light->theta)));
+        //m_Shaders[0]->SetUniform("camPos", Camera->GetPosition());
         m_Shaders[0]->SetUniform("LightType", LightType);
         m_Shaders[0]->SetUniform("lightSpaceMatrix", lightProjection * lightView);
 
@@ -158,39 +144,28 @@ public:
             //modelMatrixStack.Translate(glm::vec3(0, -1.5, 0));
             m_Shaders[0]->SetUniform("modelMatrix", modelMatrixStack.Top());
             m_Shaders[0]->SetUniform("normalMatrix", ComputeNormalMatrix(modelMatrixStack.Top()));
-            m_Plane->Draw(m_Shaders[0]);
+            plane->Draw(m_Shaders[0]);
         modelMatrixStack.Pop();
 
         m_Shaders[2]->UseProgram();
-        // m_Shaders[2]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
-        // m_Shaders[2]->SetUniform("viewMatrix", Camera->GetViewMatrix());
-        m_Shaders[2]->SetUniform("camPos", Camera->GetPosition());
-        // m_Shaders[2]->SetUniform("light.pos", m_Light->Position);
-        // m_Shaders[2]->SetUniform("light.dir", m_Light->Direction);
-        // m_Shaders[2]->SetUniform("light.ambient", m_Light->ambient);
-        // m_Shaders[2]->SetUniform("light.diffuse", m_Light->diffuse);
-        // m_Shaders[2]->SetUniform("light.specular", m_Light->specular);
-        // m_Shaders[2]->SetUniform("light.cutoff", cos(glm::radians(m_Light->cutOff)));
-        // m_Shaders[2]->SetUniform("light.theta", cos(glm::radians(m_Light->theta)));
+        //m_Shaders[2]->SetUniform("camPos", Camera->GetPosition());
         m_Shaders[2]->SetUniform("LightType", LightType);
 
         modelMatrixStack.Push();
             modelMatrixStack.Scale(glm::vec3(15, 15, 15));
             m_Shaders[2]->SetUniform("modelMatrix", modelMatrixStack.Top());
             m_Shaders[2]->SetUniform("normalMatrix", ComputeNormalMatrix(modelMatrixStack.Top()));
-            m_Ajax->Draw(m_Shaders[2]);
+            bunny->Draw(m_Shaders[2]);
         modelMatrixStack.Pop();
 
 
         m_Shaders[1]->UseProgram();
-        // m_Shaders[1]->SetUniform("projMatrix", Camera->GetProjectionMatrix());
-        // m_Shaders[1]->SetUniform("viewMatrix", Camera->GetViewMatrix());
 
         modelMatrixStack.Push();
             modelMatrixStack.Translate(m_Light->Position);
             modelMatrixStack.Scale(glm::vec3(0.3));
             m_Shaders[1]->SetUniform("modelMatrix", modelMatrixStack.Top());
-            m_Sphere->Draw(m_Shaders[1]);
+            sphere->Draw(m_Shaders[1]);
         modelMatrixStack.Pop();
     }
 
@@ -204,11 +179,10 @@ public:
     {
         std::vector<Shader> Shaders;
         std::vector<std::string> ShaderFileNames;
-        ShaderFileNames.push_back("FloorShader.vert");
-        ShaderFileNames.push_back("FloorShader.frag");
-        ShaderFileNames.push_back("LightShader.vert");
-        ShaderFileNames.push_back("LightShader.frag");
-        ShaderFileNames.push_back("AjaxShader.frag");
+        ShaderFileNames.push_back("BaseShader.vert");
+        ShaderFileNames.push_back("SingleTexture.frag");
+        ShaderFileNames.push_back("LightSource.frag");
+        ShaderFileNames.push_back("BaseColor.frag");
         ShaderFileNames.push_back("shadowMapShader.vert");
         ShaderFileNames.push_back("shadowMapShader.frag");
 
@@ -217,36 +191,16 @@ public:
         // 创建 OpenGL Shader 程序
 
         /// 0 --- 地板的 Shader 
-        auto floorShader = std::make_shared<ShaderProgram>();
-        floorShader->CreateProgram();
-        floorShader->AddShaderToProgram(&Shaders[0]);
-        floorShader->AddShaderToProgram(&Shaders[1]);
-        floorShader->LinkProgram();
-        m_Shaders.push_back(floorShader);
+        AddShaderToPrograme(Shaders, m_Shaders, {0, 1});
 
-        /// 1 --- 光源的 Shader 
-        auto lightShader = std::make_shared<ShaderProgram>();
-        lightShader->CreateProgram();
-        lightShader->AddShaderToProgram(&Shaders[2]);
-        lightShader->AddShaderToProgram(&Shaders[3]);
-        lightShader->LinkProgram();
-        m_Shaders.push_back(lightShader);
+        /// 1 --- 光源的 Shader
+        AddShaderToPrograme(Shaders, m_Shaders, {0, 2});
 
-        /// 2 --- Ajax 的 Shader 
-        auto ajaxShader = std::make_shared<ShaderProgram>();
-        ajaxShader->CreateProgram();
-        ajaxShader->AddShaderToProgram(&Shaders[0]);
-        ajaxShader->AddShaderToProgram(&Shaders[4]);
-        ajaxShader->LinkProgram();
-        m_Shaders.push_back(ajaxShader);
+        /// 2 --- bunny 的 Shader
+        AddShaderToPrograme(Shaders, m_Shaders, {0, 3});
 
-        /// 3 --- shadow texture 的 Shader 
-        auto shadowTexShader = std::make_shared<ShaderProgram>();
-        shadowTexShader->CreateProgram();
-        shadowTexShader->AddShaderToProgram(&Shaders[5]);
-        shadowTexShader->AddShaderToProgram(&Shaders[6]);
-        shadowTexShader->LinkProgram();
-        m_Shaders.push_back(shadowTexShader);
+        /// 3 --- shadow texture 的 Shader
+        AddShaderToPrograme(Shaders, m_Shaders, {4, 5});
     }
 
     void LoadTextures()
@@ -273,11 +227,6 @@ public:
             auto Camera = Ciao::Application::GetInst().GetCamera();
             ImGui::Text("Camera Pos %.1f, %.1f, %.1f", Camera->GetPosition().x, Camera->GetPosition().y,
                         Camera->GetPosition().z);
-
-            // ImVec2 size = { 480, 320 };
-            // ImVec2 uv0 = { 0, 1 };
-            // ImVec2 uv1 = { 1, 0 };
-            // ImGui::Image((void*)(intptr_t) m_FBO->GetTextureId(), size, uv0, uv1);
         }
         ImGui::End();
 

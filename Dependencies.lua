@@ -8,7 +8,6 @@ IncludeDir["ImGui"]         = "%{wks.location}/Ciao/Deps/imgui"
 IncludeDir["Assimp"]        = "%{wks.location}/Ciao/Deps/assimp/include"
 IncludeDir["Stb"]           = "%{wks.location}/Ciao/Deps/stb"
 IncludeDir["Gli"]           = "%{wks.location}/Ciao/Deps/gli"
-IncludeDir["JSON"]           = "%{wks.location}/Ciao/Deps/json/single_include/nlohmann"
 
 
 LibraryDir = {}

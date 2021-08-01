@@ -21,10 +21,9 @@
 #include "Asset/Object.h"
 #include "Asset/Texture.h"
 #include "Asset/Sphere.h"
-#include "Asset/OpenAssetImportMesh.h"
+#include "Asset/Model.h"
 #include "Asset/Mesh.h"
 #include "Asset/Plane.h"
-#include "Asset/ModelEntity.h"
 #include "Asset/Light.h"
 
 #include "Util/MatrixStack.h"

@@ -15,8 +15,8 @@ namespace Ciao
 
         bool GetLinesFromFile(std::string sFile, bool bIncludePart, std::vector<std::string>* vResult);
 
-        bool IsLoaded();
-        glm::uint GetShaderID();
+        bool IsLoaded() const;
+        glm::uint GetShaderID() const;
 
     private:
         glm::uint m_shaderID;   /// shader 的id
@@ -33,7 +33,7 @@ namespace Ciao
         void CreateProgram();
         void DeleteProgram();
 
-        bool AddShaderToProgram(Shader* shShader);
+        bool AddShaderToProgram(const Shader* shShader);
         bool LinkProgram();
 
         void UseProgram();
@@ -87,6 +87,23 @@ namespace Ciao
             shader.LoadShader(GetAssetDir() + "Shaders\\" + shaderFileNames[i], iShaderType);
             shShaders.push_back(shader);
         }
+    }
+
+    static void AddShaderToPrograme(const std::vector<Shader>& shaders,
+                                std::vector<std::shared_ptr<ShaderProgram>>& shaderPrograms,
+                                const std::vector<GLuint>& indices)
+    {
+        auto tShader = std::make_shared<ShaderProgram>();
+        tShader->CreateProgram();
+
+        for (auto id : indices) {
+            CIAO_ASSERT(id < shaders.size(), "Shader index out of range!");
+
+            tShader->AddShaderToProgram(&shaders[id]);
+        }
+        tShader->LinkProgram();
+        
+        shaderPrograms.push_back(tShader);
     }
 
     class GLBuffer

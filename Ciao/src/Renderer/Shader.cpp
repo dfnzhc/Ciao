@@ -139,12 +139,12 @@ namespace Ciao
         return true;
     }
 
-    bool Shader::IsLoaded()
+    bool Shader::IsLoaded() const 
     {
         return m_isLoaded;
     }
 
-    glm::uint Shader::GetShaderID()
+    glm::uint Shader::GetShaderID() const
     {
         return m_shaderID;
     }
@@ -167,7 +167,7 @@ namespace Ciao
         glDeleteProgram(m_ProgramID);
     }
 
-    bool ShaderProgram::AddShaderToProgram(Shader* shShader)
+    bool ShaderProgram::AddShaderToProgram(const Shader* shShader)
     {
         if (!shShader->IsLoaded())
             return false;

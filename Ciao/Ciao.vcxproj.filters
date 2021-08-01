@@ -52,15 +52,6 @@
     <Filter Include="Deps\glm\glm\gtx">
       <UniqueIdentifier>{D165D049-BD5E-EF9B-E690-D420D2E8CEA7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Deps\json">
-      <UniqueIdentifier>{3AF86DD6-A662-224D-EFA0-D3F25B4A00A2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Deps\json\single_include">
-      <UniqueIdentifier>{6E6ACD3E-5A8F-1CBF-83DA-014F6F5E1BDD}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Deps\json\single_include\nlohmann">
-      <UniqueIdentifier>{38E246BD-A450-9C3C-ED39-573C59E791D8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Deps\stb">
       <UniqueIdentifier>{A95468A9-9521-C3B4-BE3A-B15CAA66F842}</UniqueIdentifier>
     </Filter>
@@ -2703,9 +2694,6 @@
     <ClInclude Include="Deps\glm\glm\vector_relational.hpp">
       <Filter>Deps\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="Deps\json\single_include\nlohmann\json.hpp">
-      <Filter>Deps\json\single_include\nlohmann</Filter>
-    </ClInclude>
     <ClInclude Include="Deps\stb\stb_image.h">
       <Filter>Deps\stb</Filter>
     </ClInclude>
@@ -2724,13 +2712,10 @@
     <ClInclude Include="src\Asset\Mesh.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\Asset\ModelEntity.h">
+    <ClInclude Include="src\Asset\Model.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
     <ClInclude Include="src\Asset\Object.h">
-      <Filter>src\Asset</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Asset\OpenAssetImportMesh.h">
       <Filter>src\Asset</Filter>
     </ClInclude>
     <ClInclude Include="src\Asset\Plane.h">
@@ -2816,10 +2801,7 @@
     <ClCompile Include="src\Asset\Mesh.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="src\Asset\ModelEntity.cpp">
-      <Filter>src\Asset</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Asset\OpenAssetImportMesh.cpp">
+    <ClCompile Include="src\Asset\Model.cpp">
       <Filter>src\Asset</Filter>
     </ClCompile>
     <ClCompile Include="src\Asset\Plane.cpp">

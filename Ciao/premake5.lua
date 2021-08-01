@@ -19,7 +19,6 @@ project "Ciao"
 		"%{IncludeDir.Gli}/**.inl",
 		"%{IncludeDir.Stb}/stb_image.h",
 		"%{IncludeDir.Stb}/stb_image_write.h",
-		"%{IncludeDir.JSON}/json.hpp",
     }
 
     includedirs

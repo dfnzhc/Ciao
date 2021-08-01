@@ -1,21 +1,21 @@
 ﻿#include "pch.h"
-#include "OpenAssetImportMesh.h"
+#include "Model.h"
 
 #include "Mesh.h"
 #include "Texture.h"
 
 namespace Ciao
 {
-    OpenAssetImportMesh::OpenAssetImportMesh()
+    Model::Model()
     {
     }
 
-    OpenAssetImportMesh::~OpenAssetImportMesh()
+    Model::~Model()
     {
         Release();
     }
 
-    bool OpenAssetImportMesh::Load(const std::string& Filepath)
+    bool Model::Load(const std::string& Filepath)
     {
         // read file via ASSIMP
         Assimp::Importer importer;
@@ -47,18 +47,18 @@ namespace Ciao
         return true;
     }
 
-    void OpenAssetImportMesh::Create()
+    void Model::Create()
     {
     }
 
-    void OpenAssetImportMesh::Draw(std::shared_ptr<ShaderProgram> shader)
+    void Model::Draw(std::shared_ptr<ShaderProgram> shader)
     {
         for (unsigned int i = 0; i < m_Meshes.size(); ++i) {
             m_Meshes[i]->Draw(shader);
         }
     }
 
-    void OpenAssetImportMesh::Release()
+    void Model::Release()
     {
         for (unsigned int i = 0; i < m_Meshes.size(); ++i) {
             delete m_Meshes[i];
@@ -67,7 +67,7 @@ namespace Ciao
         }
     }
 
-    void OpenAssetImportMesh::processNode(aiNode* node, const aiScene* scene)
+    void Model::processNode(aiNode* node, const aiScene* scene)
     {
         // process each mesh located at the current node
         for (unsigned int i = 0; i < node->mNumMeshes; i++) {
@@ -82,7 +82,7 @@ namespace Ciao
         }
     }
 
-    Mesh* OpenAssetImportMesh::processMesh(aiMesh* mesh, const aiScene* scene)
+    Mesh* Model::processMesh(aiMesh* mesh, const aiScene* scene)
     {
         std::vector<Vertex> vertices;
         std::vector<UINT> indices;
