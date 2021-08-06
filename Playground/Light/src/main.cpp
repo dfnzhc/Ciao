@@ -71,6 +71,8 @@ public:
 
         m_lightBuffer = CreateRef<GLBuffer>(LightBufferSize, nullptr, GL_DYNAMIC_STORAGE_BIT);
         glBindBufferRange(GL_UNIFORM_BUFFER, 1, m_lightBuffer->getHandle(), 0, LightBufferSize);
+
+        wLight = 13;
     }
 
 private:
@@ -87,6 +89,7 @@ private:
 
     shared_ptr<GLLight> m_Light;
     int LightType;
+    int wLight;
 
     float m_Rot = 0.0f;
 
@@ -128,7 +131,8 @@ public:
         modelMatrixStack.Pop();
         
         modelMatrixStack.Push();
-            modelMatrixStack.Scale(glm::vec3(15, 15, 15));
+            modelMatrixStack.Translate(glm::vec3(0, -0.5, 0));
+            modelMatrixStack.Scale(glm::vec3(20));
             m_Shaders[3]->SetUniform("modelMatrix", modelMatrixStack.Top());
             bunny->Draw(m_Shaders[3]);
         modelMatrixStack.Pop();
@@ -139,6 +143,7 @@ public:
         //m_Shaders[0]->SetUniform("camPos", Camera->GetPosition());
         m_Shaders[0]->SetUniform("LightType", LightType);
         m_Shaders[0]->SetUniform("lightSpaceMatrix", lightProjection * lightView);
+        m_Shaders[0]->SetUniform("wLight", wLight);
 
         modelMatrixStack.Push();
             //modelMatrixStack.Translate(glm::vec3(0, -1.5, 0));
@@ -152,7 +157,8 @@ public:
         m_Shaders[2]->SetUniform("LightType", LightType);
 
         modelMatrixStack.Push();
-            modelMatrixStack.Scale(glm::vec3(15, 15, 15));
+            modelMatrixStack.Translate(glm::vec3(0, -0.5, 0));
+            modelMatrixStack.Scale(glm::vec3(20));
             m_Shaders[2]->SetUniform("modelMatrix", modelMatrixStack.Top());
             m_Shaders[2]->SetUniform("normalMatrix", ComputeNormalMatrix(modelMatrixStack.Top()));
             bunny->Draw(m_Shaders[2]);
@@ -180,7 +186,7 @@ public:
         std::vector<Shader> Shaders;
         std::vector<std::string> ShaderFileNames;
         ShaderFileNames.push_back("BaseShader.vert");
-        ShaderFileNames.push_back("SingleTexture.frag");
+        ShaderFileNames.push_back("SingleTexture_PCSS.frag");
         ShaderFileNames.push_back("LightSource.frag");
         ShaderFileNames.push_back("BaseColor.frag");
         ShaderFileNames.push_back("shadowMapShader.vert");
@@ -241,6 +247,7 @@ public:
 
             ImGui::SliderFloat("Cutoff", (float*)&m_Light->cutOff, 50, 80);
             ImGui::SliderFloat("Theta", (float*)&m_Light->theta, 30, 50);
+            ImGui::SliderInt("Light Width", (int*)&wLight, 1, 50);
 
         }
         ImGui::End();

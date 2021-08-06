@@ -26,7 +26,7 @@ const mat4 scaleBias = mat4(
 	0.0, 0.5, 0.0, 0.0,
 	0.0, 0.0, 0.5, 0.0,
 	0.5, 0.5, 0.5, 1.0 );
-
+ 
 void main()
 {
 	gl_Position = projMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0f);
