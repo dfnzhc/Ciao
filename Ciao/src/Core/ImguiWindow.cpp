@@ -19,9 +19,15 @@ namespace Ciao {
         ImGuiIO& io = ImGui::GetIO();
         io.ConfigWindowsMoveFromTitleBarOnly = props.MoveFromTitleBarOnly;
         
+        
+        ImFontConfig cfg = ImFontConfig();
+        cfg.RasterizerMultiply = 1.5f;
+        cfg.PixelSnapH = true;
+        cfg.OversampleH = 1;
+        cfg.OversampleV = 1;
+        
         std::string fontFile = GetAssetDir() + "Fonts\\HarmonyOS_Sans_SC_Bold.ttf";
-        io.Fonts->AddFontFromFileTTF(fontFile.c_str(), 20.0f,
-        NULL, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+        io.Fonts->AddFontFromFileTTF(fontFile.c_str(), 20.0f, &cfg, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
         (void)io;
 
         auto window = Application::GetInst().GetWindow();

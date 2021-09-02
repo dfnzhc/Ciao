@@ -110,7 +110,7 @@ namespace Ciao
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glCreateTextures(m_Type, 1, &m_Handle);
-        int numMipmaps = getNumMipMapLevels2D(w, h);
+        int numMipmaps = getNumMipMapLevels2D(w, h); 
         glTextureStorage2D(m_Handle, numMipmaps, GL_RGBA8, w, h);
         glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, img);
         glGenerateTextureMipmap(m_Handle);

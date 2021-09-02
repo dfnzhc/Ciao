@@ -12,6 +12,8 @@ group "Dependencies"
     include "Ciao/Deps/imgui"
 group ""
 
+characterset ("Unicode")
+
 include "Ciao"
 include "Playground/Sandbox"
-include "Playground/Light"
+include "Playground/Shadow"

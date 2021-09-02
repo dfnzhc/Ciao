@@ -19,13 +19,6 @@ layout(std140, binding = 0) uniform PerFrameData
 uniform mat4 modelMatrix;
 uniform mat3 normalMatrix;
 uniform mat4 lightSpaceMatrix;
-
-// OpenGL's Z is in -1..1
-const mat4 scaleBias = mat4(
-	0.5, 0.0, 0.0, 0.0,
-	0.0, 0.5, 0.0, 0.0,
-	0.0, 0.0, 0.5, 0.0,
-	0.5, 0.5, 0.5, 1.0 );
  
 void main()
 {
@@ -35,5 +28,5 @@ void main()
 	normal = normalize(normalMatrix * aNormal);
 	worldPos = (modelMatrix * vec4(aPos, 1.0f)).xyz;
 
-	FragPosLightSpace = scaleBias * lightSpaceMatrix * vec4(worldPos, 1.0);
+	FragPosLightSpace = lightSpaceMatrix * vec4(worldPos, 1.0);
 }

@@ -37,6 +37,8 @@ namespace Ciao
     {
         ProcessMouseMovement();
         ProcessMouseScroll();
+
+        UpdateCameraVectors();
     }
 
     glm::mat4 Camera::GetViewMatrix()
@@ -56,6 +58,15 @@ namespace Ciao
 
     void Camera::ProcessMouseMovement()
     {
+        if (Mouse::ButtonStay(CIAO_INPUT_MOUSE_RIGHT)) {
+            float dx = -Mouse::DX() * MouseSensitivity * 0.1f, dy = Mouse::DY() * MouseSensitivity * 0.1f;
+            glm::vec3 offset = dx * m_RightDir + dy * m_UpDir;
+            
+            m_ViewPoint += offset;
+            m_Position += offset;
+            m_ViewDir = glm::normalize(m_Position - m_ViewPoint);
+        }
+        
         if (Mouse::ButtonStay(CIAO_INPUT_MOUSE_LEFT)) {
             float dx = Mouse::DX() * MouseSensitivity, dy = Mouse::DY() * MouseSensitivity;
             m_Yaw += dx;
@@ -71,11 +82,12 @@ namespace Ciao
             m_Position.z = cos(glm::radians(m_Pitch)) * sin(glm::radians(m_Yaw));
 
             m_Position *= m_Distance;
+            m_Position += m_ViewPoint;
 
             m_ViewDir = glm::normalize(m_Position - m_ViewPoint);
         }
 
-        UpdateCameraVectors();
+        
     }
 
     void Camera::ProcessMouseScroll()
@@ -90,7 +102,7 @@ namespace Ciao
 
         m_Position = m_ViewPoint + m_ViewDir * m_Distance;
         
-        UpdateCameraVectors();
+        //UpdateCameraVectors();
     }
 
     void Camera::UpdateCameraVectors()

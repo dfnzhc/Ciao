@@ -7,6 +7,8 @@ project "Sandbox"
     targetdir ( "%{wks.location}/bin/" .. outputDir )
     objdir ( "%{wks.location}/bin-int/" .. outputDir )
 
+	characterset ("Unicode")
+
 	files
 	{
 		"src/**.h",

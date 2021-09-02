@@ -1,11 +1,11 @@
-[20:52:21] [info] CIAO: SDL initializing SUCCESSED..
-[20:52:21] [info] CIAO: SDL version: 2.0.14
-[20:52:21] [info] CIAO: Create window SUCCESSED: Width - 1600 Height - 980
-[20:52:21] [info] CIAO: Display #0: current display mode is 1920x1080px @ 120hz.
-[20:52:21] [info] CIAO: Window initializing SUCCESSED..
-[20:52:21] [info] CIAO: OpenGL Info:
+[14:15:57] [info] CIAO: SDL initializing SUCCESSED..
+[14:15:57] [info] CIAO: SDL version: 2.0.14
+[14:15:57] [info] CIAO: Create window SUCCESSED: Width - 1600 Height - 980
+[14:15:57] [info] CIAO: Display #0: current display mode is 1920x1080px @ 120hz.
+[14:15:57] [info] CIAO: Window initializing SUCCESSED..
+[14:15:57] [info] CIAO: OpenGL Info:
   Vendor:	NVIDIA Corporation
-  Device:	GeForce GTX 1060/PCIe/SSE2
-  Version:	4.6.0 NVIDIA 456.43
-[20:52:21] [info] CLIENT: Sandbox::Init()
-[20:52:30] [info] CLIENT: Sandbox::Shutdown()
+  Device:	NVIDIA GeForce GTX 1060/PCIe/SSE2
+  Version:	4.6.0 NVIDIA 471.41
+[14:15:57] [info] CLIENT: Sandbox::Init()
+[14:16:09] [info] CLIENT: Sandbox::Shutdown()

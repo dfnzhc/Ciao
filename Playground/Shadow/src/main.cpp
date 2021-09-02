@@ -23,20 +23,20 @@ struct PerFrameData
 
 const GLsizeiptr kUniformBufferSize = sizeof(PerFrameData);
 
-class Sandbox : public Ciao::Scence
+class Shadow : public Ciao::Scence
 {
 public:
     Ciao::WindowProps GetWindowProps() override
     {
         Ciao::WindowProps props;
-        props.Title = "Sandbox Scence";
+        props.Title = "Shadow Scence";
 
         return props;
     }
 
     void Init() override
     {
-        CIAO_INFO("Sandbox::Init()");
+        CIAO_INFO("Shadow::Init()");
 
         uint32_t w, h;
         w = h = 0;
@@ -71,6 +71,8 @@ public:
         m_shadowFunc = 0;
         m_sampleCount = 50;
         m_filterSize = 10;
+        m_bias = 0.001f;
+        m_wlight = 1;
     }
 
 private:
@@ -91,6 +93,8 @@ private:
     int m_shadowFunc;
     int m_sampleCount;
     int m_filterSize;
+    float m_bias;
+    int m_wlight;
 
     float m_Rot = 0.0f;
 
@@ -150,6 +154,8 @@ public:
         m_Shaders[2]->SetUniform("shadowFunc", m_shadowFunc);
         m_Shaders[2]->SetUniform("sampleCount", m_sampleCount);
         m_Shaders[2]->SetUniform("filterSize", m_filterSize);
+        m_Shaders[2]->SetUniform("bias", m_bias);
+        m_Shaders[2]->SetUniform("wLight", m_wlight);
 
         modelMatrixStack.Push();
             m_Shaders[2]->SetUniform("modelMatrix", modelMatrixStack.Top());
@@ -196,7 +202,7 @@ public:
     
     void Shutdown() override
     {
-        CIAO_INFO("Sandbox::Shutdown()");
+        CIAO_INFO("Shadow::Shutdown()");
     }
 
     void LoadShaders()
@@ -238,6 +244,8 @@ public:
         }
     }
 
+    
+
     void ImguiRender() override
     {
         if (ImGui::Begin("Hello World")) {
@@ -249,19 +257,22 @@ public:
         ImGui::End();
 
         if (ImGui::Begin(u8"参数设置")) {
-            // ImGui::Text(u8"投影矩阵参数");
-            // ImGui::SliderFloat("Left", &l_left, -1, -10);
-            // ImGui::SliderFloat("Right", &l_right, 1, 10);
-            // ImGui::SliderFloat("Bottom", &l_bottom, -1, -10);
-            // ImGui::SliderFloat("Top", &l_top, 1, 10);
-            // ImGui::SliderFloat("Near", &l_near, -10, 10);
-            // ImGui::SliderFloat("Far", &l_far, 1, 100);
+            ImGui::Text(u8"投影矩阵参数");
+            ImGui::SliderFloat("Left", &l_left, -1, -10);
+            ImGui::SliderFloat("Right", &l_right, 1, 10);
+            ImGui::SliderFloat("Bottom", &l_bottom, -1, -10);
+            ImGui::SliderFloat("Top", &l_top, 1, 10);
+            ImGui::SliderFloat("Near", &l_near, -10, 10);
+            ImGui::SliderFloat("Far", &l_far, 1, 100);
             ImGui::Text(u8"设置阴影方法");
             ImGui::RadioButton("UseShadow", &m_shadowFunc, 0);
             ImGui::RadioButton("PCF (Percentage Closer Filter)", &m_shadowFunc, 1);
             ImGui::RadioButton("PCSS (Percentage Closer Soft Shadow)", &m_shadowFunc, 2);
             ImGui::SliderInt(u8"采样数量", &m_sampleCount, 1, 100);
             ImGui::SliderInt(u8"采样半径", &m_filterSize, 1, 30);
+            ImGui::SliderFloat(u8"深度偏移", &m_bias, 0.001, 0.1);
+            
+            ImGui::SliderInt(u8"PCSS - 光源宽度", &m_wlight, 1, 10);
             
             ImGui::SliderFloat3(u8"位置", (float*)&m_LightPos, -10.0, 10.0);
         }
@@ -280,7 +291,7 @@ public:
 
 Ciao::Scence* Ciao::CreateScence()
 {
-    return new Sandbox();
+    return new Shadow();
 }
 
 
