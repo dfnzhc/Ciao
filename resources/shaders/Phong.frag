@@ -203,7 +203,7 @@ void main()
 		visibility = useShadowMap(texShadow, shadowCoord);
 	}
 	else if (shadowFunc == 1) {
-		visibility = PCF(texShadow, FragPosLightSpace);
+		visibility = PCF(texShadow, shadowCoord);
 	}
 	else if (shadowFunc == 2) {
 		visibility = PCSS(texShadow, shadowCoord);

@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Playground\Sandb
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shadow", "Playground\Shadow\Shadow.vcxproj", "{4B0E0CD1-37B0-36A7-206B-4AFB0CACBDF7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VtxPulling", "Playground\VtxPulling\VtxPulling.vcxproj", "{C288773F-AE40-B98C-1748-92E8031F547D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -39,6 +41,10 @@ Global
 		{4B0E0CD1-37B0-36A7-206B-4AFB0CACBDF7}.Debug|x64.Build.0 = Debug|x64
 		{4B0E0CD1-37B0-36A7-206B-4AFB0CACBDF7}.Release|x64.ActiveCfg = Release|x64
 		{4B0E0CD1-37B0-36A7-206B-4AFB0CACBDF7}.Release|x64.Build.0 = Release|x64
+		{C288773F-AE40-B98C-1748-92E8031F547D}.Debug|x64.ActiveCfg = Debug|x64
+		{C288773F-AE40-B98C-1748-92E8031F547D}.Debug|x64.Build.0 = Debug|x64
+		{C288773F-AE40-B98C-1748-92E8031F547D}.Release|x64.ActiveCfg = Release|x64
+		{C288773F-AE40-B98C-1748-92E8031F547D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

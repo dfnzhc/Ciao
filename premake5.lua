@@ -16,4 +16,5 @@ characterset ("Unicode")
 
 include "Ciao"
 include "Playground/Sandbox"
+include "Playground/VtxPulling"
 include "Playground/Shadow"

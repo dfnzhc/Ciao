@@ -8,6 +8,7 @@
 #include "Mouse.h"
 #include "Camera.h"
 
+
 namespace Ciao
 { 
     Application* Application::m_pAppInst = nullptr;
@@ -78,7 +79,7 @@ namespace Ciao
                 m_Camera->Init();
                 m_Camera->SetProjectionMatrix(45.0f,
                     (float)m_Window->GetWidth() / (float)m_Window->GetHeight(),
-                    0.5f, 5000.0f);
+                    0.1f, 1000.0f);
 
                 m_Scence->Init();
             }
