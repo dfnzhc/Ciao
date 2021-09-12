@@ -45,6 +45,10 @@ public:
         LoadShaders();
         LoadTextures();
 
+        // MeshData meshData;
+        // LoadFile(meshData, (Asset_dir + "Models\\bistro\\Interior\\interior.obj").c_str());
+        // SaveMeshData(meshData, (Asset_dir + "Models\\bistro\\Interior\\test.meshes").c_str());
+
         plane = CreateRef<Plane>();
         plane->Init(10, 10, 5);
 
@@ -109,7 +113,7 @@ public:
 
     void Render() override
     {
-        Ciao::Application::GetInst().GetRenderManager()->SetClearColour(glm::vec4{0.0, 0.0, 0.0, 1.0});
+        Ciao::Application::GetInst().GetRenderManager()->SetClearColour(glm::vec4{1.0, 1.0, 1.0, 1.0});
         auto Camera = Ciao::Application::GetInst().GetCamera();
 
         glutil::MatrixStack modelMatrixStack;
@@ -173,15 +177,6 @@ public:
             m_Shaders[2]->SetUniform("modelMatrix", modelMatrixStack.Top());
             mary->Draw(m_Shaders[2]);
         modelMatrixStack.Pop();
-
-        // modelMatrixStack.Push();
-        //     modelMatrixStack.Translate(glm::vec3(0, -0.5, 0));
-        //     modelMatrixStack.Scale(glm::vec3(20));
-        //     m_Shaders[2]->SetUniform("modelMatrix", modelMatrixStack.Top());
-        //     m_Shaders[2]->SetUniform("normalMatrix", ComputeNormalMatrix(modelMatrixStack.Top()));
-        //     mary->Draw(m_Shaders[2]);
-        // modelMatrixStack.Pop();
-
 
         m_Shaders[0]->UseProgram();
 
@@ -249,13 +244,6 @@ public:
         ImGui::End();
 
         if (ImGui::Begin(u8"参数设置")) {
-            // ImGui::Text(u8"投影矩阵参数");
-            // ImGui::SliderFloat("Left", &l_left, -1, -10);
-            // ImGui::SliderFloat("Right", &l_right, 1, 10);
-            // ImGui::SliderFloat("Bottom", &l_bottom, -1, -10);
-            // ImGui::SliderFloat("Top", &l_top, 1, 10);
-            // ImGui::SliderFloat("Near", &l_near, -10, 10);
-            // ImGui::SliderFloat("Far", &l_far, 1, 100);
             ImGui::Text(u8"设置阴影方法");
             ImGui::RadioButton("UseShadow", &m_shadowFunc, 0);
             ImGui::RadioButton("PCF (Percentage Closer Filter)", &m_shadowFunc, 1);

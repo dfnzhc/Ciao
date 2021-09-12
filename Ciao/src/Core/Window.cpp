@@ -65,6 +65,11 @@ namespace Ciao
             CIAO_CORE_ERROR("Create OpenGL context FAILED: {}", SDL_GetError());
             return false;
         }
+
+        if(!SDL_GL_SetSwapInterval(0))
+        {
+            CIAO_CORE_ERROR("Set the swap interval FAILED: {}", SDL_GetError());
+        }
         
         gladLoadGLLoader(SDL_GL_GetProcAddress);
 

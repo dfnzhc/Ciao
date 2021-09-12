@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 #include "Texture.h"
-#include "Util/Bitmap.h"
-#include "Util/Utils.h"
+#include "Utils/Bitmap.h"
+#include "Utils/Utils.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>

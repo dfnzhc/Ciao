@@ -15,7 +15,7 @@
 
 namespace Ciao
 {
-    class Mesh;
+    class MeshObj;
     
     class Model : public Object
     {
@@ -29,9 +29,9 @@ namespace Ciao
     
     private:
         void processNode(aiNode *node, const aiScene *scene);
-        Mesh* processMesh(aiMesh *mesh, const aiScene *scene);
+        MeshObj* processMesh(aiMesh *mesh, const aiScene *scene);
     
-        std::vector<Mesh*> m_Meshes;
+        std::vector<MeshObj*> m_Meshes;
         std::string m_Directory;
         GLuint m_vao;
     };

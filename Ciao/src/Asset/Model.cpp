@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 #include "Model.h"
 
-#include "Mesh.h"
+#include "MeshObj.h"
 #include "Texture.h"
 
 namespace Ciao
@@ -82,7 +82,7 @@ namespace Ciao
         }
     }
 
-    Mesh* Model::processMesh(aiMesh* mesh, const aiScene* scene)
+    MeshObj* Model::processMesh(aiMesh* mesh, const aiScene* scene)
     {
         std::vector<Vertex> vertices;
         std::vector<UINT> indices;
@@ -139,7 +139,7 @@ namespace Ciao
         }
         
         // return a mesh object created from the extracted mesh data
-        auto resMesh = new Mesh();
+        auto resMesh = new MeshObj();
         resMesh->Init(
             std::forward<std::vector<Vertex>>(vertices),
             std::forward<std::vector<UINT>>(indices));

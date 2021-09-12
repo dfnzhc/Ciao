@@ -10,6 +10,7 @@ outputDir = "%{cfg.buildcfg}/%{prj.name}"
 group "Dependencies"
     include "Ciao/Deps/glad"
     include "Ciao/Deps/imgui"
+    include "Ciao/Deps/meshoptimizer"
 group ""
 
 characterset ("Unicode")

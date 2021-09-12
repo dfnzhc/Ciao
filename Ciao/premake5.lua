@@ -1,11 +1,11 @@
 project "Ciao"
     kind "StaticLib"
     language "C++"
-    cppdialect "C++17"
+    cppdialect "C++20"
     staticruntime "off"
 
     targetdir ( "%{wks.location}/bin/" .. outputDir )
-    objdir ( "%{wks.location}/bin-int/" .. outputDir )
+    objdir ( "%{prj.location}/obj/%{cfg.buildcfg}" )
 
     pchheader "pch.h"
 	pchsource "src/pch.cpp"
@@ -13,12 +13,6 @@ project "Ciao"
     files { 
         "src/**.h", 
         "src/**.cpp",
-        "%{IncludeDir.glm}/**.hpp",
-		"%{IncludeDir.glm}/**.inl",
-        "%{IncludeDir.Gli}/**.hpp",
-		"%{IncludeDir.Gli}/**.inl",
-		"%{IncludeDir.Stb}/stb_image.h",
-		"%{IncludeDir.Stb}/stb_image_write.h",
     }
 
     includedirs
@@ -27,7 +21,7 @@ project "Ciao"
 		"src/Asset/",
 		"src/Core/",
 		"src/Renderer/",
-		"src/Util/",
+		"src/Utils/",
         "%{IncludeDir.SDL2}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.glm}",
@@ -37,6 +31,7 @@ project "Ciao"
         "%{IncludeDir.Assimp}",
         "%{IncludeDir.Stb}",
         "%{IncludeDir.Gli}",
+        "%{IncludeDir.MeshOptimizer}",
 	}
 
     links
@@ -44,6 +39,7 @@ project "Ciao"
         "opengl32.lib",
         "Glad",
         "ImGui",
+        "MeshOptimizer",
         "%{Library.SDL2}",
         "%{Library.FreeImage}",
     }

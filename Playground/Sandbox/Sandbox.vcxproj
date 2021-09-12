@@ -43,14 +43,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\bin\Debug\Sandbox\</OutDir>
-    <IntDir>..\..\bin-int\Debug\Sandbox\</IntDir>
+    <IntDir>obj\Debug\</IntDir>
     <TargetName>Sandbox</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\bin\Release\Sandbox\</OutDir>
-    <IntDir>..\..\bin-int\Release\Sandbox\</IntDir>
+    <IntDir>obj\Release\</IntDir>
     <TargetName>Sandbox</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>

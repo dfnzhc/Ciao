@@ -5,7 +5,7 @@ project "Sandbox"
 	staticruntime "off"
 
     targetdir ( "%{wks.location}/bin/" .. outputDir )
-    objdir ( "%{wks.location}/bin-int/" .. outputDir )
+    objdir ( "%{prj.location}/obj/%{cfg.buildcfg}" )
 
 	characterset ("Unicode")
 

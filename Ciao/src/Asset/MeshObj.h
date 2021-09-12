@@ -19,11 +19,11 @@ namespace Ciao
         
     };
     
-    class Mesh : public Object
+    class MeshObj : public Object
     {
     public:
-        Mesh();
-        ~Mesh() override;
+        MeshObj();
+        ~MeshObj() override;
 
         void Init(std::vector<Vertex>&& vertices, std::vector<UINT>&& indices);
         void Create() override;

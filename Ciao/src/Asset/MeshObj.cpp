@@ -1,18 +1,18 @@
 ﻿#include "pch.h"
-#include "Mesh.h"
+#include "MeshObj.h"
 
 namespace Ciao
 {
-    Mesh::Mesh()
+    MeshObj::MeshObj()
     {
     }
 
-    Mesh::~Mesh()
+    MeshObj::~MeshObj()
     {
         Release();
     }
 
-    void Mesh::Init(std::vector<Vertex>&& vertices, std::vector<UINT>&& indices)
+    void MeshObj::Init(std::vector<Vertex>&& vertices, std::vector<UINT>&& indices)
     {
         m_Vertices = std::move(vertices);
         m_Indices = std::move(indices);
@@ -25,7 +25,7 @@ namespace Ciao
         Create();
     }
 
-    void Mesh::Create()
+    void MeshObj::Create()
     {
         m_VEBO.Bind();
 
@@ -53,7 +53,7 @@ namespace Ciao
         glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(glm::vec3)+sizeof(glm::vec2)));
     }
 
-    void Mesh::Draw(std::shared_ptr<ShaderProgram> shader)
+    void MeshObj::Draw(std::shared_ptr<ShaderProgram> shader)
     {
         shader->UseProgram();
         glBindVertexArray(m_VAO);
@@ -63,7 +63,7 @@ namespace Ciao
         glActiveTexture(GL_TEXTURE0);
     }
 
-    void Mesh::Release()
+    void MeshObj::Release()
     {
         glDeleteVertexArrays(1, &m_VAO);
         m_VEBO.Release();
