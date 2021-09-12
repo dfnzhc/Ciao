@@ -66,7 +66,7 @@ namespace Ciao
             return false;
         }
 
-        if(!SDL_GL_SetSwapInterval(0))
+        if(SDL_GL_SetSwapInterval(0) != 0)
         {
             CIAO_CORE_ERROR("Set the swap interval FAILED: {}", SDL_GetError());
         }

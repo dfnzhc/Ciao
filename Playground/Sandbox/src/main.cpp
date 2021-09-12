@@ -75,6 +75,9 @@ public:
         m_shadowFunc = 0;
         m_sampleCount = 50;
         m_filterSize = 10;
+
+        grid = CreateRef<Grid>();
+        grid->Create();
     }
 
 private:
@@ -85,6 +88,8 @@ private:
     shared_ptr<Sphere> sphere;
     shared_ptr<Plane> plane;
     shared_ptr<Model> mary;
+
+    shared_ptr<Grid> grid;
     
     shared_ptr<GLBuffer> m_testBuffer;
 
@@ -186,6 +191,8 @@ public:
             m_Shaders[0]->SetUniform("modelMatrix", modelMatrixStack.Top());
             sphere->Draw(m_Shaders[0]);
         modelMatrixStack.Pop();
+
+        grid->Draw(m_Shaders[3]);
     }
 
     
@@ -203,6 +210,8 @@ public:
         ShaderFileNames.push_back("shadow\\shadowMap.vert");
         ShaderFileNames.push_back("shadow\\shadowMap.frag");
         ShaderFileNames.push_back("Phong.frag");
+        ShaderFileNames.push_back("Grid.vert");
+        ShaderFileNames.push_back("Grid.frag");
 
         ReadShaderFile(ShaderFileNames, Shaders);
 
@@ -216,6 +225,9 @@ public:
 
         /// 2 --- Phong Shader
         AddShaderToPrograme(Shaders, m_Shaders, {0, 4});
+
+        /// 3 --- Grid Shader
+        AddShaderToPrograme(Shaders, m_Shaders, {5, 6});
     }
 
     void LoadTextures()

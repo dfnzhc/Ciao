@@ -25,6 +25,7 @@
 #include "Asset/MeshObj.h"
 #include "Asset/Plane.h"
 #include "Asset/Light.h"
+#include "Asset/Grid.h"
 
 #include "Utils/MatrixStack.h"
 #include "Utils/Bitmap.h"
