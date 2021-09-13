@@ -99,6 +99,7 @@
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Asset\Cube.h" />
+    <ClInclude Include="src\Asset\GLMesh.h" />
     <ClInclude Include="src\Asset\Grid.h" />
     <ClInclude Include="src\Asset\Light.h" />
     <ClInclude Include="src\Asset\MeshObj.h" />
@@ -134,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Asset\Cube.cpp" />
+    <ClCompile Include="src\Asset\GLMesh.cpp" />
     <ClCompile Include="src\Asset\Grid.cpp" />
     <ClCompile Include="src\Asset\MeshObj.cpp" />
     <ClCompile Include="src\Asset\Model.cpp" />

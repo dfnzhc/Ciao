@@ -100,6 +100,7 @@ namespace Ciao
         //     m_Distance += ZoomLength;
         // }
 
+        
         m_Position = m_ViewPoint + m_ViewDir * m_Distance;
         
         //UpdateCameraVectors();

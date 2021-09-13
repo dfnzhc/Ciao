@@ -1,4 +1,4 @@
-project "VtxPulling"
+project "P2_VtxPulling"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++20"

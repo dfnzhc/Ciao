@@ -11,11 +11,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "Ciao\Deps\imgui\Im
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MeshOptimizer", "Ciao\Deps\meshoptimizer\MeshOptimizer.vcxproj", "{35B4FA56-A174-768D-6AAF-BF0AD62EBB69}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Playground\Sandbox\Sandbox.vcxproj", "{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "P0_Sandbox", "Playground\Sandbox\P0_Sandbox.vcxproj", "{D38D23DC-BF45-6529-284D-3E851424001A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shadow", "Playground\Shadow\Shadow.vcxproj", "{4B0E0CD1-37B0-36A7-206B-4AFB0CACBDF7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "P1_Shadow", "Playground\Shadow\P1_Shadow.vcxproj", "{2B2FA3EB-9799-5762-E0D7-08084C8135B7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VtxPulling", "Playground\VtxPulling\VtxPulling.vcxproj", "{C288773F-AE40-B98C-1748-92E8031F547D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "P2_VtxPulling", "Playground\VtxPulling\P2_VtxPulling.vcxproj", "{03776751-6F37-E387-3872-2C05A4F12764}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "P3_Tessellation", "Playground\Tessellation\P3_Tessellation.vcxproj", "{BE103066-2A9C-9D2A-33AD-201F9FB7F92A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "P4_MeshDraw", "Playground\MeshDraw\P4_MeshDraw.vcxproj", "{8346FF26-EFFB-771C-78F0-71F3E4A46E20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,18 +43,26 @@ Global
 		{35B4FA56-A174-768D-6AAF-BF0AD62EBB69}.Debug|x64.Build.0 = Debug|x64
 		{35B4FA56-A174-768D-6AAF-BF0AD62EBB69}.Release|x64.ActiveCfg = Release|x64
 		{35B4FA56-A174-768D-6AAF-BF0AD62EBB69}.Release|x64.Build.0 = Release|x64
-		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Debug|x64.ActiveCfg = Debug|x64
-		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Debug|x64.Build.0 = Debug|x64
-		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Release|x64.ActiveCfg = Release|x64
-		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Release|x64.Build.0 = Release|x64
-		{4B0E0CD1-37B0-36A7-206B-4AFB0CACBDF7}.Debug|x64.ActiveCfg = Debug|x64
-		{4B0E0CD1-37B0-36A7-206B-4AFB0CACBDF7}.Debug|x64.Build.0 = Debug|x64
-		{4B0E0CD1-37B0-36A7-206B-4AFB0CACBDF7}.Release|x64.ActiveCfg = Release|x64
-		{4B0E0CD1-37B0-36A7-206B-4AFB0CACBDF7}.Release|x64.Build.0 = Release|x64
-		{C288773F-AE40-B98C-1748-92E8031F547D}.Debug|x64.ActiveCfg = Debug|x64
-		{C288773F-AE40-B98C-1748-92E8031F547D}.Debug|x64.Build.0 = Debug|x64
-		{C288773F-AE40-B98C-1748-92E8031F547D}.Release|x64.ActiveCfg = Release|x64
-		{C288773F-AE40-B98C-1748-92E8031F547D}.Release|x64.Build.0 = Release|x64
+		{D38D23DC-BF45-6529-284D-3E851424001A}.Debug|x64.ActiveCfg = Debug|x64
+		{D38D23DC-BF45-6529-284D-3E851424001A}.Debug|x64.Build.0 = Debug|x64
+		{D38D23DC-BF45-6529-284D-3E851424001A}.Release|x64.ActiveCfg = Release|x64
+		{D38D23DC-BF45-6529-284D-3E851424001A}.Release|x64.Build.0 = Release|x64
+		{2B2FA3EB-9799-5762-E0D7-08084C8135B7}.Debug|x64.ActiveCfg = Debug|x64
+		{2B2FA3EB-9799-5762-E0D7-08084C8135B7}.Debug|x64.Build.0 = Debug|x64
+		{2B2FA3EB-9799-5762-E0D7-08084C8135B7}.Release|x64.ActiveCfg = Release|x64
+		{2B2FA3EB-9799-5762-E0D7-08084C8135B7}.Release|x64.Build.0 = Release|x64
+		{03776751-6F37-E387-3872-2C05A4F12764}.Debug|x64.ActiveCfg = Debug|x64
+		{03776751-6F37-E387-3872-2C05A4F12764}.Debug|x64.Build.0 = Debug|x64
+		{03776751-6F37-E387-3872-2C05A4F12764}.Release|x64.ActiveCfg = Release|x64
+		{03776751-6F37-E387-3872-2C05A4F12764}.Release|x64.Build.0 = Release|x64
+		{BE103066-2A9C-9D2A-33AD-201F9FB7F92A}.Debug|x64.ActiveCfg = Debug|x64
+		{BE103066-2A9C-9D2A-33AD-201F9FB7F92A}.Debug|x64.Build.0 = Debug|x64
+		{BE103066-2A9C-9D2A-33AD-201F9FB7F92A}.Release|x64.ActiveCfg = Release|x64
+		{BE103066-2A9C-9D2A-33AD-201F9FB7F92A}.Release|x64.Build.0 = Release|x64
+		{8346FF26-EFFB-771C-78F0-71F3E4A46E20}.Debug|x64.ActiveCfg = Debug|x64
+		{8346FF26-EFFB-771C-78F0-71F3E4A46E20}.Debug|x64.Build.0 = Debug|x64
+		{8346FF26-EFFB-771C-78F0-71F3E4A46E20}.Release|x64.ActiveCfg = Release|x64
+		{8346FF26-EFFB-771C-78F0-71F3E4A46E20}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

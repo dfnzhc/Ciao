@@ -22,6 +22,12 @@
     <ClInclude Include="src\Asset\Cube.h">
       <Filter>Asset</Filter>
     </ClInclude>
+    <ClInclude Include="src\Asset\GLMesh.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Asset\Grid.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
     <ClInclude Include="src\Asset\Light.h">
       <Filter>Asset</Filter>
     </ClInclude>
@@ -84,9 +90,6 @@
     <ClInclude Include="src\Utils\Bitmap.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\MathUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="src\Utils\MatrixStack.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -113,6 +116,12 @@
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Asset\Cube.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Asset\GLMesh.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Asset\Grid.cpp">
       <Filter>Asset</Filter>
     </ClCompile>
     <ClCompile Include="src\Asset\MeshObj.cpp">

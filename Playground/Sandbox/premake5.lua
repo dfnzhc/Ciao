@@ -1,4 +1,4 @@
-project "Sandbox"
+project "P0_Sandbox"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"

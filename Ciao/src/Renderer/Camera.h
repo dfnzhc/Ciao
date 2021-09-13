@@ -24,7 +24,7 @@ namespace Ciao
         void ProcessMouseMovement();
         void ProcessMouseScroll();
 
-        static void UpdateDistance(float delta) { m_Distance += delta; }
+        static void UpdateDistance(float delta) { if (std::abs(m_Distance + delta) < 1e-3f) return; m_Distance += delta; }
 
         glm::vec3 GetPosition() { return m_Position; }
 

@@ -2,7 +2,9 @@
 
 layout(std140, binding = 0) uniform PerFrameData
 {
-    uniform mat4 MVP;
+    mat4 viewMatrix;
+    mat4 projMatrix;
+    vec4 cameraPos;
 };
 
 struct Vertex
@@ -28,10 +30,12 @@ vec2 getTexCoord(int i)
 
 layout (location=0) out vec2 uv;
 
+uniform mat4 modelMatrix;
+
 void main()
 {
     vec3 pos = getPosition(gl_VertexID);
-    gl_Position = MVP * vec4(pos, 1.0);
+    gl_Position = projMatrix * viewMatrix * modelMatrix * vec4(pos, 1.0);
 
     uv = getTexCoord(gl_VertexID);
 }

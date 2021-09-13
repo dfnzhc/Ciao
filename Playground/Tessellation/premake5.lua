@@ -1,11 +1,13 @@
-project "P1_Shadow"
+project "P3_Tessellation"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++17"
+	cppdialect "C++20"
 	staticruntime "off"
 
     targetdir ( "%{wks.location}/bin/" .. outputDir )
     objdir ( "%{prj.location}/obj/%{cfg.buildcfg}" )
+
+	characterset ("Unicode")
 
 	files
 	{

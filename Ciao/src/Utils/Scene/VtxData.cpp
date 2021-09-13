@@ -14,7 +14,7 @@ namespace Ciao
         CIAO_ASSERT(f, "No Mesh data FOUND!");
 
 
-        if (fread(&header, sizeof(header), 1, f) != sizeof(header))
+        if (fread(&header, 1, sizeof(header), f) != sizeof(header))
         {
             CIAO_CORE_ERROR("Unable to read mesh file.");
             exit(EXIT_FAILURE);
