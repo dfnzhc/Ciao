@@ -17,3 +17,4 @@ Archive/
 Resources/Shaders/bak/
 Ciao/obj/
 **/obj
+*.user
