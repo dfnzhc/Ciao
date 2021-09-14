@@ -254,7 +254,7 @@ public:
 Ciao::Scence* Ciao::CreateScence()
 {
     return new VtxPulling();
-}
+} 
 
 
 inline std::string Ciao::GetAssetDir()
