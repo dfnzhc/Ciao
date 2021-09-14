@@ -103,6 +103,15 @@ namespace Ciao
         }
         tShader->LinkProgram();
         
+        char buffer[8192];
+        GLsizei length = 0;
+        glGetProgramInfoLog(tShader->GetProgramID(), sizeof(buffer), &length, buffer);
+        if (length)
+        {
+            CIAO_CORE_ERROR("{}", buffer);
+            assert(false);
+        }
+        
         shaderPrograms.push_back(tShader);
     }
 

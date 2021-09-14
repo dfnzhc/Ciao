@@ -33,14 +33,17 @@ namespace Ciao
         const char* ext = strrchr(fileName, '.');
 
         const bool isKTX = ext && !strcmp(ext, ".ktx");
+        const bool isHDR = ext && !strcmp(ext, ".hdr");
 
-        switch (type) {
+        switch (type)
+        {
         case GL_TEXTURE_2D:
             {
                 int w = 0;
                 int h = 0;
                 int numMipmaps = 0;
-                if (isKTX) {
+                if (isKTX)
+                {
                     gli::texture gliTex = gli::load_ktx(fileName);
                     gli::gl GL(gli::gl::PROFILE_KTX);
                     gli::gl::format const format = GL.translate(gliTex.format(), gliTex.swizzles());
@@ -51,7 +54,17 @@ namespace Ciao
                     glTextureStorage2D(m_Handle, numMipmaps, format.Internal, w, h);
                     glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, format.External, format.Type, gliTex.data(0, 0, 0));
                 }
-                else {
+                else if (isHDR)
+                {
+                    const uint8_t* img = stbi_load(fileName, &w, &h, nullptr, STBI_rgb);
+                    CIAO_ASSERT(img, "Image load Faild: " + std::string(fileName));
+                    //numMipmaps = getNumMipMapLevels2D(w, h);
+                    glTextureStorage2D(m_Handle, 1, GL_RGB32F, w, h);
+                    glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, GL_RGB32F, GL_FLOAT, img);
+                    stbi_image_free((void*)img);
+                }
+                else
+                {
                     const uint8_t* img = stbi_load(fileName, &w, &h, nullptr, STBI_rgb_alpha);
                     CIAO_ASSERT(img, "Image load Faild: " + std::string(fileName));
                     numMipmaps = getNumMipMapLevels2D(w, h);
@@ -82,7 +95,7 @@ namespace Ciao
                 glTextureParameteri(m_Handle, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
                 glTextureParameteri(m_Handle, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
                 glTextureParameteri(m_Handle, GL_TEXTURE_BASE_LEVEL, 0);
-                glTextureParameteri(m_Handle, GL_TEXTURE_MAX_LEVEL, numMipmaps-1);
+                glTextureParameteri(m_Handle, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
                 glTextureParameteri(m_Handle, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
                 glTextureParameteri(m_Handle, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
                 glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
@@ -97,8 +110,8 @@ namespace Ciao
                 glGenerateTextureMipmap(m_Handle);
                 break;
             }
-            default:
-                CIAO_ASSERT(false, "No comparable texture format.");
+        default:
+            CIAO_ASSERT(false, "No comparable texture format.");
         }
 
         // m_HandleBindless = glGetTextureHandleARB(m_Handle);
@@ -110,7 +123,7 @@ namespace Ciao
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glCreateTextures(m_Type, 1, &m_Handle);
-        int numMipmaps = getNumMipMapLevels2D(w, h); 
+        int numMipmaps = getNumMipMapLevels2D(w, h);
         glTextureStorage2D(m_Handle, numMipmaps, GL_RGBA8, w, h);
         glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, img);
         glGenerateTextureMipmap(m_Handle);

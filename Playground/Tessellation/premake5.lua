@@ -1,7 +1,7 @@
 project "P3_Tessellation"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++20"
+	cppdialect "C++17"
 	staticruntime "off"
 
     targetdir ( "%{wks.location}/bin/" .. outputDir )

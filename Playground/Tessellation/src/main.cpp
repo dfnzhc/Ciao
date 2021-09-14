@@ -22,9 +22,10 @@ struct PerFrameData
     mat4 view;
     mat4 proj;
     vec4 camPos;
+    float tesselationScale;
 
-    PerFrameData(const mat4& v, const mat4& p, const vec4& cp) :
-        view(v), proj(p), camPos(cp)
+    PerFrameData(const mat4& v, const mat4& p, const vec4& cp, float ts) :
+        view(v), proj(p), camPos(cp), tesselationScale(ts)
     {}
 };
 
@@ -61,6 +62,8 @@ public:
         {
             vec3 pos;
             vec2 tc;
+
+            VertexData(const vec3& p, const vec2& t) : pos(p), tc(t) {};
         };
 
         const aiMesh* mesh = scene->mMeshes[0];
@@ -69,7 +72,7 @@ public:
         {
             const aiVector3D v = mesh->mVertices[i];
             const aiVector3D t = mesh->mTextureCoords[0][i];
-            vertices.push_back({ .pos = vec3(v.x, v.z, v.y), .tc = vec2(t.x, t.y) });
+            vertices.emplace_back(VertexData{ vec3(v.x, v.z, v.y), vec2(t.x, t.y) });
         }
 
         std::vector<unsigned int> indices;
@@ -99,6 +102,8 @@ public:
 
         grid = CreateRef<Grid>();
         grid->Create();
+
+        glCreateVertexArrays(1, &plane_vao);
     }
 
 private:
@@ -115,9 +120,14 @@ private:
 
     shared_ptr<Grid> grid;
 
+    GLuint plane_vao;
+
     unsigned m_indicesSize;
 
     float m_Rot = 0.0f;
+    float ts_= 1.0f;
+    float plane_TessFactor = 1.0;
+    float dispFactor = 1.0f;
 
 public:
     void Update() override
@@ -125,7 +135,7 @@ public:
         auto Camera = Ciao::Application::GetInst().GetCamera();
 
         
-        const PerFrameData perFrameData{Camera->GetViewMatrix(), Camera->GetProjectionMatrix(), vec4(Camera->GetPosition(), 1.0)};
+        const PerFrameData perFrameData{Camera->GetViewMatrix(), Camera->GetProjectionMatrix(), vec4(Camera->GetPosition(), 1.0), ts_};
         glNamedBufferSubData(m_pfb->getHandle(), 0, PerFrameBufferSize, &perFrameData);
 
         m_Rot += 0.5f;
@@ -141,13 +151,29 @@ public:
         
         m_Shaders[0]->UseProgram();
         glBindVertexArray(m_vao);
-        
+
         modelMatrixStack.Push();
-            modelMatrixStack.Scale(glm::vec3{3.0});
+            modelMatrixStack.Translate(glm::vec3{0, 5, 0});
+            modelMatrixStack.Scale(glm::vec3{5.0});
             modelMatrixStack.RotateY(m_Rot * 0.001f);
             m_Shaders[0]->SetUniform("modelMatrix", modelMatrixStack.Top());
-            glDrawElements(GL_TRIANGLES, m_indicesSize, GL_UNSIGNED_INT, nullptr);
+            glDrawElements(GL_PATCHES, m_indicesSize, GL_UNSIGNED_INT, nullptr);
         modelMatrixStack.Pop();
+
+        m_Shaders[2]->UseProgram();
+        m_Shaders[2]->SetUniform("planeTessFactor", plane_TessFactor);
+        m_Shaders[2]->SetUniform("dispFactor", dispFactor);
+        glBindVertexArray(plane_vao);   
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        modelMatrixStack.Push();
+            modelMatrixStack.Scale(glm::vec3{5.0});
+            // modelMatrixStack.RotateY(m_Rot * 0.001f);
+            m_Shaders[2]->SetUniform("modelMatrix", modelMatrixStack.Top());
+            m_Shaders[2]->SetUniform("normalMatrix", ComputeNormalMatrix(modelMatrixStack.Top()));
+        
+            glDrawArraysInstancedBaseInstance(GL_PATCHES, 0, 6, 1, 0);
+        modelMatrixStack.Pop();
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         
         grid->Draw(m_Shaders[1]);
     }
@@ -159,27 +185,38 @@ public:
         glDeleteBuffers(1, &m_dataIndices);
         glDeleteBuffers(1, &m_dataVertices);
         glDeleteVertexArrays(1, &m_vao);
+        glDeleteVertexArrays(1, &plane_vao);
     }
 
     void LoadShaders()
     {
         std::vector<Shader> Shaders;
         std::vector<std::string> ShaderFileNames;
-        ShaderFileNames.push_back("vtxpulling\\vp.vert");
-        ShaderFileNames.push_back("vtxpulling\\vp.geom");
-        ShaderFileNames.push_back("vtxpulling\\vp.frag");
+        ShaderFileNames.push_back("Tessellation\\ts.vert");
+        ShaderFileNames.push_back("Tessellation\\ts.tesc");
+        ShaderFileNames.push_back("Tessellation\\ts.tese");
+        ShaderFileNames.push_back("Tessellation\\ts.geom");
+        ShaderFileNames.push_back("Tessellation\\ts.frag");
         ShaderFileNames.push_back("Grid.vert");
         ShaderFileNames.push_back("Grid.frag");
+        ShaderFileNames.push_back("Tessellation\\plane.vert");
+        ShaderFileNames.push_back("Tessellation\\plane.tesc");
+        ShaderFileNames.push_back("Tessellation\\plane.tese");
+        // ShaderFileNames.push_back("Tessellation\\plane.geom");
+        ShaderFileNames.push_back("Tessellation\\plane.frag");
 
         ReadShaderFile(ShaderFileNames, Shaders);
 
         // 创建 OpenGL Shader 程序
 
         /// 0 --- vtxpulling 的 Shader
-        AddShaderToPrograme(Shaders, m_Shaders, {0, 1, 2});
+        AddShaderToPrograme(Shaders, m_Shaders, {0, 1, 2, 3, 4}); // 
 
         /// 1 --- Grid 的 Shader
-        AddShaderToPrograme(Shaders, m_Shaders, {3, 4});
+        AddShaderToPrograme(Shaders, m_Shaders, {5, 6});
+
+        /// 2 --- Plane 的 Shader
+        AddShaderToPrograme(Shaders, m_Shaders, {7, 8, 9, 10}); // 
     }
 
     void LoadTextures()
@@ -187,6 +224,9 @@ public:
         // 以 Textures 目录作为根目录
         std::vector<std::pair<GLenum, string>> TexInfo;
         TexInfo.push_back({GL_TEXTURE_2D, "Models\\rubber_duck\\textures\\Duck_baseColor.png"});
+        TexInfo.push_back({GL_TEXTURE_2D, "Textures\\FloorTiles\\broken_wall_diff_2k.jpg"});
+        TexInfo.push_back({GL_TEXTURE_2D, "Textures\\FloorTiles\\broken_wall_disp_2k.png"});
+        TexInfo.push_back({GL_TEXTURE_2D, "Textures\\FloorTiles\\broken_wall_nor_gl_2k.jpg"});
 
         for (unsigned int i = 0; i < TexInfo.size(); ++i) {
             auto Tex = CreateRef<Texture>(
@@ -199,7 +239,15 @@ public:
 
     void ImguiRender() override
     {
-        
+        if (ImGui::Begin(u8"设置")) {
+            ImGui::Text(u8"相机参数");
+            ImGui::SliderFloat(u8"曲面细分因子", &ts_, 1.0f, 2.0f, "%.1f");
+
+            ImGui::Text(u8"平面参数");
+            ImGui::SliderFloat(u8"平面曲面细分因子", &plane_TessFactor, 1.0, 64.0f, "%.1f");
+            ImGui::SliderFloat(u8"平面位移参数", &dispFactor, 1.0f, 5.0f, "%.1f");
+        }
+        ImGui::End();
     }
 };
 

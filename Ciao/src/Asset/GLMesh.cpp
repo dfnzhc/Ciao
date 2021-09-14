@@ -7,11 +7,11 @@ namespace Ciao
 {
     struct DrawElementsIndirectCommand
     {
-        GLuint count_;
-        GLuint instanceCount_;
-        GLuint firstIndex_;
-        GLuint baseVertex_;
-        GLuint baseInstance_;
+        GLuint count;
+        GLuint instanceCount;
+        GLuint firstIndex;
+        GLuint baseVertex;
+        GLuint baseInstance;
     };
 
     GLMesh::GLMesh(const MeshFileHeader& header, const Mesh* meshes, const uint32_t* indices,
@@ -53,11 +53,11 @@ namespace Ciao
         for (uint32_t i = 0; i != numCommands_; i++)
         {
             *cmd++ = {
-                .count_ = meshes[i].GetLODIndicesCount(0),
-                .instanceCount_ = 1,
-                .firstIndex_ = meshes[i].indexOffset,
-                .baseVertex_ = meshes[i].vertexOffset,
-                .baseInstance_ = 0
+                .count = meshes[i].GetLODIndicesCount(0),
+                .instanceCount = 1,
+                .firstIndex = meshes[i].indexOffset,
+                .baseVertex = meshes[i].vertexOffset,
+                .baseInstance = 0
             };
         }
 
