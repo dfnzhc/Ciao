@@ -19,12 +19,12 @@ layout(std140, binding = 0) uniform PerFrameData
 uniform mat4 modelMatrix;
 uniform mat3 normalMatrix;
 uniform mat4 lightSpaceMatrix;
- 
+
 void main()
 {
 	gl_Position = projMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0f);
 	tc = aTexCoord;
-	
+
 	normal = normalize(normalMatrix * aNormal);
 	worldPos = (modelMatrix * vec4(aPos, 1.0f)).xyz;
 

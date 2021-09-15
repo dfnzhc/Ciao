@@ -55,7 +55,7 @@ void main()
 {
     vec3 n = normalize(normal);
     
-    vec3 normalSample = texture(tex_Normal, uv).xyz;
-    n = GetNormal(n, normalize(cameraPos.xyz - worldPos), normalSample, uv);
-    out_FragColor = vec4(n, 1.0);
+    vec3 normalSample = texture(tex_Diffuse, uv).xyz;
+    // n = GetNormal(n, normalize(cameraPos.xyz - worldPos), normalSample, uv);
+    out_FragColor = vec4(normalSample, 1.0);
 }

@@ -4,8 +4,12 @@ layout (location = 0) in vec3 aPos;
 
 layout (location=0) out vec3 dir;
 
-uniform mat4 viewMatrix;
-uniform mat4 projMatrix;
+layout(std140, binding = 0) uniform PerFrameData
+{
+	mat4 viewMatrix;
+	mat4 projMatrix;
+	vec4 cameraPos;
+};
 
 const vec3 pos[8] = vec3[8](
 	vec3(-1.0,-1.0, 1.0),
@@ -39,6 +43,7 @@ void main()
 	int idx = indices[gl_VertexID];
 	dir = pos[idx].xyz;
 	
-	vec4 pos = projMatrix * viewMatrix * vec4(pos[idx], 1.0);
+	mat4 viewMat = mat4(mat3(viewMatrix));
+	vec4 pos = projMatrix * viewMat * vec4(pos[idx], 1.0);
     gl_Position = pos.xyww;
 }

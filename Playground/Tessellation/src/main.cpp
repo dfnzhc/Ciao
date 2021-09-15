@@ -103,7 +103,7 @@ public:
         grid = CreateRef<Grid>();
         grid->Create();
 
-        glCreateVertexArrays(1, &plane_vao);
+        glCreateVertexArrays(1, &skybox_vao);
     }
 
 private:
@@ -120,7 +120,7 @@ private:
 
     shared_ptr<Grid> grid;
 
-    GLuint plane_vao;
+    GLuint skybox_vao;
 
     unsigned m_indicesSize;
 
@@ -143,7 +143,7 @@ public:
 
     void Render() override
     {
-        Ciao::Application::GetInst().GetRenderManager()->SetClearColour(glm::vec4{1.0, 1.0, 1.0, 1.0});
+        Ciao::Application::GetInst().GetRenderManager()->SetClearColour(glm::vec4{0.2, 0.3, 0.7, 1.0});
         auto Camera = Ciao::Application::GetInst().GetCamera();
 
         glutil::MatrixStack modelMatrixStack;
@@ -163,8 +163,8 @@ public:
         m_Shaders[2]->UseProgram();
         m_Shaders[2]->SetUniform("planeTessFactor", plane_TessFactor);
         m_Shaders[2]->SetUniform("dispFactor", dispFactor);
-        glBindVertexArray(plane_vao);   
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glBindVertexArray(skybox_vao);   
+        
         modelMatrixStack.Push();
             modelMatrixStack.Scale(glm::vec3{5.0});
             // modelMatrixStack.RotateY(m_Rot * 0.001f);
@@ -173,7 +173,6 @@ public:
         
             glDrawArraysInstancedBaseInstance(GL_PATCHES, 0, 6, 1, 0);
         modelMatrixStack.Pop();
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         
         grid->Draw(m_Shaders[1]);
     }
@@ -185,7 +184,7 @@ public:
         glDeleteBuffers(1, &m_dataIndices);
         glDeleteBuffers(1, &m_dataVertices);
         glDeleteVertexArrays(1, &m_vao);
-        glDeleteVertexArrays(1, &plane_vao);
+        glDeleteVertexArrays(1, &skybox_vao);
     }
 
     void LoadShaders()
@@ -226,7 +225,7 @@ public:
         TexInfo.push_back({GL_TEXTURE_2D, "Models\\rubber_duck\\textures\\Duck_baseColor.png"});
         TexInfo.push_back({GL_TEXTURE_2D, "Textures\\FloorTiles\\broken_wall_diff_2k.jpg"});
         TexInfo.push_back({GL_TEXTURE_2D, "Textures\\FloorTiles\\broken_wall_disp_2k.png"});
-        TexInfo.push_back({GL_TEXTURE_2D, "Textures\\FloorTiles\\broken_wall_nor_gl_2k.jpg"});
+        TexInfo.push_back({GL_TEXTURE_2D, "Textures\\FloorTiles\\broken_wall_nor_gl_2k.hdr"});
 
         for (unsigned int i = 0; i < TexInfo.size(); ++i) {
             auto Tex = CreateRef<Texture>(

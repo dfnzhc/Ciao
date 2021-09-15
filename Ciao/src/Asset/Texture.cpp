@@ -54,13 +54,13 @@ namespace Ciao
                     glTextureStorage2D(m_Handle, numMipmaps, format.Internal, w, h);
                     glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, format.External, format.Type, gliTex.data(0, 0, 0));
                 }
-                else if (isHDR)
+                else if (isHDR) // TODO
                 {
-                    const uint8_t* img = stbi_load(fileName, &w, &h, nullptr, STBI_rgb);
+                    const float* img = stbi_loadf(fileName, &w, &h, nullptr, STBI_rgb);
                     CIAO_ASSERT(img, "Image load Faild: " + std::string(fileName));
-                    //numMipmaps = getNumMipMapLevels2D(w, h);
-                    glTextureStorage2D(m_Handle, 1, GL_RGB32F, w, h);
-                    glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, GL_RGB32F, GL_FLOAT, img);
+                    numMipmaps = 1;//getNumMipMapLevels2D(w, h);
+                    glTextureStorage2D(m_Handle, numMipmaps, GL_RGB16F, w, h);
+                    glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, GL_RGB16F, GL_FLOAT, img);
                     stbi_image_free((void*)img);
                 }
                 else
