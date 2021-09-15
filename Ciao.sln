@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "P3_Tessellation", "Playgrou
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "P4_MeshDraw", "Playground\MeshDraw\P4_MeshDraw.vcxproj", "{8346FF26-EFFB-771C-78F0-71F3E4A46E20}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "P5_PBR", "Playground\PBR\P5_PBR.vcxproj", "{ED3E70C6-D9E0-9A9C-C29B-AEF0AEDC21ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -63,6 +65,10 @@ Global
 		{8346FF26-EFFB-771C-78F0-71F3E4A46E20}.Debug|x64.Build.0 = Debug|x64
 		{8346FF26-EFFB-771C-78F0-71F3E4A46E20}.Release|x64.ActiveCfg = Release|x64
 		{8346FF26-EFFB-771C-78F0-71F3E4A46E20}.Release|x64.Build.0 = Release|x64
+		{ED3E70C6-D9E0-9A9C-C29B-AEF0AEDC21ED}.Debug|x64.ActiveCfg = Debug|x64
+		{ED3E70C6-D9E0-9A9C-C29B-AEF0AEDC21ED}.Debug|x64.Build.0 = Debug|x64
+		{ED3E70C6-D9E0-9A9C-C29B-AEF0AEDC21ED}.Release|x64.ActiveCfg = Release|x64
+		{ED3E70C6-D9E0-9A9C-C29B-AEF0AEDC21ED}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
