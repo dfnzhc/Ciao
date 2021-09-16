@@ -15,6 +15,7 @@ using namespace glm;
 
 const std::string Asset_dir{"..\\..\\Resources\\"};
 
+
 struct PerFrameData
 {
     mat4 view;
@@ -51,7 +52,6 @@ public:
 
         model_ = CreateRef<Model>();
         model_->Load(Asset_dir + "Models\\DamagedHelmet\\glTF\\DamagedHelmet.gltf");
-        
 
         grid = CreateRef<Grid>();
         grid->Create();
@@ -148,7 +148,10 @@ public:
         TexInfo.push_back({GL_TEXTURE_2D, "Models\\DamagedHelmet\\glTF\\Default_emissive.jpg"});
         TexInfo.push_back({GL_TEXTURE_2D, "Models\\DamagedHelmet\\glTF\\Default_metalRoughness.jpg"});
         TexInfo.push_back({GL_TEXTURE_2D, "Models\\DamagedHelmet\\glTF\\Default_normal.jpg"});
+        
         //TexInfo.push_back({GL_TEXTURE_CUBE_MAP, "Textures\\HDR\\Serpentine_Valley\\Serpentine_Valley_3k.hdr"});
+        //TexInfo.push_back({GL_TEXTURE_CUBE_MAP, "Textures\\HDR\\Serpentine_Valley\\Serpentine_Valley_Env.hdr"});
+        //TexInfo.push_back({GL_TEXTURE_2D, "Textures\\brdfLUT.ktx"});
 
         for (unsigned int i = 0; i < TexInfo.size(); ++i) {
             auto Tex = CreateRef<Texture>(
@@ -174,7 +177,7 @@ Ciao::Scence* Ciao::CreateScence()
 } 
 
 
-inline std::string Ciao::GetAssetDir()
+extern inline std::string Ciao::GetAssetDir()
 {
     return Asset_dir;
 }

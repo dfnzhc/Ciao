@@ -10,10 +10,9 @@
 #define INV_SQRT_TWO 0.70710678118654752440f
 
 const std::string Asset_Dir_For_Host{"Resources\\"};
-//const std::string Asset_Dir_For_Client{"..\\..\\Resources\\"};
 
 namespace Ciao {
-    inline std::string GetAssetDir();
+    extern inline std::string GetAssetDir();
 
     template<typename T>
     using Scope = std::unique_ptr<T>;

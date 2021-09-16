@@ -34,3 +34,4 @@
 #include "Utils/UtilsMath.h"
 #include "Utils/Scene/MeshConvert.h"
 #include "Utils/Scene/VtxData.h"
+#include "Utils/PrecomputUtils.h"

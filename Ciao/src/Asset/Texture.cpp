@@ -9,6 +9,7 @@
 #include <gli/gli.hpp>
 #include <gli/load_ktx.hpp>
 
+
 namespace Ciao
 {
     Texture::Texture(GLenum type, int width, int height, GLenum internalFormat)
@@ -54,14 +55,15 @@ namespace Ciao
                     glTextureStorage2D(m_Handle, numMipmaps, format.Internal, w, h);
                     glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, format.External, format.Type, gliTex.data(0, 0, 0));
                 }
-                else if (isHDR) // TODO
+                else if (isHDR) 
                 {
-                    const float* img = stbi_loadf(fileName, &w, &h, nullptr, STBI_rgb);
+                    const float* img = stbi_loadf(fileName, &w, &h, nullptr, 0);
                     CIAO_ASSERT(img, "Image load Faild: " + std::string(fileName));
-                    numMipmaps = 1;//getNumMipMapLevels2D(w, h);
-                    glTextureStorage2D(m_Handle, numMipmaps, GL_RGB16F, w, h);
+                    numMipmaps = getNumMipMapLevels2D(w, h);
+                    glTextureStorage2D(m_Handle, 0, GL_RGB16F, w, h);
                     glTextureSubImage2D(m_Handle, 0, 0, 0, w, h, GL_RGB16F, GL_FLOAT, img);
                     stbi_image_free((void*)img);
+                    break;
                 }
                 else
                 {
