@@ -1,5 +1,13 @@
 #include_part
 
+const float M_PI = 3.141592653589793;
+
+vec4 SRGBtoLINEAR(vec4 srgbIn)
+{
+	vec3 linOut = pow(srgbIn.xyz,vec3(2.2));
+
+	return vec4(linOut, srgbIn.a);
+}
 
 // http://www.thetenthplanet.de/archives/1180
 // modified to fix handedness of the resulting cotangent frame
