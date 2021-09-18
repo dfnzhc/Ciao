@@ -13,7 +13,7 @@ namespace Ciao
     void imguiTextureWindowGL(const char* title, uint32_t texId);
 
     template <typename T>
-    inline void MergeVectors(std::vector<T>& v1, const std::vector<T>& v2)
+    inline void mergeVectors(std::vector<T>& v1, const std::vector<T>& v2)
     {
         v1.insert(v1.end(), v2.begin(), v2.end());
     }

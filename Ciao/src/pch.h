@@ -34,6 +34,8 @@
 #include <queue>
 #include <stack>
 #include <array>
+#include <numeric>
+#include <map>
 
 #include <windows.h>
 

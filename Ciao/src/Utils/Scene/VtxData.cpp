@@ -118,10 +118,10 @@ namespace Ciao
 
         for (const MeshData* i : md)
         {
-            MergeVectors(m.indexData_, i->indexData_);
-            MergeVectors(m.vertexData_, i->vertexData_);
-            MergeVectors(m.meshes_, i->meshes_);
-            MergeVectors(m.boxes_, i->boxes_);
+            mergeVectors(m.indexData_, i->indexData_);
+            mergeVectors(m.vertexData_, i->vertexData_);
+            mergeVectors(m.meshes_, i->meshes_);
+            mergeVectors(m.boxes_, i->boxes_);
 
             /* 8 is the number of per-vertex attributes: position, normal + UV */
             /* 8 是顶点属性的大小: position, normal + UV */
