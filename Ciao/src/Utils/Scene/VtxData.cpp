@@ -21,7 +21,6 @@ namespace Ciao
         }
 
         out.meshes_.resize(header.meshCount);
-
         if (fread(out.meshes_.data(), sizeof(Mesh), header.meshCount, f) != header.meshCount)
         {
             CIAO_CORE_ERROR("Could not read mesh descriptors.");
