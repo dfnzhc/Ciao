@@ -21,7 +21,7 @@ project "P0_Sandbox"
 		"%{IncludeDir.spdlog}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.Glad}",
-        "%{IncludeDir.FreeImage}",
+        --"%{IncludeDir.FreeImage}",
         "%{IncludeDir.Assimp}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.Stb}",

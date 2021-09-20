@@ -3,9 +3,10 @@
 #include <map>
 #include <set>
 #include <vector>
-#include <assimp/Importer.hpp>         // C++ importer interface
-#include <assimp/scene.h>              // Output data structure
-#include <assimp/PostProcess.h>        // Post processing flags
+
+#include "assimp/Importer.hpp"         // C++ importer interface
+#include "assimp/scene.h"              // Output data structure
+#include "assimp/PostProcess.h"        // Post processing flags
 
 #include "Asset/Object.h"
 #include "Renderer/Shader.h"
@@ -16,7 +17,7 @@
 namespace Ciao
 {
     class MeshObj;
-    
+
     class Model : public Object
     {
     public:
@@ -26,15 +27,13 @@ namespace Ciao
         void Create() override;
         void Draw(std::shared_ptr<ShaderProgram> shader) override;
         void Release() override;
-    
+
     private:
-        void processNode(aiNode *node, const aiScene *scene);
-        MeshObj* processMesh(aiMesh *mesh, const aiScene *scene);
-    
+        void processNode(aiNode* node, const aiScene* scene);
+        MeshObj* processMesh(aiMesh* mesh, const aiScene* scene);
+
         std::vector<MeshObj*> m_Meshes;
         std::string m_Directory;
         GLuint m_vao;
     };
-
 }
-

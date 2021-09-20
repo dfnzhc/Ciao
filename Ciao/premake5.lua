@@ -32,6 +32,7 @@ project "Ciao"
         "%{IncludeDir.Stb}",
         "%{IncludeDir.Gli}",
         "%{IncludeDir.MeshOptimizer}",
+        "%{IncludeDir.rapidjson}",
 	}
 
     links
