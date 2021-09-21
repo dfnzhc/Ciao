@@ -84,7 +84,7 @@ namespace Ciao
             else iShaderType = GL_COMPUTE_SHADER;
             Shader shader;
 
-            shader.LoadShader(GetAssetDir() + "Shaders\\" + shaderFileNames[i], iShaderType);
+            shader.LoadShader(GetAssetDir() + "Shaders/" + shaderFileNames[i], iShaderType);
             shShaders.push_back(shader);
         }
     }

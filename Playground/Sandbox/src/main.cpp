@@ -2,13 +2,12 @@
 #include <Ciao.h>
 
 #include "imgui.h"
-#include "glm/gtc/matrix_transform.hpp"
 
 using namespace Ciao;
 using namespace std;
 using namespace glm;
 
-const std::string Asset_dir{"..\\..\\Resources\\"};
+const std::string Asset_dir{"../../Resources/"};
 
 struct PerFrameData
 {
@@ -23,7 +22,7 @@ struct PerFrameData
 
 const GLsizeiptr kUniformBufferSize = sizeof(PerFrameData);
 
-class Sandbox : public Ciao::Scence
+class Sandbox : public Ciao::Demo
 {
 public:
     Ciao::WindowProps GetWindowProps() override
@@ -49,6 +48,8 @@ public:
         // LoadFile(meshData, (Asset_dir + "Models\\bistro\\Interior\\interior.obj").c_str());
         // SaveMeshData(meshData, (Asset_dir + "Models\\bistro\\Interior\\test.meshes").c_str());
 
+        SceneConvert(Asset_dir + "scene.json");
+
         plane = CreateRef<Plane>();
         plane->Init(10, 10, 5);
 
@@ -58,7 +59,7 @@ public:
         m_LightPos = glm::vec3{-2.0f, 4.0f, 10.0f};
 
         mary = CreateRef<Model>();
-        mary->Load(Asset_dir + "Models\\mary\\Marry.obj");
+        mary->Load(Asset_dir + "Models/mary/Marry.obj");
 
         m_FBO = CreateRef<Framebuffer>(2048, 2048);
         m_FBO->SetClearColour(glm::vec4{1.0});
@@ -207,8 +208,8 @@ public:
         std::vector<std::string> ShaderFileNames;
         ShaderFileNames.push_back("BaseShader.vert");
         ShaderFileNames.push_back("LightSource.frag");
-        ShaderFileNames.push_back("shadow\\shadowMap.vert");
-        ShaderFileNames.push_back("shadow\\shadowMap.frag");
+        ShaderFileNames.push_back("shadow/shadowMap.vert");
+        ShaderFileNames.push_back("shadow/shadowMap.frag");
         ShaderFileNames.push_back("Phong.frag");
         ShaderFileNames.push_back("Grid.vert");
         ShaderFileNames.push_back("Grid.frag");
@@ -234,7 +235,7 @@ public:
     {
         // 以 Textures 目录作为根目录
         std::vector<std::pair<GLenum, string>> TexInfo;
-        TexInfo.push_back({GL_TEXTURE_2D, "Models\\mary\\MC003_Kozakura_Mari.png"});
+        TexInfo.push_back({GL_TEXTURE_2D, "Models/mary/MC003_Kozakura_Mari.png"});
 
         for (unsigned int i = 0; i < TexInfo.size(); ++i) {
             auto Tex = CreateRef<Texture>(
@@ -278,7 +279,7 @@ public:
     }
 };
 
-Ciao::Scence* Ciao::CreateScence()
+Ciao::Demo* Ciao::CreateScence()
 {
     return new Sandbox();
 }

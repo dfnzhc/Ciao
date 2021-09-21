@@ -5,7 +5,7 @@
 
 namespace Ciao
 {
-    class Scence;
+    class Demo;
     class Window;
     class RenderManager;
     class Camera;
@@ -17,13 +17,13 @@ namespace Ciao
         
         ~Application();
 
-        void Execute(Scence* scence);
+        void Execute(Demo* scence);
         inline void Shutdown() { m_isRunning = false; }
         
         inline std::shared_ptr<RenderManager> GetRenderManager() { return m_renderMgr; }
         inline std::shared_ptr<Camera> GetCamera() { return m_Camera; }
         inline std::shared_ptr<Window> GetWindow() { return m_Window; }
-        inline std::shared_ptr<Scence> GetScence() { return m_Scence; }
+        inline std::shared_ptr<Demo> GetScence() { return m_Scence; }
         
         void GetWindowSize(uint32_t& w, uint32_t& h);
     private:
@@ -33,7 +33,7 @@ namespace Ciao
         void Render();
 
     private:
-        std::shared_ptr<Scence> m_Scence;
+        std::shared_ptr<Demo> m_Scence;
         std::shared_ptr<RenderManager> m_renderMgr;
         std::shared_ptr<Camera> m_Camera;
         std::shared_ptr<Window> m_Window;

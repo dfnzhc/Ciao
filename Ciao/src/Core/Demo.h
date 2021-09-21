@@ -3,11 +3,11 @@
 
 namespace Ciao
 {
-    class Scence
+    class Demo
     {
     public:
-        Scence(){}
-        virtual ~Scence(){}
+        Demo(){}
+        virtual ~Demo(){}
 
         virtual WindowProps GetWindowProps() { return WindowProps(); }
 
@@ -21,6 +21,6 @@ namespace Ciao
         
     };
 
-    Scence* CreateScence();
+    Demo* CreateScence();
     
 }

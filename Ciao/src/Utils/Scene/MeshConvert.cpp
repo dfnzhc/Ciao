@@ -3,9 +3,6 @@
 
 namespace Ciao
 {
-    float g_meshScale = 0.01f;
-    bool g_calculateLODs = true;
-    
     void ProcessLods(std::vector<uint32_t>& indices, std::vector<float>& vertices,
                      std::vector<std::vector<uint32_t>>& outLods)
     {
@@ -64,7 +61,7 @@ namespace Ciao
     }
 
     Mesh ConvertAIMesh(const aiMesh* m, std::vector<float>& vertices, std::vector<uint32_t>& indices,
-                       uint32_t& idxOffset, uint32_t& vertOffset)
+                       uint32_t& idxOffset, uint32_t& vertOffset, float scale, bool calLODs)
     {
         const bool hasTexCoords = m->HasTextureCoords(0);
         const uint32_t streamElementSize = static_cast<uint32_t>(g_numElementsToStore * sizeof(float));
@@ -81,16 +78,16 @@ namespace Ciao
             const aiVector3D n = m->mNormals[i];
             const aiVector3D t = hasTexCoords ? m->mTextureCoords[0][i] : aiVector3D();
 
-            if (g_calculateLODs)
+            if (calLODs)
             {
                 srcVertices.push_back(v.x);
                 srcVertices.push_back(v.y);
                 srcVertices.push_back(v.z);
             }
 
-            vertices.push_back(v.x * g_meshScale);
-            vertices.push_back(v.y * g_meshScale);
-            vertices.push_back(v.z * g_meshScale);
+            vertices.push_back(v.x * scale);
+            vertices.push_back(v.y * scale);
+            vertices.push_back(v.z * scale);
 
             vertices.push_back(t.x);
             vertices.push_back(1.0f - t.y);
@@ -118,12 +115,12 @@ namespace Ciao
                 srcIndices.push_back(m->mFaces[i].mIndices[j]);
         }
 
-        if (!g_calculateLODs)
+        if (!calLODs)
             outLods.push_back(srcIndices);
         else
             ProcessLods(srcIndices, srcVertices, outLods);
 
-        CIAO_CORE_INFO("\nCalculated LOD count: {}.", (unsigned)outLods.size());
+        CIAO_CORE_INFO("Calculated LOD count: {}.", (unsigned)outLods.size());
 
         // 按 Lod 层次加载索引
         uint32_t numIndices = 0;

@@ -4,9 +4,6 @@
 
 namespace Ciao
 {
-    void saveStringList(FILE* f, const std::vector<std::string>& lines);
-    void loadStringList(FILE* f, const std::vector<std::string>& lines);
-
     //--------------------------------------------------------------------------------------
     // 向场景中加入一个节点
     //--------------------------------------------------------------------------------------

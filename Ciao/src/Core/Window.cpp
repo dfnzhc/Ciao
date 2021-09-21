@@ -3,7 +3,7 @@
 #include "Application.h"
 
 #include "Mouse.h"
-#include "Scence.h"
+#include "Demo.h"
 #include "Renderer/Camera.h"
 #include "Renderer/RenderManager.h"
 

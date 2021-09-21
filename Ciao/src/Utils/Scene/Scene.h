@@ -3,6 +3,10 @@
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
 
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 using glm::mat4;
 
 namespace Ciao
@@ -79,7 +83,7 @@ namespace Ciao
 
     inline std::string getNodeName(const Scene& scene, int node)
     {
-        int strID = scene.nameForNode_.contains(node) ? scene.nameForNode_.at(node) : -1;
+        int strID = scene.nameForNode_.find(node) != scene.nameForNode_.end() ? scene.nameForNode_.at(node) : -1;
         return (strID > -1) ? scene.names_[strID] : std::string();
     }
 

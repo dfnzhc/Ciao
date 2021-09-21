@@ -24,6 +24,8 @@
 #include <algorithm>
 #include <functional>
 #include <fstream>
+#include <execution>
+#include <filesystem>
 #include <string>
 #include <string>
 #include <sstream>
@@ -52,6 +54,5 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <assimp/cimport.h>
-
 
 #include <meshoptimizer.h>

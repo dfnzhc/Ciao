@@ -12,7 +12,7 @@ namespace Ciao
                      std::vector<std::vector<uint32_t>>& outLods);
 
     Mesh ConvertAIMesh(const aiMesh* m, std::vector<float>& vertices, std::vector<uint32_t>& indices,
-                       uint32_t& idxOffset, uint32_t& vertOffset);
+                       uint32_t& idxOffset, uint32_t& vertOffset, float scale = 0.01f, bool calLODs = true);
     
     void LoadFile(MeshData& meshData, const char* fileName);
 

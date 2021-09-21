@@ -5,7 +5,7 @@
 
 namespace Ciao
 {
-    MeshFileHeader LoadMeshData(const char* meshFile, MeshData& out)
+    MeshFileHeader loadMeshData(const char* meshFile, MeshData& out)
     {
         MeshFileHeader header;
 
@@ -49,7 +49,7 @@ namespace Ciao
         return header;
     }
 
-    void SaveMeshData(const MeshData& m, const char* fileName)
+    void saveMeshData(const MeshData& m, const char* fileName)
     {
         FILE* f = fopen(fileName, "wb");
         const MeshFileHeader header = {
@@ -69,7 +69,7 @@ namespace Ciao
         fclose(f);
     }
 
-    void SaveBoundingBoxes(const char* fileName, const std::vector<BoundingBox>& boxes)
+    void saveBoundingBoxes(const char* fileName, const std::vector<BoundingBox>& boxes)
     {
         FILE* f = fopen(fileName, "wb");
 
@@ -86,7 +86,7 @@ namespace Ciao
         fclose(f);
     }
 
-    void LoadBoundingBoxes(const char* fileName, std::vector<BoundingBox>& boxes)
+    void loadBoundingBoxes(const char* fileName, std::vector<BoundingBox>& boxes)
     {
         FILE* f = fopen(fileName, "rb");
 

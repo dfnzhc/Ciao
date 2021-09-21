@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 #include "Application.h"
-#include "Scence.h"
+#include "Demo.h"
 #include "Window.h"
 
 #include "Renderer/RenderManager.h"
@@ -33,9 +33,9 @@ namespace Ciao
     {
     }
 
-    void Application::Execute(Scence* scence)
+    void Application::Execute(Demo* scence)
     {
-        m_Scence = std::shared_ptr<Scence>(scence);
+        m_Scence = std::shared_ptr<Demo>(scence);
         if (Init()) {
             while (m_isRunning) {
                 Update();

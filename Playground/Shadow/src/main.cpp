@@ -23,7 +23,7 @@ struct PerFrameData
 
 const GLsizeiptr kUniformBufferSize = sizeof(PerFrameData);
 
-class Shadow : public Ciao::Scence
+class Shadow : public Ciao::Demo
 {
 public:
     Ciao::WindowProps GetWindowProps() override
@@ -289,7 +289,7 @@ public:
     }
 };
 
-Ciao::Scence* Ciao::CreateScence()
+Ciao::Demo* Ciao::CreateScence()
 {
     return new Shadow();
 }

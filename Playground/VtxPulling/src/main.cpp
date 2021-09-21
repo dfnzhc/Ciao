@@ -24,7 +24,7 @@ struct PerFrameData
 
 const GLsizeiptr PerFrameBufferSize = sizeof(PerFrameData);
 
-class VtxPulling : public Ciao::Scence
+class SceneTest : public Ciao::Demo
 {
 public:
     Ciao::WindowProps GetWindowProps() override
@@ -175,9 +175,9 @@ public:
     }
 };
 
-Ciao::Scence* Ciao::CreateScence()
+Ciao::Demo* Ciao::CreateScence()
 {
-    return new VtxPulling();
+    return new SceneTest();
 }
 
 

@@ -34,6 +34,14 @@ namespace Ciao
         return (int)std::distance(files.begin(), i);
     }
 
+    std::string replaceAll(const std::string& str, const std::string& oldSubStr, const std::string& newSubStr);
+
+    /* Convert 8-bit ASCII string to upper case */
+    std::string lowercaseString(const std::string& s);
+
+    void saveStringList(FILE* f, const std::vector<std::string>& lines);
+    void loadStringList(FILE* f, std::vector<std::string>& lines);
+
     // From https://stackoverflow.com/a/64152990/1182653
     // Delete a list of items from std::vector with indices in 'selection'
     template <class T, class Index = int>

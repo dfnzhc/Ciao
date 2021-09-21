@@ -116,8 +116,8 @@ namespace Ciao
             CIAO_ASSERT(false, "No comparable texture format.");
         }
 
-        // m_HandleBindless = glGetTextureHandleARB(m_Handle);
-        // glMakeTextureHandleResidentARB(m_HandleBindless);
+        m_HandleBindless = glGetTextureHandleARB(m_Handle);
+        glMakeTextureHandleResidentARB(m_HandleBindless);
     }
 
     Texture::Texture(int w, int h, const void* img)
@@ -132,22 +132,22 @@ namespace Ciao
         glTextureParameteri(m_Handle, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
         glTextureParameteri(m_Handle, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTextureParameteri(m_Handle, GL_TEXTURE_MAX_ANISOTROPY, 16);
-        // m_HandleBindless = glGetTextureHandleARB(m_Handle);
-        // glMakeTextureHandleResidentARB(m_HandleBindless);
+        m_HandleBindless = glGetTextureHandleARB(m_Handle);
+        glMakeTextureHandleResidentARB(m_HandleBindless);
     }
 
     Texture::~Texture()
     {
-        // if (m_HandleBindless)
-        //     glMakeTextureHandleNonResidentARB(m_HandleBindless);
+        if (m_HandleBindless)
+            glMakeTextureHandleNonResidentARB(m_HandleBindless);
         glDeleteTextures(1, &m_Handle);
     }
 
     Texture::Texture(Texture&& other)
-        : m_Type(other.m_Type), m_Handle(other.m_Handle)
+        : m_Type(other.m_Type), m_Handle(other.m_Handle), m_HandleBindless(other.m_HandleBindless)
     {
         other.m_Type = 0;
         other.m_Handle = 0;
-        //other.m_HandleBindless = 0;
+        other.m_HandleBindless = 0;
     }
 }

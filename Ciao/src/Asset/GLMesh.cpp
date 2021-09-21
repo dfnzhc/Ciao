@@ -1,19 +1,11 @@
 ﻿#include "pch.h"
+
 #include "GLMesh.h"
 
-#include "Scene/VtxData.h"
+#include "Utils/Scene/VtxData.h"
 
 namespace Ciao
 {
-    struct DrawElementsIndirectCommand
-    {
-        GLuint count;
-        GLuint instanceCount;
-        GLuint firstIndex;
-        GLuint baseVertex;
-        GLuint baseInstance;
-    };
-
     GLMesh::GLMesh(const MeshFileHeader& header, const Mesh* meshes, const uint32_t* indices,
                    const float* vertexData)
         : bufferIndices_(header.indexDataSize, indices, 0),

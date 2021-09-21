@@ -92,12 +92,21 @@ namespace Ciao
     static_assert(sizeof(DrawData) == sizeof(uint32_t) * 6);
     static_assert(sizeof(BoundingBox) == sizeof(float) * 6);
 
-    MeshFileHeader LoadMeshData(const char* meshFile, MeshData& out);
-    void SaveMeshData(const MeshData& m, const char* fileName);
+    MeshFileHeader loadMeshData(const char* meshFile, MeshData& out);
+    void saveMeshData(const MeshData& m, const char* fileName);
 
     void RecalculateBoundingBoxes(MeshData& m);
 
     // Combine a list of meshes to a single mesh container
     // 将一列 Mesh 顶点数据，整合到单个的容器中
     MeshFileHeader MergeMeshData(MeshData& m, const std::vector<MeshData*> md);
+
+    struct DrawElementsIndirectCommand
+    {
+        GLuint count;
+        GLuint instanceCount;
+        GLuint firstIndex;
+        GLuint baseVertex;
+        GLuint baseInstance;
+    };
 }

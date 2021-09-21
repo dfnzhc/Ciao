@@ -1,0 +1,11 @@
+[
+	{
+		"input_scene": "Models/bistro/Interior/interior.obj",
+		"output_mesh": "Meshes/bistro_interior.meshes",
+		"output_scene": "Meshes/bistro_interior.scene",
+		"output_materials": "Meshes/bistro_interior.materials",
+		"scale": 0.01,
+		"calculate_LODs": false,
+		"merge_instances": true
+	}
+]

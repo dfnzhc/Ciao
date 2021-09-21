@@ -3,6 +3,7 @@
 
 namespace Ciao
 {
+    struct SceneData;
     struct Mesh;
     struct MeshFileHeader;
 
@@ -23,6 +24,7 @@ namespace Ciao
 
         GLBuffer bufferIndices_;
         GLBuffer bufferVertices_;
+        
         GLBuffer bufferIndirect_;
     };
 }
