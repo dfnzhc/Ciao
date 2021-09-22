@@ -4,13 +4,11 @@ namespace Ciao
 {
     enum
     {
-        CIAO_INPUT_MOUSE_FIRST      = 1,
+        CIAO_INPUT_MOUSE_FIRST      = 0,
         CIAO_INPUT_MOUSE_LEFT       = CIAO_INPUT_MOUSE_FIRST,
+        CIAO_INPUT_MOUSE_RIGHT      = 1,
         CIAO_INPUT_MOUSE_MIDDLE     = 2,
-        CIAO_INPUT_MOUSE_RIGHT      = 3,
-        CIAO_INPUT_MOUSE_X1         = 4,
-        CIAO_INPUT_MOUSE_X2         = 5,
-        CIAO_INPUT_MOUSE_LAST       = CIAO_INPUT_MOUSE_X2
+        CIAO_INPUT_MOUSE_LAST       = CIAO_INPUT_MOUSE_MIDDLE
     };
     
     class Mouse
@@ -30,8 +28,12 @@ namespace Ciao
         static bool ButtonUp(int button);
         static bool ButtonStay(int button);
 
+        static void SetButtonState(int button, bool st);
+
+        static void UpdatePos(int nx, int ny);
+
     private:
-        constexpr static const int ButtonCount = 5;
+        constexpr static const int ButtonCount = 3;
 
         static int x, xLast;
         static int y, yLast;

@@ -34,11 +34,11 @@ void main()
     vec3 normalSample = vec3(0.0, 0.0, 0.0);
 
     if (mtl.albedoMap_ > 0) 
-        albedo = texture( sampler2D(unpackUint2x32(mtl.albedoMap_)), v_tc);
+        albedo = SRGBtoLINEAR(texture( sampler2D(unpackUint2x32(mtl.albedoMap_)), v_tc));
     if (mtl.normalMap_ > 0)
         normalSample = texture( sampler2D(unpackUint2x32(mtl.normalMap_)), v_tc).xyz;
 
-//    runAlphaTest(albedo.a, mtl.alphaTest_);
+    runAlphaTest(albedo.a, mtl.alphaTest_);
 
     // world-space normal
     vec3 n = normalize(v_worldNormal);
@@ -47,12 +47,12 @@ void main()
     if (length(normalSample) > 0.5)
         n = perturbNormal(normalSample, n, normalize(cameraPos.xyz - v_worldPos.xyz), v_tc);
 
-//    vec3 lightDir = normalize(vec3(-1.0, 1.0, 0.1));
-//
-//    float NdotL = clamp( dot( n, lightDir ), 0.3, 1.0 );
-//    
-//    albedo.rgb = pow(albedo.rgb * NdotL, vec3(1.0 / 2.2));
+    vec3 lightDir = normalize(vec3(-1.0, 1.0, 0.1));
+
+    float NdotL = clamp( dot( n, lightDir ), 0.3, 1.0 );
+    
+    albedo.rgb = pow(albedo.rgb * NdotL, vec3(1.0 / 2.2));
 
     
-    out_FragColor = vec4(vec3(normalSample), 1.0);
+    out_FragColor = vec4(vec3(albedo), 1.0);
 }

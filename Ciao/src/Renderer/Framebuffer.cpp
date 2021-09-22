@@ -3,9 +3,6 @@
 
 #include "Asset/Texture.h"
 
-#include "Application.h"
-#include "RenderManager.h"
-
 namespace Ciao
 {
     Framebuffer::Framebuffer(uint32_t width, uint32_t height, GLenum formatColor, GLenum formatDepth)
@@ -55,7 +52,5 @@ namespace Ciao
     void Framebuffer::unbind()
     {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        
-        Ciao::Application::GetInst().GetRenderManager()->Clear();
     }
 }

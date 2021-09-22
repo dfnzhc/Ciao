@@ -1,9 +1,8 @@
 ﻿#include "pch.h"
 #include "Mouse.h"
 
-#include <SDL_events.h>
-#include <SDL_mouse.h>
-#include <SDL_stdinc.h>
+#include "Application.h"
+#include "Window.h"
 
 namespace Ciao
 {
@@ -26,9 +25,15 @@ namespace Ciao
         xLast = x;
         yLast = y;
         buttonsLast = buttons;
-        Uint32 state = SDL_GetMouseState(&x, &y);
+
+        double xpos, ypos;
+        glfwGetCursorPos(Application::GetInst().GetWindow()->GetWindow(), &xpos, &ypos);
+
+        x = static_cast<int>(xpos);
+        y = static_cast<int>(ypos);
+
         for (int i = 0; i < ButtonCount; ++i) {
-            buttons[i] = state & SDL_BUTTON(i + 1);
+            buttons[i] = glfwGetMouseButton(Application::GetInst().GetWindow()->GetWindow(), i) == GLFW_PRESS;
         }
     }
 
@@ -36,7 +41,7 @@ namespace Ciao
     {
         if (button >= CIAO_INPUT_MOUSE_FIRST && button <= CIAO_INPUT_MOUSE_LAST)
         {
-            return buttons[button - 1];
+            return buttons[button];
         }
         return false;
     }
@@ -45,7 +50,7 @@ namespace Ciao
     {
         if (button >= CIAO_INPUT_MOUSE_FIRST && button <= CIAO_INPUT_MOUSE_LAST)
         {
-            return buttons[button - 1] && !buttonsLast[button - 1];
+            return buttons[button] && !buttonsLast[button];
         }
         return false;
     }
@@ -54,7 +59,7 @@ namespace Ciao
     {
         if (button >= CIAO_INPUT_MOUSE_FIRST && button <= CIAO_INPUT_MOUSE_LAST)
         {
-            return !buttons[button - 1] && buttonsLast[button - 1];
+            return !buttons[button] && buttonsLast[button];
         }
         return false;
     }
@@ -63,8 +68,26 @@ namespace Ciao
     {
         if (button >= CIAO_INPUT_MOUSE_FIRST && button <= CIAO_INPUT_MOUSE_LAST)
         {
-            return buttons[button - 1] && buttonsLast[button - 1];
+            return buttons[button] && buttonsLast[button];
         }
         return false;
+    }
+
+    void Mouse::SetButtonState(int button, bool st)
+    {
+        if (button >= CIAO_INPUT_MOUSE_FIRST && button <= CIAO_INPUT_MOUSE_LAST)
+        {
+            buttonsLast[button] = buttons[button];
+            buttons[button] = st;
+        }
+    }
+
+    void Mouse::UpdatePos(int nx, int ny)
+    {
+        xLast = x;
+        yLast = y;
+
+        x = nx;
+        y = ny;
     }
 }

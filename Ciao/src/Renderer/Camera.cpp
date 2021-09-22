@@ -86,8 +86,6 @@ namespace Ciao
 
             m_ViewDir = glm::normalize(m_Position - m_ViewPoint);
         }
-
-        
     }
 
     void Camera::ProcessMouseScroll()

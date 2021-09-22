@@ -76,6 +76,7 @@ namespace Ciao
                                               numCommands_((GLsizei)data.shapes_.size())
     {
         glCreateVertexArrays(1, &vao_);
+        glBindVertexArray(vao_);
         glVertexArrayElementBuffer(vao_, bufferIndices_.getHandle());
         glVertexArrayVertexBuffer(vao_, 0, bufferVertices_.getHandle(), 0, sizeof(vec3) + sizeof(vec3) + sizeof(vec2));
 

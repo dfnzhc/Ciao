@@ -37,6 +37,14 @@ public:
     {
         CIAO_INFO("Sandbox::Init()");
 
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        glClearColor(0.2f, 0.3f, 0.7f, 1.0);
+
         uint32_t w, h;
         w = h = 0;
         Ciao::Application::GetInst().GetWindowSize(w, h);
@@ -48,7 +56,7 @@ public:
         // LoadFile(meshData, (Asset_dir + "Models\\bistro\\Interior\\interior.obj").c_str());
         // SaveMeshData(meshData, (Asset_dir + "Models\\bistro\\Interior\\test.meshes").c_str());
 
-        SceneConvert(Asset_dir + "scene.json");
+        // SceneConvert(Asset_dir + "scene.json");
 
         plane = CreateRef<Plane>();
         plane->Init(10, 10, 5);
@@ -119,7 +127,9 @@ public:
 
     void Render() override
     {
-        Ciao::Application::GetInst().GetRenderManager()->SetClearColour(glm::vec4{1.0, 1.0, 1.0, 1.0});
+        glClearColor(0.2f, 0.3f, 0.7f, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         auto Camera = Ciao::Application::GetInst().GetCamera();
 
         glutil::MatrixStack modelMatrixStack;
@@ -171,8 +181,6 @@ public:
         m_Shaders[2]->SetUniform("withTexture", 1);
         modelMatrixStack.Push();
             modelMatrixStack.Translate(glm::vec3(-1.5, 0, 0));
-            // modelMatrixStack.Translate(glm::vec3(0, -0.5, 0));
-            // modelMatrixStack.Scale(glm::vec3(20));
             m_Shaders[2]->SetUniform("modelMatrix", modelMatrixStack.Top());
             mary->Draw(m_Shaders[2]);
         modelMatrixStack.Pop();

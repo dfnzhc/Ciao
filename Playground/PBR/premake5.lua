@@ -21,7 +21,7 @@ project "P5_PBR"
 		"%{IncludeDir.spdlog}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.Glad}",
-        "%{IncludeDir.FreeImage}",
+        "%{IncludeDir.glfw}",
         "%{IncludeDir.Assimp}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.Stb}",

@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-typedef union SDL_Event SDL_Event;
 namespace Ciao
 {
     struct ImguiWindowProperties
@@ -18,8 +17,6 @@ namespace Ciao
 
         void Create(const ImguiWindowProperties& props);
         void Shutdown();
-
-        void HandleSDLEvent(SDL_Event& e);
 
         void BeginRender();
         void EndRender();

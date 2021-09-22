@@ -2,9 +2,8 @@
 #include "ImguiWindow.h"
 #include "Application.h"
 
-#include <SDL.h>
 #include <imgui.h>
-#include <imgui_impl_sdl.h>
+#include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
 #include "Window.h"
@@ -31,26 +30,22 @@ namespace Ciao {
         (void)io;
 
         auto window = Application::GetInst().GetWindow();
-        ImGui_ImplSDL2_InitForOpenGL(window->GetSDLWindow(), window->GetSDLContext());
+        ImGui_ImplGlfw_InitForOpenGL(window->GetWindow(), true);
+        
         ImGui_ImplOpenGL3_Init("#version 460");
     }
 
     void ImguiWindow::Shutdown()
     {
         ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplSDL2_Shutdown();
+        ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
-    }
-
-    void ImguiWindow::HandleSDLEvent(SDL_Event& e)
-    {
-        ImGui_ImplSDL2_ProcessEvent(&e);
     }
 
     void ImguiWindow::BeginRender()
     {
         ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplSDL2_NewFrame(Application::GetInst().GetWindow()->GetSDLWindow());
+        ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
     }
 

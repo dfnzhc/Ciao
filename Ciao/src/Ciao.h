@@ -12,8 +12,6 @@
 
 #include "Renderer/Framebuffer.h"
 #include "Renderer/VertexBuffer.h"
-#include "Renderer/RenderCommand.h"
-#include "Renderer/RenderManager.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Camera.h"
 

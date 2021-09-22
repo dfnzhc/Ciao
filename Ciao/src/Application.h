@@ -7,7 +7,6 @@ namespace Ciao
 {
     class Demo;
     class Window;
-    class RenderManager;
     class Camera;
     
     class Application
@@ -18,12 +17,10 @@ namespace Ciao
         ~Application();
 
         void Execute(Demo* scence);
-        inline void Shutdown() { m_isRunning = false; }
         
-        inline std::shared_ptr<RenderManager> GetRenderManager() { return m_renderMgr; }
         inline std::shared_ptr<Camera> GetCamera() { return m_Camera; }
         inline std::shared_ptr<Window> GetWindow() { return m_Window; }
-        inline std::shared_ptr<Demo> GetScence() { return m_Scence; }
+        inline std::shared_ptr<Demo> GetScence() { return m_Demo; }
         
         void GetWindowSize(uint32_t& w, uint32_t& h);
     private:
@@ -32,13 +29,12 @@ namespace Ciao
         void Update();
         void Render();
 
+        void SetGLFWCallBack();
+
     private:
-        std::shared_ptr<Demo> m_Scence;
-        std::shared_ptr<RenderManager> m_renderMgr;
+        std::shared_ptr<Demo> m_Demo;
         std::shared_ptr<Camera> m_Camera;
         std::shared_ptr<Window> m_Window;
-
-        bool m_isRunning;
 
         Application();
         static Application* m_pAppInst;

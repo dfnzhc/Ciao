@@ -23,6 +23,7 @@ project "Ciao"
 		"src/Renderer/",
 		"src/Utils/",
         "%{IncludeDir.SDL2}",
+        "%{IncludeDir.glfw}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.spdlog}",
@@ -42,6 +43,7 @@ project "Ciao"
         "ImGui",
         "MeshOptimizer",
         "%{Library.SDL2}",
+        "%{Library.glfw}",
         "%{Library.FreeImage}",
     }
 
