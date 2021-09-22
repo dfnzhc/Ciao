@@ -89,7 +89,7 @@ namespace Ciao
         glVertexArrayAttribBinding(vao_, 1, 0);
         // position
         glEnableVertexArrayAttrib(vao_, 2);
-        glVertexArrayAttribFormat(vao_, 2, 3, GL_FLOAT, GL_TRUE, sizeof(vec3) + sizeof(glm::vec2));
+        glVertexArrayAttribFormat(vao_, 2, 3, GL_FLOAT, GL_TRUE, sizeof(vec3) + sizeof(vec2));
         glVertexArrayAttribBinding(vao_, 2, 0);
 
         std::vector<uint8_t> drawCommands;
@@ -142,6 +142,6 @@ namespace Ciao
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, kBufferIndex_ModelMatrices, bufferModelMatrices_.getHandle());
         glBindBuffer(GL_DRAW_INDIRECT_BUFFER, bufferIndirect_.getHandle());
         glBindBuffer(GL_PARAMETER_BUFFER, bufferIndirect_.getHandle());
-        glMultiDrawElementsIndirectCount(GL_TRIANGLES, GL_UNSIGNED_INT, (const void*)sizeof(GLsizei), 0, (GLsizei)numCommands_, 0);
+        glMultiDrawElementsIndirectCount(GL_TRIANGLES, GL_UNSIGNED_INT, (const void*)sizeof(GLsizei), 0, numCommands_, 0);
     }
 }

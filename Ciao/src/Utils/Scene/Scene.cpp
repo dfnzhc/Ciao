@@ -16,7 +16,7 @@ namespace Ciao
             scene.globalTransform_.push_back(mat4{1.0f});
         }
 
-        scene.hierarchy_.push_back({.parent_ = parent, .level_ = level});
+        scene.hierarchy_.push_back({.parent_ = parent, .lastSibling_ = -1});
 
         // 把节点加入到层次结构之后，需要更新节点间的关系
         if (parent > -1)
@@ -368,7 +368,7 @@ namespace Ciao
         };
 
         scene.nameForNode_[0] = 0;
-        scene.names_ = { "NewRoot" };
+        scene.names_ = {"NewRoot"};
 
         scene.localTransform_.push_back(glm::mat4(1.f));
         scene.globalTransform_.push_back(glm::mat4(1.f));
@@ -386,7 +386,7 @@ namespace Ciao
             scene.materialNames_ = scenes[0]->materialNames_;
 
         // FIXME: too much logic (for all the components in a scene, though mesh data and materials go separately - there are dedicated data lists)
-        for (const Scene* s: scenes)
+        for (const Scene* s : scenes)
         {
             mergeVectors(scene.localTransform_, s->localTransform_);
             mergeVectors(scene.globalTransform_, s->globalTransform_);
@@ -401,9 +401,9 @@ namespace Ciao
 
             shiftNodes(scene, offs, nodeCount, offs);
 
-            mergeMaps(scene.meshes_,          s->meshes_,          offs, mergeMeshes ? meshOffs : 0);
+            mergeMaps(scene.meshes_, s->meshes_, offs, mergeMeshes ? meshOffs : 0);
             mergeMaps(scene.materialForNode_, s->materialForNode_, offs, mergeMaterials ? materialOfs : 0);
-            mergeMaps(scene.nameForNode_,     s->nameForNode_,     offs, nameOffs);
+            mergeMaps(scene.nameForNode_, s->nameForNode_, offs, nameOffs);
 
             offs += nodeCount;
 
@@ -420,7 +420,7 @@ namespace Ciao
         // fixing 'nextSibling' fields in the old roots (zero-index in all the scenes)
         offs = 1;
         int idx = 0;
-        for (const Scene* s: scenes)
+        for (const Scene* s : scenes)
         {
             int nodeCount = (int)s->hierarchy_.size();
             bool isLast = (idx == scenes.size() - 1);
@@ -439,7 +439,7 @@ namespace Ciao
         }
 
         // now shift levels of all nodes below the root
-        for (auto i = scene.hierarchy_.begin() + 1 ; i != scene.hierarchy_.end() ; i++)
+        for (auto i = scene.hierarchy_.begin() + 1; i != scene.hierarchy_.end(); i++)
             i->level_++;
     }
 
@@ -457,7 +457,8 @@ namespace Ciao
     // Recurse down from a node and collect all nodes which are already marked for deletion
     static void collectNodesToDelete(const Scene& scene, int node, std::vector<uint32_t>& nodes)
     {
-        for (int n = scene.hierarchy_[node].firstChild_; n != - 1 ; n = scene.hierarchy_[n].nextSibling_) {
+        for (int n = scene.hierarchy_[node].firstChild_; n != - 1; n = scene.hierarchy_[n].nextSibling_)
+        {
             addUniqueIdx(nodes, n);
             collectNodesToDelete(scene, n, nodes);
         }
@@ -471,29 +472,28 @@ namespace Ciao
         if (node == -1)
             return -1;
 
-        return (newIndices[node] == -1) ?
-            findLastNonDeletedItem(scene, newIndices, scene.hierarchy_[node].nextSibling_) :
-            newIndices[node];
+        return (newIndices[node] == -1) ? findLastNonDeletedItem(scene, newIndices, scene.hierarchy_[node].nextSibling_) : newIndices[node];
     }
 
     void shiftMapIndices(std::unordered_map<uint32_t, uint32_t>& items, const std::vector<int>& newIndices)
     {
         std::unordered_map<uint32_t, uint32_t> newItems;
-        for (const auto& m: items) {
+        for (const auto& m : items)
+        {
             int newIndex = newIndices[m.first];
             if (newIndex != -1)
                 newItems[newIndex] = m.second;
         }
         items = newItems;
     }
-    
+
     // Delete a collection of nodes from a scenegraph
     // Approximately an O ( N * Log(N) * Log(M)) algorithm (N = scene.size, M = nodesToDelete.size) to delete a collection of nodes from scene graph
     void deleteSceneNodes(Scene& scene, const std::vector<uint32_t>& nodesToDelete)
     {
         // 0) Add all the nodes down below in the hierarchy
         auto indicesToDelete = nodesToDelete;
-        for (auto i: indicesToDelete)
+        for (auto i : indicesToDelete)
             collectNodesToDelete(scene, i, indicesToDelete);
 
         // aux array with node indices to keep track of the moved ones [moved = [](node) { return (node != nodes[node]); ]
@@ -506,12 +506,13 @@ namespace Ciao
 
         // 1.b) Make a newIndices[oldIndex] mapping table
         std::vector<int> newIndices(oldSize, -1);
-        for(int i = 0 ; i < nodes.size() ; i++)
+        for (int i = 0; i < nodes.size(); i++)
             newIndices[nodes[i]] = i;
 
         // 2) Replace all non-null parent/firstChild/nextSibling pointers in all the nodes by new positions
-        auto nodeMover = [&scene, &newIndices](Hierarchy& h) {
-            return Hierarchy {
+        auto nodeMover = [&scene, &newIndices](Hierarchy& h)
+        {
+            return Hierarchy{
                 .parent_ = (h.parent_ != -1) ? newIndices[h.parent_] : -1,
                 .firstChild_ = findLastNonDeletedItem(scene, newIndices, h.firstChild_),
                 .nextSibling_ = findLastNonDeletedItem(scene, newIndices, h.nextSibling_),

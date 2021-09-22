@@ -111,7 +111,7 @@ namespace Ciao
             meshData.meshes_.push_back(ConvertAIMesh(scene->mMeshes[i], meshData.vertexData_, meshData.indexData_,
                                                      indexOffset, vertexOffset, cfg.scale, cfg.calculateLODs));
         }
-
+        
         RecalculateBoundingBoxes(meshData);
         saveMeshData(meshData, cfg.outputMesh.c_str());
 

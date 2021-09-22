@@ -44,8 +44,8 @@ void main()
     vec3 n = normalize(v_worldNormal);
 
     // normal mapping: skip missing normal maps
-//    if (length(normalSample) > 0.5)
-//        n = perturbNormal(normalSample, n, normalize(cameraPos.xyz - v_worldPos.xyz), v_tc);
+    if (length(normalSample) > 0.5)
+        n = perturbNormal(normalSample, n, normalize(cameraPos.xyz - v_worldPos.xyz), v_tc);
 
 //    vec3 lightDir = normalize(vec3(-1.0, 1.0, 0.1));
 //
@@ -54,5 +54,5 @@ void main()
 //    albedo.rgb = pow(albedo.rgb * NdotL, vec3(1.0 / 2.2));
 
     
-    out_FragColor = vec4(vec3(n), 1.0);
+    out_FragColor = vec4(vec3(normalSample), 1.0);
 }

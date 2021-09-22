@@ -19,3 +19,6 @@ Ciao/obj/
 **/obj
 *.user
 *.log
+**.meshes
+**.scene
+**.materials

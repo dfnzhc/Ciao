@@ -47,13 +47,15 @@ public:
         LoadShaders();
         // LoadTextures();
 
+        // SceneConvert(Asset_dir + "scene.json");
+
         m_pfb = make_shared<GLBuffer>(PerFrameBufferSize, nullptr, GL_DYNAMIC_STORAGE_BIT);
         glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_pfb->getHandle(), 0, PerFrameBufferSize);
 
         grid = CreateRef<Grid>();
         grid->Create();
 
-        SceneData sceneData {"Meshes/test2.meshes", "Meshes/test2.scene", "Meshes/test2.materials"};
+        SceneData sceneData {"Meshes/bistro_interior.meshes", "Meshes/bistro_interior.scene", "Meshes/bistro_interior.materials"};
         scene_ = CreateRef<GLScene>(sceneData);
         int i = 0;
     }
