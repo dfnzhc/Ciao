@@ -22,12 +22,10 @@ project "Ciao"
 		"src/Core/",
 		"src/Renderer/",
 		"src/Utils/",
-        "%{IncludeDir.SDL2}",
         "%{IncludeDir.glfw}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.spdlog}",
-        "%{IncludeDir.FreeImage}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.Assimp}",
         "%{IncludeDir.Stb}",
@@ -42,9 +40,7 @@ project "Ciao"
         "Glad",
         "ImGui",
         "MeshOptimizer",
-        "%{Library.SDL2}",
         "%{Library.glfw}",
-        "%{Library.FreeImage}",
     }
 
     defines

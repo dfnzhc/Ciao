@@ -27,6 +27,8 @@ vec2 getTexCoord(int i)
 {
     return vec2(in_Vertices[i].tc[0], in_Vertices[i].tc[1]);
 }
+//layout (location=0) in vec3 in_pos;
+//layout (location=1) in vec2 in_uv;
 
 layout (location=0) out vec2 uv;
 

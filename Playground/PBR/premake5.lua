@@ -18,9 +18,9 @@ project "P5_PBR"
 	includedirs
 	{
 		"%{wks.location}/Ciao/src",
+		"%{IncludeDir.Glad}",
 		"%{IncludeDir.spdlog}",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.Glad}",
         "%{IncludeDir.glfw}",
         "%{IncludeDir.Assimp}",
         "%{IncludeDir.ImGui}",
@@ -32,15 +32,15 @@ project "P5_PBR"
 	{
 		"Ciao",
 		"Glad",
-		"%{Library.FreeImage}",
+		"%{Library.glfw}",
 	}
 
 	dpiawareness "HighPerMonitor"
 
-	postbuildcommands
-	{
-		"{COPYDIR} \"%{LibraryDir.FreeImage_DLL}\" \"%{cfg.targetdir}\""
-	}
+	-- postbuildcommands
+	-- {
+	-- 	"{COPYDIR} \"%{LibraryDir.FreeImage_DLL}\" \"%{cfg.targetdir}\""
+	-- }
 
     filter "system:windows"
 		systemversion "latest"

@@ -37,6 +37,14 @@ public:
     void Init() override
     {
         CIAO_INFO("Shadow::Init()");
+        
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        glClearColor(0.2f, 0.3f, 0.7f, 1.0);
 
         uint32_t w, h;
         w = h = 0;
@@ -113,7 +121,9 @@ public:
 
     void Render() override
     {
-        Ciao::Application::GetInst().GetRenderManager()->SetClearColour(glm::vec4{0.0, 0.0, 0.0, 1.0});
+        glClearColor(0.2f, 0.3f, 0.7f, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
         auto Camera = Ciao::Application::GetInst().GetCamera();
 
         glutil::MatrixStack modelMatrixStack;

@@ -46,6 +46,14 @@ public:
     {
         CIAO_INFO("VtxPulling::Init()");
 
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        glClearColor(0.2f, 0.3f, 0.7f, 1.0);
+
         LoadShaders();
         LoadTextures();
 
@@ -143,36 +151,38 @@ public:
 
     void Render() override
     {
-        Ciao::Application::GetInst().GetRenderManager()->SetClearColour(glm::vec4{0.2, 0.3, 0.7, 1.0});
+        glClearColor(0.2f, 0.3f, 0.7f, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
         auto Camera = Ciao::Application::GetInst().GetCamera();
 
         glutil::MatrixStack modelMatrixStack;
         modelMatrixStack.SetIdentity();
         
-        m_Shaders[0]->UseProgram();
-        glBindVertexArray(m_vao);
-
-        modelMatrixStack.Push();
-            modelMatrixStack.Translate(glm::vec3{0, 5, 0});
-            modelMatrixStack.Scale(glm::vec3{5.0});
-            modelMatrixStack.RotateY(m_Rot * 0.001f);
-            m_Shaders[0]->SetUniform("modelMatrix", modelMatrixStack.Top());
-            glDrawElements(GL_PATCHES, m_indicesSize, GL_UNSIGNED_INT, nullptr);
-        modelMatrixStack.Pop();
-
-        m_Shaders[2]->UseProgram();
-        m_Shaders[2]->SetUniform("planeTessFactor", plane_TessFactor);
-        m_Shaders[2]->SetUniform("dispFactor", dispFactor);
-        glBindVertexArray(skybox_vao);   
-        
-        modelMatrixStack.Push();
-            modelMatrixStack.Scale(glm::vec3{5.0});
-            // modelMatrixStack.RotateY(m_Rot * 0.001f);
-            m_Shaders[2]->SetUniform("modelMatrix", modelMatrixStack.Top());
-            m_Shaders[2]->SetUniform("normalMatrix", ComputeNormalMatrix(modelMatrixStack.Top()));
-        
-            glDrawArraysInstancedBaseInstance(GL_PATCHES, 0, 6, 1, 0);
-        modelMatrixStack.Pop();
+        // m_Shaders[0]->UseProgram();
+        // glBindVertexArray(m_vao);
+        //
+        // modelMatrixStack.Push();
+        //     modelMatrixStack.Translate(glm::vec3{0, 5, 0});
+        //     modelMatrixStack.Scale(glm::vec3{5.0});
+        //     modelMatrixStack.RotateY(m_Rot * 0.001f);
+        //     m_Shaders[0]->SetUniform("modelMatrix", modelMatrixStack.Top());
+        //     glDrawElements(GL_PATCHES, m_indicesSize, GL_UNSIGNED_INT, nullptr);
+        // modelMatrixStack.Pop();
+        //
+        // m_Shaders[2]->UseProgram();
+        // m_Shaders[2]->SetUniform("planeTessFactor", plane_TessFactor);
+        // m_Shaders[2]->SetUniform("dispFactor", dispFactor);
+        // glBindVertexArray(skybox_vao);   
+        //
+        // modelMatrixStack.Push();
+        //     modelMatrixStack.Scale(glm::vec3{5.0});
+        //     // modelMatrixStack.RotateY(m_Rot * 0.001f);
+        //     m_Shaders[2]->SetUniform("modelMatrix", modelMatrixStack.Top());
+        //     m_Shaders[2]->SetUniform("normalMatrix", ComputeNormalMatrix(modelMatrixStack.Top()));
+        //
+        //     glDrawArraysInstancedBaseInstance(GL_PATCHES, 0, 6, 1, 0);
+        // modelMatrixStack.Pop();
         
         grid->Draw(m_Shaders[1]);
     }

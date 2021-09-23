@@ -18,10 +18,10 @@ project "P3_Tessellation"
 	includedirs
 	{
 		"%{wks.location}/Ciao/src",
+		"%{IncludeDir.Glad}",
 		"%{IncludeDir.spdlog}",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.Glad}",
-        "%{IncludeDir.FreeImage}",
+        "%{IncludeDir.glfw}",
         "%{IncludeDir.Assimp}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.Stb}",
@@ -32,15 +32,15 @@ project "P3_Tessellation"
 	{
 		"Ciao",
 		"Glad",
-		"%{Library.FreeImage}",
+		"%{Library.glfw}",
 	}
 
 	dpiawareness "HighPerMonitor"
 
-	postbuildcommands
-	{
-		"{COPYDIR} \"%{LibraryDir.FreeImage_DLL}\" \"%{cfg.targetdir}\""
-	}
+	-- postbuildcommands
+	-- {
+	-- 	"{COPYDIR} \"%{LibraryDir.FreeImage_DLL}\" \"%{cfg.targetdir}\""
+	-- }
 
     filter "system:windows"
 		systemversion "latest"

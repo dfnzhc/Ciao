@@ -39,17 +39,25 @@ public:
     {
         CIAO_INFO("VtxPulling::Init()");
 
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        glClearColor(0.2f, 0.3f, 0.7f, 1.0);
+
         LoadShaders();
         LoadTextures();
 
         m_pfb = make_shared<GLBuffer>(PerFrameBufferSize, nullptr, GL_DYNAMIC_STORAGE_BIT);
         glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_pfb->getHandle(), 0, PerFrameBufferSize);
-        
+
         // load model
         const aiScene* scene = aiImportFile((Asset_dir + "Models\\rubber_duck\\scene.gltf").c_str(), aiProcess_Triangulate);
 
         if (!scene || !scene->HasMeshes())
-            CIAO_ASSERT("Unable to load data.");
+        CIAO_ASSERT("Unable to load data.");
 
         struct VertexData
         {
@@ -63,7 +71,7 @@ public:
         {
             const aiVector3D v = mesh->mVertices[i];
             const aiVector3D t = mesh->mTextureCoords[0][i];
-            vertices.push_back({ .pos = vec3(v.x, v.z, v.y), .tc = vec2(t.x, t.y) });
+            vertices.push_back({.pos = vec3(v.x, v.z, v.y), .tc = vec2(t.x, t.y)});
         }
 
         std::vector<unsigned int> indices;
@@ -89,7 +97,19 @@ public:
         // vertices
         glCreateBuffers(1, &m_dataVertices);
         glNamedBufferStorage(m_dataVertices, kSizeVertices, vertices.data(), 0);
+        // glVertexArrayVertexBuffer(m_vao, 0, m_dataVertices, 0, sizeof(vec3) + sizeof(vec2));
+        //
+        // glEnableVertexArrayAttrib(m_vao, 0);
+        // glVertexArrayAttribFormat(m_vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
+        // glVertexArrayAttribBinding(m_vao, 0, 0);
+        //
+        // glEnableVertexArrayAttrib(m_vao, 1);
+        // glVertexArrayAttribFormat(m_vao, 1, 2, GL_FLOAT, GL_FALSE, sizeof(vec3));
+        // glVertexArrayAttribBinding(m_vao, 1, 0);
+        
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_dataVertices);
+
+        glBindVertexArray(0);
     }
 
 private:
@@ -112,24 +132,27 @@ public:
         auto Camera = Ciao::Application::GetInst().GetCamera();
 
         const mat4 m = scale(mat4(1.0), vec3{3.0});
-        
+
         const PerFrameData perFrameData = {.mvp = Camera->GetProjectionMatrix() * Camera->GetViewMatrix() * m};
         glNamedBufferSubData(m_pfb->getHandle(), 0, PerFrameBufferSize, &perFrameData);
     }
 
     void Render() override
     {
-        Ciao::Application::GetInst().GetRenderManager()->SetClearColour(glm::vec4{1.0, 1.0, 1.0, 1.0});
+        glClearColor(0.2f, 0.3f, 0.7f, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
         auto Camera = Ciao::Application::GetInst().GetCamera();
 
         glutil::MatrixStack modelMatrixStack;
         modelMatrixStack.SetIdentity();
 
         m_Shaders[0]->UseProgram();
+        glBindVertexArray(m_vao);
         glDrawElements(GL_TRIANGLES, m_indicesSize, GL_UNSIGNED_INT, nullptr);
     }
 
-    
+
     void Shutdown() override
     {
         CIAO_INFO("VtxPulling::Shutdown()");
@@ -160,7 +183,8 @@ public:
         std::vector<std::pair<GLenum, string>> TexInfo;
         TexInfo.push_back({GL_TEXTURE_2D, "Models\\rubber_duck\\textures\\Duck_baseColor.png"});
 
-        for (unsigned int i = 0; i < TexInfo.size(); ++i) {
+        for (unsigned int i = 0; i < TexInfo.size(); ++i)
+        {
             auto Tex = CreateRef<Texture>(
                 TexInfo[i].first, std::string(Asset_dir + TexInfo[i].second).c_str());
             glBindTextureUnit(i, Tex->getHandle());
@@ -171,7 +195,6 @@ public:
 
     void ImguiRender() override
     {
-        
     }
 };
 

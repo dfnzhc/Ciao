@@ -18,11 +18,10 @@ project "P6_Scene"
 	includedirs
 	{
 		"%{wks.location}/Ciao/src",
+		"%{IncludeDir.Glad}",
 		"%{IncludeDir.spdlog}",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.Glad}",
         "%{IncludeDir.glfw}",
-        "%{IncludeDir.FreeImage}",
         "%{IncludeDir.Assimp}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.Stb}",
@@ -33,15 +32,15 @@ project "P6_Scene"
 	{
 		"Ciao",
 		"Glad",
-		"%{Library.FreeImage}",
+		"%{Library.glfw}",
 	}
 
 	dpiawareness "HighPerMonitor"
 
-	postbuildcommands
-	{
-		"{COPYDIR} \"%{LibraryDir.FreeImage_DLL}\" \"%{cfg.targetdir}\""
-	}
+	-- postbuildcommands
+	-- {
+	-- 	"{COPYDIR} \"%{LibraryDir.FreeImage_DLL}\" \"%{cfg.targetdir}\""
+	-- }
 
     filter "system:windows"
 		systemversion "latest"

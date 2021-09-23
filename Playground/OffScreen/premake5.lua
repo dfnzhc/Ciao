@@ -1,7 +1,7 @@
-project "P2_VtxPulling"
+project "P7_OffScreen"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++20"
+	cppdialect "C++17"
 	staticruntime "off"
 
     targetdir ( "%{wks.location}/bin/" .. outputDir )
@@ -18,9 +18,9 @@ project "P2_VtxPulling"
 	includedirs
 	{
 		"%{wks.location}/Ciao/src",
+		"%{IncludeDir.Glad}",
 		"%{IncludeDir.spdlog}",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.Glad}",
         "%{IncludeDir.glfw}",
         "%{IncludeDir.Assimp}",
         "%{IncludeDir.ImGui}",

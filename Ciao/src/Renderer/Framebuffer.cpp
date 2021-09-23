@@ -42,11 +42,11 @@ namespace Ciao
         glBindFramebuffer(GL_FRAMEBUFFER, m_Handle);
         glViewport(0, 0, mWidth, mHeight);
 
-        glEnable(GL_DEPTH_TEST);
-        glDisable(GL_BLEND);
-        
-        glClearNamedFramebufferfv(m_Handle, GL_COLOR, 0, glm::value_ptr(mClearColour));
-        glClearNamedFramebufferfi(m_Handle, GL_DEPTH_STENCIL, 0, 1.0f, 0);
+        // glEnable(GL_DEPTH_TEST);
+        // glDisable(GL_BLEND);
+        //
+        // glClearNamedFramebufferfv(m_Handle, GL_COLOR, 0, glm::value_ptr(mClearColour));
+        // glClearNamedFramebufferfi(m_Handle, GL_DEPTH_STENCIL, 0, 1.0f, 0);
     }
 
     void Framebuffer::unbind()
