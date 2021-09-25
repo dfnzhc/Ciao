@@ -17,11 +17,10 @@ characterset ("Unicode")
 
 include "Ciao"
 include "Playground/Sandbox"
-include "Playground/VtxPulling"
 include "Playground/Shadow"
-include "Playground/Tessellation"
 include "Playground/MeshDraw"
 include "Playground/PBR"
 include "Playground/Scene"
 include "Playground/OffScreen"
 include "Playground/SSAO"
+include "Playground/HDR"

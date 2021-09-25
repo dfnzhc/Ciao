@@ -59,7 +59,7 @@ public:
         LoadShaders();
         // LoadTextures();
 
-        // SceneConvert(Asset_dir + "scene_San_Miguel.json");
+        // SceneConvert(Asset_dir + "scene.json");
 
         m_pfb = make_shared<GLBuffer>(PerFrameBufferSize, nullptr, GL_DYNAMIC_STORAGE_BIT);
         glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_pfb->getHandle(), 0, PerFrameBufferSize);

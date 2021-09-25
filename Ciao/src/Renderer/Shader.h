@@ -81,6 +81,7 @@ namespace Ciao
             else if (sExt == "geom") iShaderType = GL_GEOMETRY_SHADER;
             else if (sExt == "tesc") iShaderType = GL_TESS_CONTROL_SHADER;
             else if (sExt == "tese") iShaderType = GL_TESS_EVALUATION_SHADER;
+            else if (sExt == "comp") iShaderType = GL_COMPUTE_SHADER;
             else iShaderType = GL_COMPUTE_SHADER;
             Shader shader;
 

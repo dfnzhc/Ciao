@@ -7,5 +7,14 @@
 		"scale": 0.01,
 		"calculate_LODs": false,
 		"merge_instances": true
+	},
+	{
+		"input_scene": "Models/bistro/Exterior/exterior.obj",
+		"output_mesh": "Meshes/bistro_exterior.meshes",
+		"output_scene": "Meshes/bistro_exterior.scene",
+		"output_materials": "Meshes/bistro_exterior.materials",
+		"scale": 0.01,
+		"calculate_LODs": false,
+		"merge_instances": true
 	}
 ]
