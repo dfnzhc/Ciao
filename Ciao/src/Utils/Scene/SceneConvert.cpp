@@ -5,6 +5,8 @@
 #include <stb_image_resize.h>
 #include <stb_image_write.h>
 
+#include "GLScene.h"
+#include "MergeUtil.h"
 #include "MeshConvert.h"
 #include "Scene.h"
 #include "Utils/Utils.h"
@@ -462,5 +464,57 @@ namespace Ciao
         // 递归当前节点的子节点
         for (unsigned int n = 0 ; n  < N->mNumChildren ; n++)
             Traverse(sourceScene, scene, N->mChildren[n], newNode, ofs + 1);
+    }
+
+    void MergeBistro()
+    {
+        Scene scene1, scene2;
+        std::vector<Scene*> scenes = { &scene1, &scene2 };
+
+        MeshData m1, m2;
+        MeshFileHeader header1 = loadMeshData(GetAssetDir().append("Meshes/bistro_exterior.meshes").c_str(), m1);
+        MeshFileHeader header2 = loadMeshData(GetAssetDir().append("Meshes/bistro_interior.meshes").c_str(), m2);
+
+        std::vector<uint32_t> meshCounts = { header1.meshCount, header2.meshCount };
+
+        loadScene(GetAssetDir().append("Meshes/bistro_exterior.scene").c_str(), scene1);
+        loadScene(GetAssetDir().append("Meshes/bistro_interior.scene").c_str(), scene2);
+
+        Scene scene;
+        mergeScenes(scene, scenes, {}, meshCounts);
+
+        MeshData meshData;
+        std::vector<MeshData*> meshDatas = { &m1, &m2 };
+
+        MeshFileHeader header = MergeMeshData(meshData, meshDatas);
+
+        // now the material lists:
+        std::vector<MaterialDescription> materials1, materials2;
+        std::vector<std::string> textureFiles1, textureFiles2;
+        loadMaterials(GetAssetDir().append("Meshes/bistro_exterior.materials").c_str(), materials1, textureFiles1);
+        loadMaterials(GetAssetDir().append("Meshes/bistro_interior.materials").c_str(), materials2, textureFiles2);
+
+        std::vector<MaterialDescription> allMaterials;
+        std::vector<std::string> allTextures;
+
+        mergeMaterialLists(
+            { &materials1, &materials2 },
+            { &textureFiles1, &textureFiles2 },
+            allMaterials, allTextures);
+
+        saveMaterials(GetAssetDir().append("Meshes/bistro_all.materials").c_str(), allMaterials, allTextures);
+
+        printf("[Unmerged] scene items: %d\n", (int)scene.hierarchy_.size());
+        mergeScene(scene, meshData, "Foliage_Linde_Tree_Large_Orange_Leaves");
+        printf("[Merged orange leaves] scene items: %d\n", (int)scene.hierarchy_.size());
+        mergeScene(scene, meshData, "Foliage_Linde_Tree_Large_Green_Leaves");
+        printf("[Merged green leaves]  scene items: %d\n", (int)scene.hierarchy_.size());
+        mergeScene(scene, meshData, "Foliage_Linde_Tree_Large_Trunk");
+        printf("[Merged trunk]  scene items: %d\n", (int)scene.hierarchy_.size());
+
+        RecalculateBoundingBoxes(meshData);
+
+        saveMeshData(meshData, GetAssetDir().append("Meshes/bistro_all.meshes").c_str());
+        saveScene(GetAssetDir().append("Meshes/bistro_all.scene").c_str(), scene);
     }
 }

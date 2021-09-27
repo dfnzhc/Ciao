@@ -15,7 +15,7 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Camera.h"
 
-#include "Asset/Cube.h"
+#include "Asset/Skybox.h"
 #include "Asset/Object.h"
 #include "Asset/Texture.h"
 #include "Asset/Sphere.h"

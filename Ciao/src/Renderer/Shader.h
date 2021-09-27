@@ -9,11 +9,12 @@ namespace Ciao
     {
     public:
         Shader();
+        Shader(const std::string& filename);
 
-        bool LoadShader(std::string sFile, int iType);
+        bool LoadShader(const std::string&, int iType);
         void DeleteShader();
 
-        bool GetLinesFromFile(std::string sFile, bool bIncludePart, std::vector<std::string>* vResult);
+        bool GetLinesFromFile(const std::string&, bool bIncludePart, std::vector<std::string>* vResult);
 
         bool IsLoaded() const;
         glm::uint GetShaderID() const;
@@ -29,6 +30,11 @@ namespace Ciao
     {
     public:
         ShaderProgram();
+        ShaderProgram(const Shader& a);
+        ShaderProgram(const Shader& a, const Shader& b);
+        ShaderProgram(const Shader& a, const Shader& b, const Shader& c);
+        ShaderProgram(const Shader& a, const Shader& b, const Shader& c, const Shader& d);
+        ShaderProgram(const Shader& a, const Shader& b, const Shader& c, const Shader& d, const Shader& e);
 
         void CreateProgram();
         void DeleteProgram();
@@ -70,23 +76,10 @@ namespace Ciao
         bool m_isLinked; // 是否链接了 Shader
     };
 
-
     static void ReadShaderFile(const std::vector<std::string>& shaderFileNames, std::vector<Shader>& shShaders)
     {
         for (int i = 0; i < (int)shaderFileNames.size(); i++) {
-            std::string sExt = shaderFileNames[i].substr((int)shaderFileNames[i].size() - 4, 4);
-            int iShaderType;
-            if (sExt == "vert") iShaderType = GL_VERTEX_SHADER;
-            else if (sExt == "frag") iShaderType = GL_FRAGMENT_SHADER;
-            else if (sExt == "geom") iShaderType = GL_GEOMETRY_SHADER;
-            else if (sExt == "tesc") iShaderType = GL_TESS_CONTROL_SHADER;
-            else if (sExt == "tese") iShaderType = GL_TESS_EVALUATION_SHADER;
-            else if (sExt == "comp") iShaderType = GL_COMPUTE_SHADER;
-            else iShaderType = GL_COMPUTE_SHADER;
-            Shader shader;
-
-            shader.LoadShader(GetAssetDir() + "Shaders/" + shaderFileNames[i], iShaderType);
-            shShaders.push_back(shader);
+            shShaders.push_back(Shader(shaderFileNames[i]));
         }
     }
 

@@ -4,6 +4,8 @@
 
 namespace Ciao
 {
+    struct SceneData;
+
     struct SceneConfig
     {
         std::string fileName;
@@ -29,4 +31,6 @@ namespace Ciao
                                const std::vector<std::string>& opacityMaps);
 
     void Traverse(const aiScene* sourceScene, Scene& scene, aiNode* N, int parent, int ofs);
+    
+    void MergeBistro();
 }

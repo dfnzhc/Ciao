@@ -38,10 +38,10 @@ namespace Ciao
             {
                 int dest = scene.hierarchy_[s].lastSibling_;
                 // 如果不缓存最后加入的兄弟节点索引，就需要用 nextSibling 迭代找出相关索引
-                // if (dest <= -1)
-                // {
-                //     for (dest = s; scene.hierarchy_[dest].nextSibling_ != -1; dest = scene.hierarchy_[dest].nextSibling_);
-                // }
+                if (dest <= -1)
+                {
+                    for (dest = s; scene.hierarchy_[dest].nextSibling_ != -1; dest = scene.hierarchy_[dest].nextSibling_);
+                }
                 scene.hierarchy_[dest].nextSibling_ = node;
                 scene.hierarchy_[s].lastSibling_ = node;
             }

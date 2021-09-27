@@ -8,7 +8,22 @@ namespace Ciao
         m_isLoaded = false;
     }
 
-    bool Shader::LoadShader(std::string sFile, int iType)
+    Shader::Shader(const std::string& filename)
+    {
+        std::string sExt = filename.substr((int)filename.size() - 4, 4);
+        int iShaderType;
+        if (sExt == "vert") iShaderType = GL_VERTEX_SHADER;
+        else if (sExt == "frag") iShaderType = GL_FRAGMENT_SHADER;
+        else if (sExt == "geom") iShaderType = GL_GEOMETRY_SHADER;
+        else if (sExt == "tesc") iShaderType = GL_TESS_CONTROL_SHADER;
+        else if (sExt == "tese") iShaderType = GL_TESS_EVALUATION_SHADER;
+        else if (sExt == "comp") iShaderType = GL_COMPUTE_SHADER;
+        else iShaderType = GL_COMPUTE_SHADER;
+
+        LoadShader(GetAssetDir() + "Shaders/" + filename, iShaderType);
+    }
+
+    bool Shader::LoadShader(const std::string& sFile, int iType)
     {
         std::vector<std::string> sLines;
 
@@ -87,7 +102,7 @@ namespace Ciao
         glDeleteShader(m_shaderID);
     }
 
-    bool Shader::GetLinesFromFile(std::string sFile, bool bIncludePart, std::vector<std::string>* vResult)
+    bool Shader::GetLinesFromFile(const std::string& sFile, bool bIncludePart, std::vector<std::string>* vResult)
     {
         FILE* fp;
         fopen_s(&fp, sFile.c_str(), "rt");
@@ -149,9 +164,66 @@ namespace Ciao
         return m_shaderID;
     }
 
+    void printProgramInfoLog(GLuint handle)
+    {
+        char buffer[8192];
+        GLsizei length = 0;
+        glGetProgramInfoLog(handle, sizeof(buffer), &length, buffer);
+        if (length)
+        {
+            CIAO_CORE_ERROR("{}.", buffer);
+            CIAO_ASSERT(false, "Shader program link failed!");
+        }
+    }
+
     ShaderProgram::ShaderProgram()
     {
         m_isLinked = false;
+    }
+
+    ShaderProgram::ShaderProgram(const Shader& a) : m_ProgramID(glCreateProgram())
+    {
+        glAttachShader(m_ProgramID, a.GetShaderID());
+        glLinkProgram(m_ProgramID);
+        printProgramInfoLog(m_ProgramID);
+    }
+
+    ShaderProgram::ShaderProgram(const Shader& a, const Shader& b) : m_ProgramID(glCreateProgram())
+    {
+        glAttachShader(m_ProgramID, a.GetShaderID());
+        glAttachShader(m_ProgramID, b.GetShaderID());
+        glLinkProgram(m_ProgramID);
+        printProgramInfoLog(m_ProgramID);
+    }
+
+    ShaderProgram::ShaderProgram(const Shader& a, const Shader& b, const Shader& c) : m_ProgramID(glCreateProgram())
+    {
+        glAttachShader(m_ProgramID, a.GetShaderID());
+        glAttachShader(m_ProgramID, b.GetShaderID());
+        glAttachShader(m_ProgramID, c.GetShaderID());
+        glLinkProgram(m_ProgramID);
+        printProgramInfoLog(m_ProgramID);
+    }
+
+    ShaderProgram::ShaderProgram(const Shader& a, const Shader& b, const Shader& c, const Shader& d) : m_ProgramID(glCreateProgram())
+    {
+        glAttachShader(m_ProgramID, a.GetShaderID());
+        glAttachShader(m_ProgramID, b.GetShaderID());
+        glAttachShader(m_ProgramID, c.GetShaderID());
+        glAttachShader(m_ProgramID, d.GetShaderID());
+        glLinkProgram(m_ProgramID);
+        printProgramInfoLog(m_ProgramID);
+    }
+
+    ShaderProgram::ShaderProgram(const Shader& a, const Shader& b, const Shader& c, const Shader& d, const Shader& e) : m_ProgramID(glCreateProgram())
+    {
+        glAttachShader(m_ProgramID, a.GetShaderID());
+        glAttachShader(m_ProgramID, b.GetShaderID());
+        glAttachShader(m_ProgramID, c.GetShaderID());
+        glAttachShader(m_ProgramID, d.GetShaderID());
+        glAttachShader(m_ProgramID, e.GetShaderID());
+        glLinkProgram(m_ProgramID);
+        printProgramInfoLog(m_ProgramID);
     }
 
     void ShaderProgram::CreateProgram()

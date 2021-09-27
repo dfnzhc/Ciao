@@ -77,12 +77,11 @@ namespace Ciao
     void mergeScene(Scene& scene, MeshData& meshData, const std::string& materialName)
     {
         // Find material index
-        int oldMaterial = (int)std::distance(std::begin(scene.materialNames_),
-                                             std::find(std::begin(scene.materialNames_), std::end(scene.materialNames_), materialName));
+        int oldMaterial = (int)std::distance(std::begin(scene.materialNames_), std::find(std::begin(scene.materialNames_), std::end(scene.materialNames_), materialName));
 
         std::vector<uint32_t> toDelete;
 
-        for (auto i = 0u; i < scene.hierarchy_.size(); i++)
+        for (auto i = 0u ; i < scene.hierarchy_.size() ; i++)
             if (scene.meshes_.contains(i) && scene.materialForNode_.contains(i) && (scene.materialForNode_.at(i) == oldMaterial))
                 toDelete.push_back(i);
 
@@ -102,7 +101,7 @@ namespace Ciao
         // cutoff all but one of the merged meshes (insert the last saved mesh from meshesToMerge - they are all the same)
         eraseSelected(meshData.meshes_, meshesToMerge);
 
-        for (auto& n : scene.meshes_)
+        for (auto& n: scene.meshes_)
             n.second = oldToNew[n.second];
 
         // reattach the node with merged meshes [identity transforms are assumed]
