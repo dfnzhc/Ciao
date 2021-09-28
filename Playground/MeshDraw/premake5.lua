@@ -1,7 +1,7 @@
-project "P9_CullingCPU"
+project "P4_MeshDraw"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++17"
+	cppdialect "C++20"
 	staticruntime "off"
 
     targetdir ( "%{wks.location}/bin/" .. outputDir )

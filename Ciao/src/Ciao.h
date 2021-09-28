@@ -26,7 +26,6 @@
 #include "Asset/Grid.h"
 #include "Asset/GLMesh.h"
 #include "Asset/GLScene.h"
-#include "Asset/LineCanvasGL.h"
 
 #include "Utils/MatrixStack.h"
 #include "Utils/Bitmap.h"

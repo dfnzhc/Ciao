@@ -2,6 +2,7 @@
 #include <Ciao.h>
 
 #include "imgui.h"
+#include "glm/gtc/matrix_transform.hpp"
 
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -13,8 +14,7 @@ using namespace Ciao;
 using namespace std;
 using namespace glm;
 
-const std::string Asset_dir{"../../Resources/"};
-
+const std::string Asset_dir{"..\\..\\Resources\\"};
 
 struct PerFrameData
 {
@@ -29,20 +29,20 @@ struct PerFrameData
 
 const GLsizeiptr PerFrameBufferSize = sizeof(PerFrameData);
 
-class SceneTest : public Ciao::Demo
+class MeshDraw : public Ciao::Demo
 {
 public:
     Ciao::WindowProps GetWindowProps() override
     {
         Ciao::WindowProps props;
-        props.Title = "SceneTest Demo";
+        props.Title = "MeshDraw Scence";
 
         return props;
     }
 
     void Init() override
     {
-        CIAO_INFO("SceneTest::Init()");
+        CIAO_INFO("MeshDraw::Init()");
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
@@ -53,22 +53,19 @@ public:
         glClearColor(0.2f, 0.3f, 0.7f, 1.0);
 
         LoadShaders();
-        // LoadTextures();
-
-        // SceneConvert(Asset_dir + "scene.json");
-        //MergeBistro();
+        LoadTextures();
 
         m_pfb = make_shared<GLBuffer>(PerFrameBufferSize, nullptr, GL_DYNAMIC_STORAGE_BIT);
         glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_pfb->getHandle(), 0, PerFrameBufferSize);
+        
+        MeshData meshData;
+        MeshFileHeader header = loadMeshData((Asset_dir + "Models\\bistro\\Interior\\test.meshes").c_str(), meshData);
+
+        mesh_ = CreateRef<GLMesh>(header, meshData.meshes_.data(), meshData.indexData_.data(), meshData.vertexData_.data());
+        
 
         grid = CreateRef<Grid>();
         grid->Create();
-
-        sceneData_ = new SceneData{ "Meshes/bistro_all.meshes", "Meshes/bistro_all.scene",
-            "Meshes/bistro_all.materials" };
-        scene_ = CreateRef<GLScene>(*sceneData_);
-
-        skybox_ = CreateRef<Skybox>();
     }
 
 private:
@@ -77,81 +74,79 @@ private:
 
     shared_ptr<GLBuffer> m_pfb;
 
+    shared_ptr<GLMesh> mesh_;
     shared_ptr<Grid> grid;
 
-    shared_ptr<GLScene> scene_;
-    SceneData* sceneData_ = nullptr;
+    unsigned m_indicesSize;
 
-    shared_ptr<Skybox> skybox_;
+    float m_Rot = 0.0f;
 
 public:
     void Update() override
     {
         auto Camera = Ciao::Application::GetInst().GetCamera();
+
         
         const PerFrameData perFrameData{Camera->GetViewMatrix(), Camera->GetProjectionMatrix(), vec4(Camera->GetPosition(), 1.0)};
         glNamedBufferSubData(m_pfb->getHandle(), 0, PerFrameBufferSize, &perFrameData);
 
+        m_Rot += 0.5f;
     }
 
     void Render() override
     {
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClearColor(0.2f, 0.3f, 0.7f, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
         auto Camera = Ciao::Application::GetInst().GetCamera();
 
         glutil::MatrixStack modelMatrixStack;
         modelMatrixStack.SetIdentity();
-
-        skybox_->Draw();
         
-        scene_->Draw(m_Shaders[1]);
+        m_Shaders[0]->UseProgram();
         
-        grid->Draw(m_Shaders[0]);
+        modelMatrixStack.Push();
+            modelMatrixStack.Scale(glm::vec3{2.0f});
+            m_Shaders[0]->SetUniform("modelMatrix", modelMatrixStack.Top());
+            m_Shaders[0]->SetUniform("normalMatrix", ComputeNormalMatrix(modelMatrixStack.Top()));
+            mesh_->Draw(m_Shaders[0]);
+        modelMatrixStack.Pop();
+        
+        grid->Draw(m_Shaders[1]);
     }
 
     
     void Shutdown() override
     {
-        CIAO_INFO("SceneTest::Shutdown()");
-
-        delete(sceneData_);
+        CIAO_INFO("MeshDraw::Shutdown()");
     }
 
     void LoadShaders()
     {
         std::vector<Shader> Shaders;
         std::vector<std::string> ShaderFileNames;
+        ShaderFileNames.push_back("MeshDraw\\Mesh_Inst.vert");
+        ShaderFileNames.push_back("MeshDraw\\Mesh_Inst.geom");
+        ShaderFileNames.push_back("MeshDraw\\Mesh_Inst.frag");
         ShaderFileNames.push_back("Grid.vert");
         ShaderFileNames.push_back("Grid.frag");
-        ShaderFileNames.push_back("Scene/Scene.vert");
-        ShaderFileNames.push_back("Scene/Scene.frag");
 
         ReadShaderFile(ShaderFileNames, Shaders);
 
         // 创建 OpenGL Shader 程序
 
-        /// 0 --- Grid 的 Shader
-        AddShaderToPrograme(Shaders, m_Shaders, {0, 1});
+        /// 0 --- Mesh 的 Shader
+        AddShaderToPrograme(Shaders, m_Shaders, {0, 1, 2});
 
-        /// 1 --- 自定义 scene 的 Shader
-        AddShaderToPrograme(Shaders, m_Shaders, {2, 3});
-        
+        /// 1 --- Grid 的 Shader
+        AddShaderToPrograme(Shaders, m_Shaders, {3, 4});
     }
 
     void LoadTextures()
     {
         // 以 Textures 目录作为根目录
         std::vector<std::pair<GLenum, string>> TexInfo;
-        // TexInfo.push_back({GL_TEXTURE_2D, "Models\\DamagedHelmet\\glTF\\Default_albedo.jpg"});
-        // TexInfo.push_back({GL_TEXTURE_2D, "Models\\DamagedHelmet\\glTF\\Default_AO.jpg"});
-        // TexInfo.push_back({GL_TEXTURE_2D, "Models\\DamagedHelmet\\glTF\\Default_emissive.jpg"});
-        // TexInfo.push_back({GL_TEXTURE_2D, "Models\\DamagedHelmet\\glTF\\Default_metalRoughness.jpg"});
-        // TexInfo.push_back({GL_TEXTURE_2D, "Models\\DamagedHelmet\\glTF\\Default_normal.jpg"});
-        //
-        // TexInfo.push_back({GL_TEXTURE_CUBE_MAP, "Textures\\HDR\\Serpentine_Valley\\Serpentine_Valley_3k.hdr"});
-        // TexInfo.push_back({GL_TEXTURE_CUBE_MAP, "Textures\\HDR\\Serpentine_Valley\\Serpentine_Valley_Env.hdr"});
-        // TexInfo.push_back({GL_TEXTURE_2D, "Textures\\brdfLUT.ktx"});
+        TexInfo.push_back({GL_TEXTURE_2D, "Models\\rubber_duck\\textures\\Duck_baseColor.png"});
 
         for (unsigned int i = 0; i < TexInfo.size(); ++i) {
             auto Tex = CreateRef<Texture>(
@@ -164,20 +159,17 @@ public:
 
     void ImguiRender() override
     {
-        if (ImGui::Begin(u8"设置")) {
-            ImGui::Text("Gogogo");
-        }
-        ImGui::End();
+        
     }
 };
 
 Ciao::Demo* Ciao::CreateScence()
 {
-    return new SceneTest();
-} 
+    return new MeshDraw();
+}
 
 
-extern inline std::string Ciao::GetAssetDir()
+inline std::string Ciao::GetAssetDir()
 {
     return Asset_dir;
 }

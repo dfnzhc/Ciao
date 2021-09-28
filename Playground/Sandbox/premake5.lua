@@ -1,7 +1,7 @@
 project "P0_Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++20"
+	cppdialect "C++17"
 	staticruntime "off"
 
     targetdir ( "%{wks.location}/bin/" .. outputDir )
