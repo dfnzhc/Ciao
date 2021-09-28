@@ -9,6 +9,7 @@ namespace Ciao
     {
     public:
         Shader();
+        Shader(Shader&&) noexcept;
         Shader(const std::string& filename);
 
         bool LoadShader(const std::string&, int iType);

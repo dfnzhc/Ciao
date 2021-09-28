@@ -8,6 +8,11 @@ namespace Ciao
         m_isLoaded = false;
     }
 
+    Shader::Shader(Shader&& shader) noexcept : m_shaderID(shader.m_shaderID), m_ShaderType(shader.m_ShaderType), m_isLoaded(shader.m_isLoaded) 
+    {
+        shader.m_shaderID = -1;
+    }
+
     Shader::Shader(const std::string& filename)
     {
         std::string sExt = filename.substr((int)filename.size() - 4, 4);
@@ -22,6 +27,7 @@ namespace Ciao
 
         LoadShader(GetAssetDir() + "Shaders/" + filename, iShaderType);
     }
+    
 
     bool Shader::LoadShader(const std::string& sFile, int iType)
     {

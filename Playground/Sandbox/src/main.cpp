@@ -204,7 +204,6 @@ public:
         grid->Draw(m_Shaders[3]);
     }
 
-    
     void Shutdown() override
     {
         CIAO_INFO("Sandbox::Shutdown()");
