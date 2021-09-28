@@ -12,6 +12,9 @@ using glm::mat4;
 namespace Ciao
 {
     constexpr const int MAX_NODE_LEVEL = 16;
+    
+    constexpr GLuint kBufferIndex_ModelMatrices = 1;
+    constexpr GLuint kBufferIndex_Materials = 2;
 
     struct Hierarchy
     {

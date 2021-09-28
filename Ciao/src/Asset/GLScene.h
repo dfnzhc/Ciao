@@ -5,9 +5,6 @@
 
 namespace Ciao
 {
-    constexpr GLuint kBufferIndex_ModelMatrices = 1;
-    constexpr GLuint kBufferIndex_Materials = 2;
-    
     struct MaterialDescription;
     class Texture;
 

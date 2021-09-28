@@ -66,9 +66,20 @@ public:
 
         sceneData_ = new SceneData{ "Meshes/bistro_all.meshes", "Meshes/bistro_all.scene",
             "Meshes/bistro_all.materials" };
-        scene_ = CreateRef<GLScene>(*sceneData_);
+        scene_ = CreateRef<GLMesh<SceneData>>(*sceneData_);
 
         skybox_ = CreateRef<Skybox>();
+
+        canvas_ = CreateRef<CanvasGL>();
+
+        for (const auto& c : sceneData_->shapes_)
+        {
+            const mat4 model = sceneData_->scene_.globalTransform_[c.transformIndex];
+            sceneData_->meshData_.boxes_[c.meshIndex].transform(model);
+        }
+
+        fullScene = CreateRef<BoundingBox>();
+        *fullScene = combineBoxes(sceneData_->meshData_.boxes_);
     }
 
 private:
@@ -79,35 +90,86 @@ private:
 
     shared_ptr<Grid> grid;
 
-    shared_ptr<GLScene> scene_;
+    shared_ptr<GLMesh<SceneData>> scene_;
     SceneData* sceneData_ = nullptr;
 
     shared_ptr<Skybox> skybox_;
 
+    shared_ptr<BoundingBox> fullScene;
+
+    shared_ptr<CanvasGL> canvas_;
+    
+    mat4 CullingView = Ciao::Application::GetInst().GetCamera()->GetViewMatrix();
+    bool bFreezeCullingView = false;
+    bool bDrawMeshes = true;
+    bool bDrawBoxes = true;
+    bool bDrawGrid = true;
+
+    int numVisibleMeshes = 0;
+
 public:
     void Update() override
     {
-        auto Camera = Ciao::Application::GetInst().GetCamera();
         
-        const PerFrameData perFrameData{Camera->GetViewMatrix(), Camera->GetProjectionMatrix(), vec4(Camera->GetPosition(), 1.0)};
-        glNamedBufferSubData(m_pfb->getHandle(), 0, PerFrameBufferSize, &perFrameData);
-
     }
 
     void Render() override
     {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        auto Camera = Ciao::Application::GetInst().GetCamera();
 
         glutil::MatrixStack modelMatrixStack;
         modelMatrixStack.SetIdentity();
 
+        auto Camera = Ciao::Application::GetInst().GetCamera();
+        
+        const PerFrameData perFrameData{Camera->GetViewMatrix(), Camera->GetProjectionMatrix(), vec4(Camera->GetPosition(), 1.0)};
+        glNamedBufferSubData(m_pfb->getHandle(), 0, PerFrameBufferSize, &perFrameData);
+
+        if (bFreezeCullingView)
+            CullingView = Camera->GetViewMatrix();
+
+        vec4 frustumPlanes[6];
+        getFrustumPlanes(Camera->GetProjectionMatrix() * CullingView, frustumPlanes);
+        vec4 frustumCorners[8];
+        getFrustumCorners(Camera->GetProjectionMatrix() * CullingView, frustumCorners);
+
+        
+        {
+            DrawElementsIndirectCommand* cmd = scene_->bufferIndirect_.drawCommands_.data();
+            for (const auto& c : sceneData_->shapes_)
+            {
+                cmd->instanceCount = isBoxInFrustum(frustumPlanes, frustumCorners, sceneData_->meshData_.boxes_[c.meshIndex]) ? 1 : 0;
+                numVisibleMeshes += (cmd++)->instanceCount;
+            }
+            scene_->bufferIndirect_.uploadIndirectBuffer();
+        }
+
+        if (bDrawBoxes)
+        {
+            DrawElementsIndirectCommand* cmd = scene_->bufferIndirect_.drawCommands_.data();
+            for (const auto& c : sceneData_->shapes_)
+                drawBox3dGL(*canvas_, mat4(1.0f), sceneData_->meshData_.boxes_[c.meshIndex], (cmd++)->instanceCount ? vec4(0, 1, 0, 1) : vec4(1, 0, 0, 1));
+            drawBox3dGL(*canvas_, mat4(1.0f), *fullScene, vec4(1, 0, 0, 1));
+        }
+        
         skybox_->Draw();
-        
-        scene_->Draw(m_Shaders[1]);
-        
-        grid->Draw(m_Shaders[0]);
+        glDisable(GL_BLEND);
+        glEnable(GL_DEPTH_TEST);
+
+        if(bDrawMeshes)
+        {
+            m_Shaders[1]->UseProgram();
+            scene_->draw(sceneData_->shapes_.size());
+        }
+
+        if (bDrawGrid)
+            grid->Draw(m_Shaders[0]);
+
+        if(bFreezeCullingView)
+            renderCameraFrustumGL(*canvas_, CullingView,
+                Ciao::Application::GetInst().GetCamera()->GetProjectionMatrix(), vec4(1, 1, 0, 1), 100);
+        canvas_->flush();
     }
 
     
@@ -164,8 +226,15 @@ public:
 
     void ImguiRender() override
     {
-        if (ImGui::Begin(u8"设置")) {
-            ImGui::Text("Gogogo");
+        if (ImGui::Begin("Control panel")) {
+            ImGui::Text("Draw:");
+            ImGui::Checkbox("Meshes", &bDrawMeshes);
+            ImGui::Checkbox("Boxes",  &bDrawBoxes);
+            ImGui::Checkbox("Grid",  &bDrawGrid);
+            ImGui::Separator();
+            ImGui::Checkbox("Freeze culling frustum (P)", &bFreezeCullingView);
+            ImGui::Separator();
+            ImGui::Text("Visible meshes: %i", numVisibleMeshes);
         }
         ImGui::End();
     }
