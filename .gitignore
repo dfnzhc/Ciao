@@ -7,6 +7,7 @@ premake5.exe
 Deps/
 imgui.ini
 Archive/
+**.user
 **.vcxproj
 **.vcxproj.filters
 **.sln
@@ -14,8 +15,7 @@ Resources/
 Resources/Shaders/bak/
 !Resources/Shaders/
 **/obj/
-*.user
-*.log
+**.log
 **.meshes
 **.scene
 **.materials

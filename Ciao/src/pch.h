@@ -27,11 +27,9 @@
 #include <execution>
 #include <filesystem>
 #include <string>
-#include <string>
 #include <sstream>
 #include <unordered_map>
 #include <unordered_set>
-#include <assert.h>
 #include <stdexcept>
 #include <queue>
 #include <stack>
@@ -40,3 +38,20 @@
 #include <map>
 
 #include <windows.h>
+
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
+
+
+using glm::mat4;
+using glm::mat3;
+using glm::vec2;
+using glm::vec3;
+using glm::vec4;
+
+#include "Core/Common.h"
+#include "Core/Logger.h"

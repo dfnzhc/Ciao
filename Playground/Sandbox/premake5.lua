@@ -1,13 +1,11 @@
 project "P0_Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++17"
+	cppdialect "C++20"
 	staticruntime "off"
 
     targetdir ( "%{wks.location}/bin/" .. outputDir )
     objdir ( "%{prj.location}/obj/%{cfg.buildcfg}" )
-
-	characterset ("Unicode")
 
 	files
 	{
@@ -18,20 +16,20 @@ project "P0_Sandbox"
 	includedirs
 	{
 		"%{wks.location}/Ciao/src",
-		"%{IncludeDir.Glad}",
 		"%{IncludeDir.spdlog}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.glfw}",
-        "%{IncludeDir.Assimp}",
-        "%{IncludeDir.ImGui}",
-        "%{IncludeDir.Stb}",
-        "%{IncludeDir.Gli}",
+		"%{IncludeDir.Glad}",
+        -- "%{IncludeDir.Assimp}",
+        -- "%{IncludeDir.ImGui}",
+        -- "%{IncludeDir.Stb}",
+        -- "%{IncludeDir.Gli}",
 	}
 
 	links
 	{
 		"Ciao",
-		"Glad",
+		--"Glad",
 		"%{Library.glfw}",
 	}
 

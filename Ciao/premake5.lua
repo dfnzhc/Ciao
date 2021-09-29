@@ -18,14 +18,10 @@ project "Ciao"
     includedirs
 	{
 		"src",
-		-- "src/Asset/",
-		-- "src/Core/",
-		-- "src/Renderer/",
-		-- "src/Utils/",
-        -- "%{IncludeDir.glfw}",
-        -- "%{IncludeDir.Glad}",
-        -- "%{IncludeDir.glm}",
-        -- "%{IncludeDir.spdlog}",
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.spdlog}",
+        "%{IncludeDir.Glad}",
+        "%{IncludeDir.glfw}",
         -- "%{IncludeDir.ImGui}",
         -- "%{IncludeDir.Assimp}",
         -- "%{IncludeDir.Stb}",
@@ -37,8 +33,8 @@ project "Ciao"
     links
     {
         "opengl32.lib",
+        "Glad",
         "%{Library.glfw}",
-        -- "Glad",
         -- "ImGui",
         -- "MeshOptimizer",
     }
