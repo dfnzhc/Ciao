@@ -1,22 +1,22 @@
 IncludeDir = {}
-IncludeDir["glfw"]          = "%{wks.location}/Ciao/Deps/glfw/include"
-IncludeDir["Glad"]          = "%{wks.location}/Ciao/Deps/glad/include"
-IncludeDir["glm"]           = "%{wks.location}/Ciao/Deps/glm"
-IncludeDir["spdlog"]        = "%{wks.location}/Ciao/Deps/spdlog/include"
-IncludeDir["ImGui"]         = "%{wks.location}/Ciao/Deps/imgui"
-IncludeDir["Assimp"]        = "%{wks.location}/Ciao/Deps/assimp/include"
-IncludeDir["Stb"]           = "%{wks.location}/Ciao/Deps/stb"
-IncludeDir["Gli"]           = "%{wks.location}/Ciao/Deps/gli"
-IncludeDir["MeshOptimizer"] = "%{wks.location}/Ciao/Deps/meshoptimizer/src"
-IncludeDir["rapidjson"]     = "%{wks.location}/Ciao/Deps/rapidjson/include"
+IncludeDir["glfw"]          = "%{wks.location}/Deps/glfw/include"
+IncludeDir["Glad"]          = "%{wks.location}/Deps/glad/include"
+IncludeDir["glm"]           = "%{wks.location}/Deps/glm"
+IncludeDir["spdlog"]        = "%{wks.location}/Deps/spdlog/include"
+IncludeDir["ImGui"]         = "%{wks.location}/Deps/imgui"
+IncludeDir["Assimp"]        = "%{wks.location}/Deps/assimp/include"
+IncludeDir["Stb"]           = "%{wks.location}/Deps/stb"
+IncludeDir["Gli"]           = "%{wks.location}/Deps/gli"
+IncludeDir["MeshOptimizer"] = "%{wks.location}/Deps/meshoptimizer/src"
+IncludeDir["rapidjson"]     = "%{wks.location}/Deps/rapidjson/include"
 
 
 LibraryDir = {}
-LibraryDir["glfw"]          = "%{wks.location}/Ciao/Deps/glfw/lib-vc2019"
+LibraryDir["glfw"]          = "%{wks.location}/Deps/glfw/lib-vc2019"
 
-LibraryDir["Assimp"]        = "%{wks.location}/Ciao/Deps/assimp/lib"
-LibraryDir["Assimp_DLL"]    = "%{wks.location}/Ciao/Deps/assimp/bin/Release"
-LibraryDir["Assimp_DLL_D"]  = "%{wks.location}/Ciao/Deps/assimp/bin/Debug"
+LibraryDir["Assimp"]        = "%{wks.location}/Deps/assimp/lib"
+LibraryDir["Assimp_DLL"]    = "%{wks.location}/Deps/assimp/bin/Release"
+LibraryDir["Assimp_DLL_D"]  = "%{wks.location}/Deps/assimp/bin/Debug"
 
 
 Library = {}

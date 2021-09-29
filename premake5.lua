@@ -8,18 +8,18 @@ workspace "Ciao"
 outputDir = "%{cfg.buildcfg}/%{prj.name}"
 
 group "Dependencies"
-    include "Ciao/Deps/glad"
-    include "Ciao/Deps/imgui"
-    include "Ciao/Deps/meshoptimizer"
+    include "Deps/glad"
+    include "Deps/imgui"
+    include "Deps/meshoptimizer"
 group ""
 
 characterset ("Unicode")
 
 include "Ciao"
 include "Playground/Sandbox"
-include "Playground/Shadow"
+-- include "Playground/Shadow"
 -- include "Playground/MeshDraw"
-include "Playground/PBR"
+-- include "Playground/PBR"
 -- include "Playground/Scene"
 -- include "Playground/OffScreen"
 -- include "Playground/SSAO"

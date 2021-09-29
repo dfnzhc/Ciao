@@ -18,29 +18,29 @@ project "Ciao"
     includedirs
 	{
 		"src",
-		"src/Asset/",
-		"src/Core/",
-		"src/Renderer/",
-		"src/Utils/",
-        "%{IncludeDir.glfw}",
-        "%{IncludeDir.Glad}",
-        "%{IncludeDir.glm}",
-        "%{IncludeDir.spdlog}",
-        "%{IncludeDir.ImGui}",
-        "%{IncludeDir.Assimp}",
-        "%{IncludeDir.Stb}",
-        "%{IncludeDir.Gli}",
-        "%{IncludeDir.MeshOptimizer}",
-        "%{IncludeDir.rapidjson}",
+		-- "src/Asset/",
+		-- "src/Core/",
+		-- "src/Renderer/",
+		-- "src/Utils/",
+        -- "%{IncludeDir.glfw}",
+        -- "%{IncludeDir.Glad}",
+        -- "%{IncludeDir.glm}",
+        -- "%{IncludeDir.spdlog}",
+        -- "%{IncludeDir.ImGui}",
+        -- "%{IncludeDir.Assimp}",
+        -- "%{IncludeDir.Stb}",
+        -- "%{IncludeDir.Gli}",
+        -- "%{IncludeDir.MeshOptimizer}",
+        -- "%{IncludeDir.rapidjson}",
 	}
 
     links
     {
         "opengl32.lib",
-        "Glad",
-        "ImGui",
-        "MeshOptimizer",
         "%{Library.glfw}",
+        -- "Glad",
+        -- "ImGui",
+        -- "MeshOptimizer",
     }
 
     defines
