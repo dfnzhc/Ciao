@@ -7,51 +7,52 @@ namespace Ciao
 		None = 0, Orbit, FirstPerson
 	};
 
-	class Camera
+	class CameraPositioner
 	{
 	public:
-		Camera();
+		virtual ~CameraPositioner() = default;
+		virtual mat4 getViewMatrix() const = 0;
+		virtual vec3 getPosition() const = 0;
+	};
+
+	class Camera final
+	{
+	public:
+		explicit Camera(CameraPositioner& positioner);
+
+		Camera(const Camera&) = default;
+		Camera& operator=(const Camera&) = default;
+
+		mat4 getViewMatrix() const { positioner_->getViewMatrix(); }
+		mat4 getPosition() const { positioner_->getPosition(); }
+
+	private:
+		const CameraPositioner* positioner_;
+	};
+
+
+	class CameraPositioner_Oribit final : public CameraPositioner
+	{
+	public:
+		CameraPositioner_Oribit() = default;
+
+		CameraPositioner_Oribit(const vec3& pos, const vec3& target, const vec3& up);
 
 		void update();
 
-		void setOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
-		void setPerspective(float fovy, float aspect, float zNear, float zFar);
+		mat4 getViewMatrix() const override { return viewMat_; }
+		vec3 getPosition() const override { return position_; }
 
-		mat4 getViewMatrix() const { return mView_; }
-		mat4 getProjMatrix() const { return mProj_; }
-
-
-		void updateDistance(float delta) { if (std::abs(distToViewPoint_ + delta) < Epsilon) return; distToViewPoint_ += delta; }
 
 	private:
-
-		void processMouseMovement();
-		void processMouseScroll();
-
-		void updateCameraViewMatrix();
+		vec3 position_{0.0f, 10.0f, 10.0f};
+		glm::quat orientation_{ vec3{0.0f} };
+		vec3 up_{ 0.0f, 0.0f, 1.0f };
 
 
-		const vec3 WorldUp{ 0.0f, 1.0f, 0.0f };
-
-		vec3 viewVec_;
-		vec3 upVec_;
-		vec3 rightVec_;
-
-		vec3 position_{0.0, 5.0f * Sqrt_Two, 5.0f * Sqrt_Two};
-		vec3 viewPoint_{0};
-
-		float fovy_ = 45.0f;
-		float aspect_;
-		float zNear_ = 0.1f;
-		float zFar_ = 1000.0f;
-
-		mat4 mProj_;
-		mat4 mView_;
+		vec3 right_;
 
 
-		float distToViewPoint_ = 10.0f;
-
-		float yaw_ = -90.0f;
-		float pitch_ = -45.0f;
+		mat4 viewMat_{1.0f};
 	};
 }

@@ -48,6 +48,7 @@ project "P0_Sandbox"
         defines "CIAO_DEBUG"
         symbols "On"
         runtime "Debug"
+		
 
 		postbuildcommands
 		{
