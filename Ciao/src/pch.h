@@ -39,19 +39,11 @@
 
 #include <windows.h>
 
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
-
-
-using glm::mat4;
-using glm::mat3;
-using glm::vec2;
-using glm::vec3;
-using glm::vec4;
 
 #include "Core/Common.h"
 #include "Core/Logger.h"

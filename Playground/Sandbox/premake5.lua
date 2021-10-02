@@ -4,6 +4,8 @@ project "P0_Sandbox"
 	cppdialect "C++20"
 	staticruntime "off"
 
+	debugdir ( "%{wks.location}" )
+
     targetdir ( "%{wks.location}/bin/" .. outputDir )
     objdir ( "%{prj.location}/obj/%{cfg.buildcfg}" )
 

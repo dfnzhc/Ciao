@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "App.h"
 
+#include "Camera.h"
 #include "Mouse.h"
 
 
@@ -99,10 +100,10 @@ namespace Ciao
 			window_,
 			[](GLFWwindow* window, double xoffset, double yoffset)
 			{
-				// if (yoffset > 0)
-				// 	Camera::UpdateDistance(-0.5f);
-				// else if (yoffset < 0)
-				// 	Camera::UpdateDistance(0.5f);
+				if (yoffset > 0)
+					CameraPositioner_Oribit::zoom(-0.5f);
+				else if (yoffset < 0)
+					CameraPositioner_Oribit::zoom(0.5f);
 			}
 		);
 

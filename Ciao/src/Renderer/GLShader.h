@@ -41,6 +41,7 @@ namespace Ciao
 
 	class GLBuffer
 	{
+	public:
 		GLBuffer(GLsizeiptr size, const void* data, GLbitfield flags);
 		~GLBuffer();
 

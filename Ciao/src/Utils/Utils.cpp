@@ -12,11 +12,12 @@ namespace Ciao
 
 	std::string readShaderFile(const char* fileName)
 	{
-		FILE* file = fopen(fileName, "r");
+		FILE* file;
+		fopen_s(&file, fileName, "rt");
 
 		if (!file)
 		{
-			CIAO_CORE_ERROR("I/O error. Cannot open shader file {}.", fileName);
+			CIAO_CORE_ERROR("I/O error. Cannot open shader file {}", fileName);
 			return std::string();
 		}
 
