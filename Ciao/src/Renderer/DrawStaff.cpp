@@ -17,4 +17,25 @@ namespace Ciao
 	{
 		glBindVertexArray(handle_);
 	}
+
+	Grid::Grid()
+	{
+		glCreateVertexArrays(1, &vao_);
+	}
+
+	Grid::~Grid()
+	{
+		glDeleteVertexArrays(1, &vao_);
+	}
+
+	void Grid::draw()
+	{
+		progGrid_.useProgram();
+		glBindVertexArray(vao_);
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDrawArraysInstancedBaseInstance(GL_TRIANGLES, 0, 6, 1, 0);
+		glDisable(GL_BLEND);
+	}
 }

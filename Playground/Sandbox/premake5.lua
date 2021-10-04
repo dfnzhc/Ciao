@@ -22,17 +22,17 @@ project "P0_Sandbox"
         "%{IncludeDir.glm}",
         "%{IncludeDir.glfw}",
 		"%{IncludeDir.Glad}",
-        -- "%{IncludeDir.Assimp}",
+        "%{IncludeDir.Stb}",
+        "%{IncludeDir.Gli}",
+        "%{IncludeDir.Assimp}",
         -- "%{IncludeDir.ImGui}",
-        -- "%{IncludeDir.Stb}",
-        -- "%{IncludeDir.Gli}",
 	}
 
 	links
 	{
 		"Ciao",
-		--"Glad",
 		"%{Library.glfw}",
+		--"Glad",
 	}
 
 	dpiawareness "HighPerMonitor"

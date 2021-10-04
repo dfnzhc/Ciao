@@ -18,16 +18,17 @@ namespace Ciao
 
 		void swapBuffers();
 
-		bool shouldClose() const;
+		bool beginRender();
 
 		GLFWwindow* getWindow() const { return window_; }
 
-		uint32_t getWindth() const { return width_; }
-		uint32_t getHeight() const { return height_; }
+		int getWindth() const { return width_; }
+		int getHeight() const { return height_; }
 
 		float getDeltaSeconds() const { return  deltaSeconds_; }
 
 		void setTitle(const std::string& title) { title_ = title; }
+		inline float getAspect() const { return float(width_) / float(height_); }
 
 	private:
 		void setCallback();
@@ -40,7 +41,7 @@ namespace Ciao
 		double timeStamp_ = glfwGetTime();
 		float deltaSeconds_ = 0;
 
-		uint32_t width_, height_;
+		int width_, height_;
 
 		std::string title_;
 	};

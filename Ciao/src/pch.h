@@ -45,5 +45,11 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <assimp/cimport.h>
+
+#include <meshoptimizer.h>
+
 #include "Core/Common.h"
 #include "Core/Logger.h"

@@ -4,7 +4,6 @@
 
 namespace Ciao
 {
-
 	int endsWith(const char* s, const char* part)
 	{
 		return (strstr(s, part) - s) == (strlen(s) - strlen(part));
@@ -33,7 +32,7 @@ namespace Ciao
 		buffer[bytesread] = 0;
 
 		// shader 文件 以 utf - 8 的编码保存，并添加 BOM
-		static constexpr unsigned char BOM[] = { 0xEF, 0xBB, 0xBF };
+		static constexpr unsigned char BOM[] = {0xEF, 0xBB, 0xBF};
 
 		if (bytesread > 3)
 		{
@@ -68,4 +67,51 @@ namespace Ciao
 	}
 
 
+	std::string replaceAll(const std::string& str, const std::string& oldSubStr, const std::string& newSubStr)
+	{
+		std::string result = str;
+
+		for (size_t p = result.find(oldSubStr); p != std::string::npos; p = result.find(oldSubStr))
+			result.replace(p, oldSubStr.length(), newSubStr);
+
+		return result;
+	}
+
+	std::string lowercaseString(const std::string& s)
+	{
+		std::string out(s.length(), ' ');
+		std::transform(s.begin(), s.end(), out.begin(), tolower);
+		return out;
+	}
+
+	void saveStringList(FILE* f, const std::vector<std::string>& lines)
+	{
+		uint32_t sz = (uint32_t)lines.size();
+
+		fwrite(&sz, sizeof(uint32_t), 1, f);
+		for (const auto& s : lines)
+		{
+			sz = (uint32_t)s.length();
+			fwrite(&sz, sizeof(uint32_t), 1, f);
+			fwrite(s.c_str(), sz + 1, 1, f);
+		}
+	}
+
+	void loadStringList(FILE* f, std::vector<std::string>& lines)
+	{
+		{
+			uint32_t sz = 0;
+			fread(&sz, sizeof(uint32_t), 1, f);
+			lines.resize(sz);
+		}
+		std::vector<char> inBytes;
+		for (auto& s : lines)
+		{
+			uint32_t sz = 0;
+			fread(&sz, sizeof(uint32_t), 1, f);
+			inBytes.resize(sz + 1);
+			fread(inBytes.data(), sz + 1, 1, f);
+			s = std::string(inBytes.data());
+		}
+	}
 }

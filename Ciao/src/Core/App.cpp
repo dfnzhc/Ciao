@@ -88,9 +88,17 @@ namespace Ciao
 		timeStamp_ = newTimeStamp;
 	}
 
-	bool App::shouldClose() const
+	bool App::beginRender()
 	{
-		return glfwWindowShouldClose(window_);
+		if (glfwWindowShouldClose(window_))
+			return false;
+
+		glfwGetFramebufferSize(window_, &width_, &height_);
+
+		glViewport(0, 0, width_, height_);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		return true;
 	}
 
 

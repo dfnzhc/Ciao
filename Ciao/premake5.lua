@@ -22,12 +22,12 @@ project "Ciao"
         "%{IncludeDir.spdlog}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.glfw}",
+        "%{IncludeDir.Stb}",
+        "%{IncludeDir.Gli}",
+        "%{IncludeDir.Assimp}",
+        "%{IncludeDir.MeshOptimizer}",
+        "%{IncludeDir.rapidjson}",
         -- "%{IncludeDir.ImGui}",
-        -- "%{IncludeDir.Assimp}",
-        -- "%{IncludeDir.Stb}",
-        -- "%{IncludeDir.Gli}",
-        -- "%{IncludeDir.MeshOptimizer}",
-        -- "%{IncludeDir.rapidjson}",
 	}
 
     links
@@ -35,8 +35,8 @@ project "Ciao"
         "opengl32.lib",
         "Glad",
         "%{Library.glfw}",
+        "MeshOptimizer",
         -- "ImGui",
-        -- "MeshOptimizer",
     }
 
     defines
