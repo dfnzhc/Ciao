@@ -2,6 +2,7 @@
 #include "App.h"
 
 #include "Camera.h"
+#include "ImGuiRenderer.h"
 #include "Mouse.h"
 
 
@@ -65,6 +66,9 @@ namespace Ciao
 		// 初始化鼠标
 		mouse_ = new Mouse();
 		mouse_->Init();
+
+		imgui_renderer_ = new ImGuiRenderer();
+		imgui_renderer_->init(window_);
 	}
 
 	App::~App()
@@ -73,11 +77,15 @@ namespace Ciao
 		glfwTerminate();
 
 		delete mouse_;
+		delete imgui_renderer_;
 	}
 
 	void App::swapBuffers()
 	{
-		mouse_->Update(window_);
+		imgui_renderer_->render();
+
+		if (!imgui_renderer_->CaptureMouse())
+			mouse_->Update(window_);
 
 		glfwPollEvents();
 		glfwSwapBuffers(window_);
@@ -97,6 +105,8 @@ namespace Ciao
 
 		glViewport(0, 0, width_, height_);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		imgui_renderer_->BeginRender();
 
 		return true;
 	}

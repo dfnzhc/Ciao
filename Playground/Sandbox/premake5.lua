@@ -25,13 +25,13 @@ project "P0_Sandbox"
         "%{IncludeDir.Stb}",
         "%{IncludeDir.Gli}",
         "%{IncludeDir.Assimp}",
-        -- "%{IncludeDir.ImGui}",
+        "%{IncludeDir.ImGui}",
 	}
 
 	links
 	{
 		"Ciao",
-		"%{Library.glfw}",
+		--"%{Library.glfw}",
 		--"Glad",
 	}
 

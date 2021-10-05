@@ -27,7 +27,7 @@ project "Ciao"
         "%{IncludeDir.Assimp}",
         "%{IncludeDir.MeshOptimizer}",
         "%{IncludeDir.rapidjson}",
-        -- "%{IncludeDir.ImGui}",
+        "%{IncludeDir.ImGui}",
 	}
 
     links
@@ -36,7 +36,7 @@ project "Ciao"
         "Glad",
         "%{Library.glfw}",
         "MeshOptimizer",
-        -- "ImGui",
+        "ImGui",
     }
 
     defines

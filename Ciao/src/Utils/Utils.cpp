@@ -58,7 +58,7 @@ namespace Ciao
 				return std::string();
 			}
 
-			const std::string name = sDirectory.append(code.substr(p1 + 1, p2 - p1 - 1));
+			const std::string name = sDirectory + code.substr(p1 + 1, p2 - p1 - 1);
 			const std::string include = readShaderFile(name.c_str());
 			code.replace(pos, p2 - pos + 1, include.c_str());
 		}

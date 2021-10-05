@@ -51,5 +51,8 @@
 
 #include <meshoptimizer.h>
 
+#include <imgui.h>
+#include <imgui_internal.h>
+
 #include "Core/Common.h"
 #include "Core/Logger.h"

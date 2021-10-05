@@ -8,6 +8,7 @@
 
 namespace Ciao
 {
+	class ImGuiRenderer;
 	class Mouse;
 
 	class App
@@ -37,6 +38,8 @@ namespace Ciao
 		GLFWwindow* window_ = nullptr;
 
 		Mouse* mouse_;
+
+		ImGuiRenderer* imgui_renderer_;
 
 		double timeStamp_ = glfwGetTime();
 		float deltaSeconds_ = 0;

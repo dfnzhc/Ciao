@@ -98,13 +98,4 @@ namespace Ciao
 	// Combine a list of meshes to a single mesh container
 	// 将一列 Mesh 顶点数据，整合到单个的容器中
 	MeshFileHeader MergeMeshData(MeshData& m, const std::vector<MeshData*> md);
-
-	struct DrawElementsIndirectCommand
-	{
-		GLuint count;
-		GLuint instanceCount;
-		GLuint firstIndex;
-		GLuint baseVertex;
-		GLuint baseInstance;
-	};
 }

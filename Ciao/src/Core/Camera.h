@@ -43,7 +43,7 @@ namespace Ciao
 	public:
 		//CameraPositioner_Oribit() = default;
 
-		CameraPositioner_Oribit(const vec3& pos = vec3(0.0f, 10.0f, 10.0f * sqrtf(3)),
+		CameraPositioner_Oribit(const vec3& pos = vec3(0.0f, 5.0f, 5.0f * sqrtf(3)),
 		                        const vec3& target = vec3(0)) : position_(pos), target_(target)
 		{
 			viewDir_ = normalize(pos - target);
