@@ -422,7 +422,14 @@ namespace Ciao
 		return newFile;
 	}
 
-	inline void makePrefix(int ofs) { for (int i = 0; i < ofs; i++) printf("\t"); }
+	inline void makePrefix(int ofs)
+	{
+		std::string s = "";
+		for (int i = 0; i < ofs; i++)
+			s.append("    ");
+
+		CIAO_CORE_INFO("{}", s);
+	}
 
 	glm::mat4 toMat4(const aiMatrix4x4& from)
 	{
@@ -436,7 +443,7 @@ namespace Ciao
 
 	void Traverse(const aiScene* sourceScene, Scene& scene, aiNode* N, int parent, int ofs)
 	{
-		// 场景的根节点
+		// 当前节点
 		int newNode = addNode(scene, parent, ofs);
 
 		if (N->mName.C_Str())

@@ -5,7 +5,7 @@
 
 namespace Ciao
 {
-	class GLTexture;
+	class Texture;
 	struct MaterialDescription;
 	struct DrawData;
 
@@ -15,7 +15,7 @@ namespace Ciao
 		void loadScene(const char* sceneFile);
 
 
-		std::vector<GLTexture> allMaterialTextures_;
+		std::vector<Texture> allMaterialTextures_;
 
 		MeshFileHeader header_;
 		MeshData meshData_;

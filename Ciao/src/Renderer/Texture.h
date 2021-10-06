@@ -2,15 +2,15 @@
 
 namespace Ciao
 {
-	class GLTexture
+	class Texture
 	{
 	public:
-		GLTexture(GLenum type, const char* fileName);
-		GLTexture(GLenum type, int width, int height, GLenum internalFormat);
-		GLTexture(int w, int h, const void* img);
-		~GLTexture();
-		GLTexture(const GLTexture&) = delete;
-		GLTexture(GLTexture&&);
+		Texture(GLenum type, const char* fileName);
+		Texture(GLenum type, int width, int height, GLenum internalFormat);
+		Texture(int w, int h, const void* img);
+		~Texture();
+		Texture(const Texture&) = delete;
+		Texture(Texture&&);
 		GLenum getType() const { return type_; }
 		GLuint getHandle() const { return handle_; }
 		GLuint64 getHandleBindless() const { return handleBindless_; }

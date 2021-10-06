@@ -2,11 +2,11 @@
 #include "SceneData.h"
 
 #include "Renderer/Scene/Material.h"
-#include "Renderer/GLTexture.h"
+#include "Renderer/Texture.h"
 
 namespace Ciao
 {
-	static uint64_t getTextureHandleBindless(uint64_t idx, const std::vector<GLTexture>& textures)
+	static uint64_t getTextureHandleBindless(uint64_t idx, const std::vector<Texture>& textures)
 	{
 		if (idx == INVALID_TEXTURE) return 0;
 

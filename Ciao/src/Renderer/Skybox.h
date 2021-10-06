@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "GLShader.h"
-#include "GLTexture.h"
+#include "Texture.h"
 #include "Utils/Utils.h"
 
 namespace Ciao
@@ -16,9 +16,9 @@ namespace Ciao
 		void draw();
 
 	private:
-		GLTexture envMap_;
-		GLTexture envMapIrradiance_;
-		GLTexture brdfLUT_ = { GL_TEXTURE_2D, Res("Textures/brdfLUT.ktx") };
+		Texture envMap_;
+		Texture envMapIrradiance_;
+		Texture brdfLUT_ = { GL_TEXTURE_2D, Res("Textures/brdfLUT.ktx") };
 		GLShader shdCubeVertex_ = GLShader{ Res("Shaders/Skybox.vert") };
 		GLShader shdCubeFragment_ = GLShader{ Res("Shaders/Skybox.frag") };
 		GLProgram progCube_ = GLProgram{ shdCubeVertex_, shdCubeFragment_ };

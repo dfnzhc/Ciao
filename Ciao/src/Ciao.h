@@ -10,8 +10,9 @@
 #include "Renderer/GLShader.h"
 #include "Renderer/DrawStaff.h"
 #include "Renderer/GLMesh.h"
-#include "Renderer/GLTexture.h"
+#include "Renderer/Texture.h"
 #include "Renderer/Skybox.h"
+#include "Renderer/Framebuffer.h"
 #include "Renderer/SceneData.h"
 #include "Renderer/Scene/Material.h"
 #include "Renderer/Scene/MergeUtil.h"
@@ -19,6 +20,7 @@
 #include "Renderer/Scene/Scene.h"
 #include "Renderer/Scene/SceneConvert.h"
 #include "Renderer/Scene/VtxData.h"
+
 
 #include "Utils/Utils.h"
 #include "Utils/UtilsMath.h"

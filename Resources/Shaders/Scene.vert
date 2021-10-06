@@ -2,12 +2,7 @@
 
 #extension GL_ARB_gpu_shader_int64 : enable
 
-layout(std140, binding = 0) uniform PerFrameData
-{
-    mat4 view;
-    mat4 proj;
-    vec4 cameraPos;
-};
+#include <GLBufferDeclarations.h>
 
 layout(std430, binding = 1) restrict readonly buffer Matrices
 {

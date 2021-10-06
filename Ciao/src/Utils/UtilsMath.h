@@ -81,6 +81,89 @@ namespace Ciao
 		}
 	};
 
+	inline void getFrustumPlanes(glm::mat4 mvp, glm::vec4* planes)
+	{
+		using glm::vec4;
+
+		mvp = glm::transpose(mvp);
+		planes[0] = vec4(mvp[3] + mvp[0]); // left
+		planes[1] = vec4(mvp[3] - mvp[0]); // right
+		planes[2] = vec4(mvp[3] + mvp[1]); // bottom
+		planes[3] = vec4(mvp[3] - mvp[1]); // top
+		planes[4] = vec4(mvp[3] + mvp[2]); // near
+		planes[5] = vec4(mvp[3] - mvp[2]); // far
+	}
+
+	inline void getFrustumCorners(glm::mat4 mvp, glm::vec4* points)
+	{
+		using glm::vec4;
+
+		const vec4 corners[] = {
+			vec4(-1, -1, -1, 1), vec4(1, -1, -1, 1),
+			vec4(1,  1, -1, 1),  vec4(-1,  1, -1, 1),
+			vec4(-1, -1,  1, 1), vec4(1, -1,  1, 1),
+			vec4(1,  1,  1, 1),  vec4(-1,  1,  1, 1)
+		};
+
+		const glm::mat4 invMVP = glm::inverse(mvp);
+
+		for (int i = 0; i != 8; i++) {
+			const vec4 q = invMVP * corners[i];
+			points[i] = q / q.w;
+		}
+	}
+
+	inline bool isBoxInFrustum(glm::vec4* frustumPlanes, glm::vec4* frustumCorners, const BoundingBox& box)
+	{
+		using glm::dot;
+		using glm::vec4;
+
+		for (int i = 0; i < 6; i++) {
+			int r = 0;
+			r += (dot(frustumPlanes[i], vec4(box.min_.x, box.min_.y, box.min_.z, 1.0f)) < 0.0) ? 1 : 0;
+			r += (dot(frustumPlanes[i], vec4(box.max_.x, box.min_.y, box.min_.z, 1.0f)) < 0.0) ? 1 : 0;
+			r += (dot(frustumPlanes[i], vec4(box.min_.x, box.max_.y, box.min_.z, 1.0f)) < 0.0) ? 1 : 0;
+			r += (dot(frustumPlanes[i], vec4(box.max_.x, box.max_.y, box.min_.z, 1.0f)) < 0.0) ? 1 : 0;
+			r += (dot(frustumPlanes[i], vec4(box.min_.x, box.min_.y, box.max_.z, 1.0f)) < 0.0) ? 1 : 0;
+			r += (dot(frustumPlanes[i], vec4(box.max_.x, box.min_.y, box.max_.z, 1.0f)) < 0.0) ? 1 : 0;
+			r += (dot(frustumPlanes[i], vec4(box.min_.x, box.max_.y, box.max_.z, 1.0f)) < 0.0) ? 1 : 0;
+			r += (dot(frustumPlanes[i], vec4(box.max_.x, box.max_.y, box.max_.z, 1.0f)) < 0.0) ? 1 : 0;
+			if (r == 8) return false;
+		}
+
+		// check frustum outside/inside box
+		int r = 0;
+		r = 0; for (int i = 0; i < 8; i++) r += ((frustumCorners[i].x > box.max_.x) ? 1 : 0); if (r == 8) return false;
+		r = 0; for (int i = 0; i < 8; i++) r += ((frustumCorners[i].x < box.min_.x) ? 1 : 0); if (r == 8) return false;
+		r = 0; for (int i = 0; i < 8; i++) r += ((frustumCorners[i].y > box.max_.y) ? 1 : 0); if (r == 8) return false;
+		r = 0; for (int i = 0; i < 8; i++) r += ((frustumCorners[i].y < box.min_.y) ? 1 : 0); if (r == 8) return false;
+		r = 0; for (int i = 0; i < 8; i++) r += ((frustumCorners[i].z > box.max_.z) ? 1 : 0); if (r == 8) return false;
+		r = 0; for (int i = 0; i < 8; i++) r += ((frustumCorners[i].z < box.min_.z) ? 1 : 0); if (r == 8) return false;
+
+		return true;
+	}
+
+	inline BoundingBox combineBoxes(const std::vector<BoundingBox>& boxes)
+	{
+		std::vector<vec3> allPoints;
+		allPoints.reserve(boxes.size() * 8);
+
+		for (const auto& b : boxes)
+		{
+			allPoints.emplace_back(b.min_.x, b.min_.y, b.min_.z);
+			allPoints.emplace_back(b.min_.x, b.min_.y, b.max_.z);
+			allPoints.emplace_back(b.min_.x, b.max_.y, b.min_.z);
+			allPoints.emplace_back(b.min_.x, b.max_.y, b.max_.z);
+
+			allPoints.emplace_back(b.max_.x, b.min_.y, b.min_.z);
+			allPoints.emplace_back(b.max_.x, b.min_.y, b.max_.z);
+			allPoints.emplace_back(b.max_.x, b.max_.y, b.min_.z);
+			allPoints.emplace_back(b.max_.x, b.max_.y, b.max_.z);
+		}
+
+		return BoundingBox(allPoints.data(), allPoints.size());
+	}
+
 	template <typename T>
 	T clamp(T v, T a, T b)
 	{

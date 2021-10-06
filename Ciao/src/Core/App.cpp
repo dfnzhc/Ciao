@@ -73,11 +73,11 @@ namespace Ciao
 
 	App::~App()
 	{
-		glfwDestroyWindow(window_);
-		glfwTerminate();
-
 		delete mouse_;
 		delete imgui_renderer_;
+
+		glfwDestroyWindow(window_);
+		glfwTerminate();
 	}
 
 	void App::swapBuffers()

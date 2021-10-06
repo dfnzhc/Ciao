@@ -1,5 +1,5 @@
 ﻿#include "pch.h"
-#include "GLTexture.h"
+#include "Texture.h"
 
 #include "Utils/Bitmap.h"
 #include "Utils/UtilsCubemap.h"
@@ -22,7 +22,7 @@ namespace Ciao
 	}
 
 
-	GLTexture::GLTexture(GLenum type, int width, int height, GLenum internalFormat)
+	Texture::Texture(GLenum type, int width, int height, GLenum internalFormat)
 		: type_(type)
 	{
 		glCreateTextures(type, 1, &handle_);
@@ -59,7 +59,7 @@ namespace Ciao
 		return imgData;
 	}
 
-	GLTexture::GLTexture(GLenum type, const char* fileName)
+	Texture::Texture(GLenum type, const char* fileName)
 		: type_(type)
 	{
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -159,7 +159,7 @@ namespace Ciao
 		glMakeTextureHandleResidentARB(handleBindless_);
 	}
 
-	GLTexture::GLTexture(int w, int h, const void* img)
+	Texture::Texture(int w, int h, const void* img)
 		: type_(GL_TEXTURE_2D)
 	{
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -175,7 +175,7 @@ namespace Ciao
 		glMakeTextureHandleResidentARB(handleBindless_);
 	}
 
-	GLTexture::GLTexture(GLTexture&& other)
+	Texture::Texture(Texture&& other)
 		: type_(other.type_)
 		  , handle_(other.handle_)
 		  , handleBindless_(other.handleBindless_)
@@ -185,7 +185,7 @@ namespace Ciao
 		other.handleBindless_ = 0;
 	}
 
-	GLTexture::~GLTexture()
+	Texture::~Texture()
 	{
 		if (handleBindless_)
 			glMakeTextureHandleNonResidentARB(handleBindless_);
