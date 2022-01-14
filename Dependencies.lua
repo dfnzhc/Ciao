@@ -1,25 +1,32 @@
-IncludeDir = {}
-IncludeDir["glfw"]          = "%{wks.location}/Deps/glfw/include"
-IncludeDir["Glad"]          = "%{wks.location}/Deps/glad/include"
-IncludeDir["glm"]           = "%{wks.location}/Deps/glm"
-IncludeDir["spdlog"]        = "%{wks.location}/Deps/spdlog/include"
-IncludeDir["ImGui"]         = "%{wks.location}/Deps/imgui"
-IncludeDir["Assimp"]        = "%{wks.location}/Deps/assimp/include"
-IncludeDir["Stb"]           = "%{wks.location}/Deps/stb"
-IncludeDir["Gli"]           = "%{wks.location}/Deps/gli"
-IncludeDir["MeshOptimizer"] = "%{wks.location}/Deps/meshoptimizer/src"
-IncludeDir["rapidjson"]     = "%{wks.location}/Deps/rapidjson/include"
+DepsDir = {}
+DepsDir["SDL2"]          = "%{wks.location}/Deps/SDL2"
+DepsDir["Glad"]          = "%{wks.location}/Deps/glad"
+DepsDir["Glm"]           = "%{wks.location}/Deps/glm"
+DepsDir["Spdlog"]        = "%{wks.location}/Deps/spdlog"
+DepsDir["ImGui"]         = "%{wks.location}/Deps/imgui"
+DepsDir["ImGuizmo"]      = "%{wks.location}/Deps/ImGuizmo"
+DepsDir["Stb"]           = "%{wks.location}/Deps/stb"
+DepsDir["Tinydir"]       = "%{wks.location}/Deps/tinydir"
+DepsDir["Tinygltf"]      = "%{wks.location}/Deps/tinygltf"
+DepsDir["Tinyobjloader"] = "%{wks.location}/Deps/tinyobjloader"
+
+IncDir = {}
+IncDir["SDL2"]          = "%{DepsDir.SDL2}/include"
+IncDir["Glad"]          = "%{DepsDir.Glad}/include"
+IncDir["Glm"]           = "%{DepsDir.Glm}"
+IncDir["Spdlog"]        = "%{DepsDir.Spdlog}/include"
+IncDir["ImGui"]         = "%{DepsDir.ImGui}"
+IncDir["ImGuizmo"]      = "%{DepsDir.ImGuizmo}"
+IncDir["Stb"]           = "%{DepsDir.Stb}"
+IncDir["Tinydir"]       = "%{DepsDir.Tinydir}"
+IncDir["Tinygltf"]      = "%{DepsDir.Tinygltf}"
+IncDir["Tinyobjloader"] = "%{DepsDir.Tinyobjloader}"
 
 
-LibraryDir = {}
-LibraryDir["glfw"]          = "%{wks.location}/Deps/glfw/lib-vc2019"
-
-LibraryDir["Assimp"]        = "%{wks.location}/Deps/assimp/lib"
-LibraryDir["Assimp_DLL"]    = "%{wks.location}/Deps/assimp/bin/Release"
-LibraryDir["Assimp_DLL_D"]  = "%{wks.location}/Deps/assimp/bin/Debug"
+LibDir = {}
+LibDir["SDL2"]          = "%{DepsDir.SDL2}/lib/x64"
 
 
-Library = {}
-Library["glfw"]             = "%{LibraryDir.glfw}/glfw3.lib"
-Library["Assimp"]           = "%{LibraryDir.Assimp}/Release/assimp.lib"
-Library["Assimp_Debug"]     = "%{LibraryDir.Assimp}/Debug/assimpd.lib"
+Lib = {}
+Lib["SDL2"]             = "%{DepsDir.SDL2}/lib/x64/SDL2.lib"
+Lib["SDL2_DLL"]         = "%{DepsDir.SDL2}/lib/x64/SDL2.dll"

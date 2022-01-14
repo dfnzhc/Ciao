@@ -1,23 +1,23 @@
-project "Ciao"
-    kind "StaticLib"
-    language "C++"
-    cppdialect "C++20"
-    staticruntime "off"
+project "P0_Sandbox"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++20"
+	staticruntime "off"
+
+	debugdir ( "%{wks.location}" )
 
     targetdir ( "%{wks.location}/bin/" .. outputDir )
     objdir ( "%{prj.location}/obj/%{cfg.buildcfg}" )
 
-    pchheader "pch.h"
-	pchsource "src/pch.cpp"
-    
-    files { 
-        "src/**.h", 
-        "src/**.cpp",
-    }
-
-    includedirs
+	files
 	{
-		"src",
+		"src/**.h",
+		"src/**.cpp",
+	}
+
+	includedirs
+	{
+		"%{wks.location}/Ciao/src",
         "%{IncDir.SDL2}",
         "%{IncDir.Glad}",
         "%{IncDir.Glm}",
@@ -30,43 +30,37 @@ project "Ciao"
         "%{IncDir.Tinyobjloader}",
 	}
 
-    links
-    {
-        "opengl32.lib",
-        "Glad",
-        "%{Lib.SDL2}",
-    }
-    
-
-    defines
+	links
 	{
-		"_CRT_SECURE_NO_WARNINGS",
+		"Ciao",
+		--"%{Library.glfw}",
+		--"Glad",
 	}
 
-    
-    -- 不使用预编译头的文件
-    -- filter {}
-    --     files 
-    --     {
+	dpiawareness "HighPerMonitor"
 
-    --     }
-
-    --     flags
-    --     { 
-    --         "NoPCH" 
-    --     }
+	postbuildcommands
+	{
+		"{COPYDIR} \"%{Lib.SDL2_DLL}\" \"%{cfg.targetdir}\""
+	}
 
     filter "system:windows"
 		systemversion "latest"
-        defines "CIAO_PLATFORM_WINDOWS"
+
 
     filter "configurations:Debug"
         defines "CIAO_DEBUG"
         symbols "On"
         runtime "Debug"
+		
+
+		postbuildcommands
+		{
+		}
 
         links
         {
+
         }
 
     filter "configurations:Release"
@@ -74,6 +68,11 @@ project "Ciao"
         optimize "On"
         runtime "Release"
 
+		postbuildcommands
+		{
+		}
+
         links
         {
+            
         }

@@ -2,5 +2,9 @@
 .idea/
 bin/
 Ciao/obj/
-Editor/obj/
 GenerateProjects.bat
+Deps/
+Playground/Sandbox/obj/
+*.filters
+*.vcxproj
+*.user
