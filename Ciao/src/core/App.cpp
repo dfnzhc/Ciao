@@ -1,112 +1,190 @@
 ﻿#include "pch.h"
 #include "App.h"
 
-#include <SDL.h>
-
+#include "render/Camera.h"
+#include "render/ImGuiRenderer.h"
 #include "render/Mouse.h"
 
 namespace Ciao
 {
-    App::~App()
-    {
-        Shutdown();
-    }
-
-    void App::Init()
+    App::App() : width_(800), height_(600), title_("We eat fish right.")
     {
         Logger::Init();
-        if (SDL_Init(SDL_INIT_EVERYTHING))
+
+        glfwSetErrorCallback([](int error, const char* description)
         {
-            CIAO_CORE_ERROR("SDL initializeing FAILED: {}", SDL_GetError());
+            CIAO_CORE_ERROR("Error: {}.", description);
+        });
+
+        if (!glfwInit())
+        {
+            CIAO_CORE_ERROR("Initialize GLFW Failed.");
+            exit(EXIT_FAILURE);
         }
-        else
-        {
-            CIAO_CORE_INFO("SDL initializing SUCCESSED..");
-            SDL_version version;
-            SDL_VERSION(&version);
-            CIAO_CORE_INFO("SDL version: {}.{}.{}", (int32_t)version.major, (int32_t)version.minor, (int32_t)version.patch);
 
-            
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
-            SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-            SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-            SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-            
-            SDL_DisplayMode current;
-            SDL_GetCurrentDisplayMode(0, &current);
-            SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-            CIAO_CORE_INFO("Display #{}: current display mode is {}x{}px @ {}hz.", 0, current.w, current.h, current.refresh_rate);
-            
-            // TODO: 修改默认窗口的大小
-            window_ = SDL_CreateWindow("GLSL PathTracer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 800, window_flags);
-            
-            SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
-            
-            context_ = SDL_GL_CreateContext(window_);
-            if (!context_)
-            {
-                CIAO_CORE_ERROR("Failed to initialize GL context!");
-            }
-            
-            // 禁用同步刷新
-            SDL_GL_SetSwapInterval(0);
-            
-            // 加载 glad
-            if(!gladLoadGLLoader(SDL_GL_GetProcAddress))
-            {
-                CIAO_CORE_ERROR("Failed to initialize GL context!");
-            }
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
-            // TODO：初始化 imgui & ImGuizmo
-
-        	// 初始化鼠标
-        	Mouse::Init();
-        }
-    }
-
-    void App::Shutdown()
-    {
-        SDL_GL_DeleteContext(context_);
-        SDL_DestroyWindow(window_);
-        SDL_Quit();
-    }
-
-    void App::mainLoop()
-    {
-    	handleEvents();
-    	update();
-    }
-
-    void App::update()
-    {
-    	Mouse::Update();
-    }
-
-    void App::handleEvents()
-    {
-        SDL_Event event;
-        while (SDL_PollEvent(&event))
-        {
-        	//ImGui_ImplSDL2_ProcessEvent(&event);
-        	if (event.type == SDL_QUIT)
-        	{
-        		running = false;
-        	}
-        	if (event.type == SDL_WINDOWEVENT)
-        	{
-        		if (event.window.event == SDL_WINDOWEVENT_RESIZED)
-        		{
-        			
-        		}
+        const GLFWvidmode* info = glfwGetVideoMode(glfwGetPrimaryMonitor());
         
-        		if (event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window_))
-        		{
-        			running = false;
-        		}
-        	}
+        // width_ = info->width;
+        // height_ = info->height;
+        window_ = glfwCreateWindow(width_, height_, title_.c_str(), nullptr, nullptr);
+
+        if (!window_)
+        {
+            CIAO_CORE_ERROR("Create GLFW window FAILED.");
+            exit(EXIT_FAILURE);
         }
+
+        CIAO_CORE_INFO("Create GLFW window SUCCESS!\t-{}x{}.", width_, height_);
+
+        glfwSetWindowPos(window_, (info->width - width_) * 0.5f, (info->height - height_) * 0.5f);
+        //glfwMaximizeWindow(window_);
+        glfwMakeContextCurrent(window_);
+
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+        {
+            CIAO_CORE_ERROR("Failed to initialize GLAD");
+            exit(EXIT_FAILURE);
+        }
+
+        glfwSwapInterval(0);
+
+        glDebugMessageCallback(message_callback, nullptr);
+        glEnable(GL_DEBUG_OUTPUT);
+        glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, nullptr, GL_FALSE);
+
+        setCallback();
+
+
+        // 初始化鼠标
+        mouse_ = new Mouse();
+        mouse_->Init();
+
+        imgui_renderer_ = new ImGuiRenderer();
+        imgui_renderer_->init(window_);
+    }
+
+    App::~App()
+    {
+        delete mouse_;
+        delete imgui_renderer_;
+
+        glfwDestroyWindow(window_);
+        glfwTerminate();
+    }
+
+    void App::swapBuffers()
+    {
+        imgui_renderer_->render();
+
+        if (!imgui_renderer_->CaptureMouse())
+            mouse_->Update(window_);
+
+        glfwPollEvents();
+        glfwSwapBuffers(window_);
+        assert(glGetError() == GL_NO_ERROR);
+
+        const double newTimeStamp = glfwGetTime();
+        deltaSeconds_ = static_cast<float>(newTimeStamp - timeStamp_);
+        timeStamp_ = newTimeStamp;
+    }
+
+    bool App::beginRender()
+    {
+        if (glfwWindowShouldClose(window_))
+            return false;
+
+        glfwGetFramebufferSize(window_, &width_, &height_);
+
+        glViewport(0, 0, width_, height_);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        imgui_renderer_->BeginRender();
+
+        return true;
+    }
+
+    void App::setCallback()
+    {
+        glfwSetScrollCallback(
+            window_,
+            [](GLFWwindow* window, double xoffset, double yoffset)
+            {
+                if (yoffset > 0)
+                    CameraPositioner_Oribit::zoom(-0.5f);
+                else if (yoffset < 0)
+                    CameraPositioner_Oribit::zoom(0.5f);
+            }
+        );
+
+        glfwSetKeyCallback(
+            window_,
+            [](GLFWwindow* window, int key, int scancode, int action, int mods)
+            {
+                const bool pressed = action != GLFW_RELEASE;
+                if (key == GLFW_KEY_ESCAPE && pressed)
+                    glfwSetWindowShouldClose(window, GLFW_TRUE);
+            }
+        );
+
+        glfwSetWindowSizeCallback(
+            window_,
+            [](GLFWwindow* window, int width, int height)
+            {
+                glViewport(0, 0, width, height);
+            }
+        );
+    }
+
+    void message_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, GLchar const* message,
+                          void const* user_param)
+    {
+        auto const src_str = [source]()
+        {
+            switch (source)
+            {
+            case GL_DEBUG_SOURCE_API: return "API";
+            case GL_DEBUG_SOURCE_WINDOW_SYSTEM: return "WINDOW SYSTEM";
+            case GL_DEBUG_SOURCE_SHADER_COMPILER: return "SHADER COMPILER";
+            case GL_DEBUG_SOURCE_THIRD_PARTY: return "THIRD PARTY";
+            case GL_DEBUG_SOURCE_APPLICATION: return "APPLICATION";
+            case GL_DEBUG_SOURCE_OTHER: return "OTHER";
+            }
+            return "";
+        }();
+
+        auto const type_str = [type]()
+        {
+            switch (type)
+            {
+            case GL_DEBUG_TYPE_ERROR: return "ERROR";
+            case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: return "DEPRECATED_BEHAVIOR";
+            case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR: return "UNDEFINED_BEHAVIOR";
+            case GL_DEBUG_TYPE_PORTABILITY: return "PORTABILITY";
+            case GL_DEBUG_TYPE_PERFORMANCE: return "PERFORMANCE";
+            case GL_DEBUG_TYPE_MARKER: return "MARKER";
+            case GL_DEBUG_TYPE_OTHER: return "OTHER";
+            }
+            return "";
+        }();
+
+        auto const severity_str = [severity]()
+        {
+            switch (severity)
+            {
+            case GL_DEBUG_SEVERITY_NOTIFICATION: return "NOTIFICATION";
+            case GL_DEBUG_SEVERITY_LOW: return "LOW";
+            case GL_DEBUG_SEVERITY_MEDIUM: return "MEDIUM";
+            case GL_DEBUG_SEVERITY_HIGH: return "HIGH";
+            }
+            return "";
+        }();
+
+        CIAO_CORE_INFO("{}, {}, {}, {}: {}.", src_str, type_str, severity_str, id, message);
     }
 }

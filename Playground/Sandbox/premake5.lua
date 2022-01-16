@@ -18,7 +18,7 @@ project "P0_Sandbox"
 	includedirs
 	{
 		"%{wks.location}/Ciao/src",
-        "%{IncDir.SDL2}",
+        "%{IncDir.Glfw}",
         "%{IncDir.Glad}",
         "%{IncDir.Glm}",
         "%{IncDir.Spdlog}",
@@ -39,10 +39,10 @@ project "P0_Sandbox"
 
 	dpiawareness "HighPerMonitor"
 
-	postbuildcommands
-	{
-		"{COPYDIR} \"%{Lib.SDL2_DLL}\" \"%{cfg.targetdir}\""
-	}
+	-- postbuildcommands
+	-- {
+	-- 	"{COPYDIR} \"%{Lib.SDL2_DLL}\" \"%{cfg.targetdir}\""
+	-- }
 
     filter "system:windows"
 		systemversion "latest"

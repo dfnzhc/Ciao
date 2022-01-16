@@ -18,7 +18,7 @@ project "Ciao"
     includedirs
 	{
 		"src",
-        "%{IncDir.SDL2}",
+        "%{IncDir.Glfw}",
         "%{IncDir.Glad}",
         "%{IncDir.Glm}",
         "%{IncDir.Spdlog}",
@@ -34,13 +34,15 @@ project "Ciao"
     {
         "opengl32.lib",
         "Glad",
-        "%{Lib.SDL2}",
+        "ImGui",
+        "%{Lib.Glfw}",
     }
     
 
     defines
 	{
 		"_CRT_SECURE_NO_WARNINGS",
+		"GLFW_INCLUDE_NONE"
 	}
 
     

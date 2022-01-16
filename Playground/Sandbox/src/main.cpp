@@ -3,21 +3,24 @@
 
 using namespace Ciao;
 
+CameraPositioner_Oribit positioner;
+Camera camera(positioner);
 
 int main()
 {
 	App app;
-	app.Init();
-	
-	
-	CameraPositioner_Oribit positioner;
-	Camera camera(positioner);
 
-	while (app.isRunning())
+	while (app.beginRender())
 	{
-		app.mainLoop();
 		positioner.update();
 
-		CIAO_TRACE("{}, {}", camera.getPosition().x, camera.getPosition().y);
+		if (ImGui::Begin("Control", nullptr))
+		{
+			ImGui::Text("Hello!");
+		}
+		ImGui::End();
+
+		
+		app.swapBuffers();
 	}
 }

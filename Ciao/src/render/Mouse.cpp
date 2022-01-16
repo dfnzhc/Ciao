@@ -1,8 +1,6 @@
 ﻿#include "pch.h"
 #include "Mouse.h"
 
-#include <SDL_mouse.h>
-
 namespace Ciao
 {
     std::array<bool, Mouse::ButtonCount> Mouse::buttons;
@@ -14,15 +12,21 @@ namespace Ciao
         std::fill(buttonsLast.begin(), buttonsLast.end(), false);
     }
 
-    void Mouse::Update()
+    void Mouse::Update(GLFWwindow* window)
     {
         xLast = x;
         yLast = y;
         buttonsLast = buttons;
-        Uint32 state = SDL_GetMouseState(&x, &y);
-        //CIAO_CORE_TRACE("{}-{}", x, y);
-        for (int i = 0; i < ButtonCount; ++i) {
-            buttons[i] = state & SDL_BUTTON(i + 1);
+
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+
+        x = static_cast<int>(xpos);
+        y = static_cast<int>(ypos);
+
+        for (int i = 0; i < ButtonCount; ++i)
+        {
+            buttons[i] = glfwGetMouseButton(window, i) == GLFW_PRESS;
         }
     }
 
@@ -30,7 +34,7 @@ namespace Ciao
     {
         if (button >= CIAO_INPUT_MOUSE_FIRST && button <= CIAO_INPUT_MOUSE_LAST)
         {
-            return buttons[button - 1];
+            return buttons[button];
         }
         return false;
     }
@@ -39,7 +43,7 @@ namespace Ciao
     {
         if (button >= CIAO_INPUT_MOUSE_FIRST && button <= CIAO_INPUT_MOUSE_LAST)
         {
-            return buttons[button - 1] && !buttonsLast[button - 1];
+            return buttons[button] && !buttonsLast[button];
         }
         return false;
     }
@@ -48,7 +52,7 @@ namespace Ciao
     {
         if (button >= CIAO_INPUT_MOUSE_FIRST && button <= CIAO_INPUT_MOUSE_LAST)
         {
-            return !buttons[button - 1] && buttonsLast[button - 1];
+            return !buttons[button] && buttonsLast[button];
         }
         return false;
     }
@@ -57,7 +61,7 @@ namespace Ciao
     {
         if (button >= CIAO_INPUT_MOUSE_FIRST && button <= CIAO_INPUT_MOUSE_LAST)
         {
-            return buttons[button - 1] && buttonsLast[button - 1];
+            return buttons[button] && buttonsLast[button];
         }
         return false;
     }

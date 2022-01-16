@@ -4,24 +4,22 @@ namespace Ciao
 {
     enum
     {
-        CIAO_INPUT_MOUSE_FIRST      = 1,
-        CIAO_INPUT_MOUSE_LEFT       = CIAO_INPUT_MOUSE_FIRST,
-        CIAO_INPUT_MOUSE_MIDDLE     = 2,
-        CIAO_INPUT_MOUSE_RIGHT      = 3,
-        CIAO_INPUT_MOUSE_X1         = 4,
-        CIAO_INPUT_MOUSE_X2         = 5,
-        CIAO_INPUT_MOUSE_LAST       = CIAO_INPUT_MOUSE_X2
+        CIAO_INPUT_MOUSE_FIRST		= 0,
+        CIAO_INPUT_MOUSE_LEFT		= CIAO_INPUT_MOUSE_FIRST,
+        CIAO_INPUT_MOUSE_RIGHT		= 1,
+        CIAO_INPUT_MOUSE_MIDDLE		= 2,
+        CIAO_INPUT_MOUSE_LAST		= CIAO_INPUT_MOUSE_MIDDLE
     };
     
     class Mouse
     {
     public:
         static void Init();
-        static void Update();
+        static void Update(GLFWwindow* window);
 
         inline static int X() { return x; }
         inline static int Y() { return x; }
-        
+
         inline static int DX() { return x - xLast; }
         inline static int DY() { return y - yLast; }
 
@@ -31,7 +29,7 @@ namespace Ciao
         static bool ButtonStay(int button);
 
     private:
-        constexpr static const int ButtonCount = 5;
+        constexpr static const int ButtonCount = 3;
 
         inline static int x = 0, xLast = 0;
         inline static int y = 0, yLast = 0;

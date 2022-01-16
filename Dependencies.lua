@@ -1,5 +1,5 @@
 DepsDir = {}
-DepsDir["SDL2"]          = "%{wks.location}/Deps/SDL2"
+DepsDir["Glfw"]          = "%{wks.location}/Deps/glfw"
 DepsDir["Glad"]          = "%{wks.location}/Deps/glad"
 DepsDir["Glm"]           = "%{wks.location}/Deps/glm"
 DepsDir["Spdlog"]        = "%{wks.location}/Deps/spdlog"
@@ -11,7 +11,7 @@ DepsDir["Tinygltf"]      = "%{wks.location}/Deps/tinygltf"
 DepsDir["Tinyobjloader"] = "%{wks.location}/Deps/tinyobjloader"
 
 IncDir = {}
-IncDir["SDL2"]          = "%{DepsDir.SDL2}/include"
+IncDir["Glfw"]          = "%{DepsDir.Glfw}/include"
 IncDir["Glad"]          = "%{DepsDir.Glad}/include"
 IncDir["Glm"]           = "%{DepsDir.Glm}"
 IncDir["Spdlog"]        = "%{DepsDir.Spdlog}/include"
@@ -24,9 +24,8 @@ IncDir["Tinyobjloader"] = "%{DepsDir.Tinyobjloader}"
 
 
 LibDir = {}
-LibDir["SDL2"]          = "%{DepsDir.SDL2}/lib/x64"
+LibDir["Glfw"]          = "%{DepsDir.Glfw}/lib-vc2022"
 
 
 Lib = {}
-Lib["SDL2"]             = "%{DepsDir.SDL2}/lib/x64/SDL2.lib"
-Lib["SDL2_DLL"]         = "%{DepsDir.SDL2}/lib/x64/SDL2.dll"
+Lib["Glfw"]             = "%{LibDir.Glfw}/glfw3.lib"

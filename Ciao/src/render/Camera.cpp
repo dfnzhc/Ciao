@@ -18,7 +18,6 @@ namespace Ciao
 
     void CameraPositioner_Oribit::processMovement()
     {
-
         glm::vec2 delta{ Mouse::DX() * mouseSpeed_, Mouse::DY() * mouseSpeed_ };
 
         if (Mouse::ButtonStay(CIAO_INPUT_MOUSE_RIGHT))

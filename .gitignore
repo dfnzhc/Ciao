@@ -8,3 +8,6 @@ Playground/Sandbox/obj/
 *.filters
 *.vcxproj
 *.user
+Assets/
+imgui.ini
+logs.txt
