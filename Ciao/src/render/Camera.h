@@ -49,8 +49,6 @@ namespace Ciao
 
             pitch_ = 30;
             yaw_ = 90;
-
-            
         }
 
         void update();
@@ -74,7 +72,6 @@ namespace Ciao
         void processScroll();
 
         glm::vec3 position_{0.0f, 10.0f, 10.0f};
-
 
         glm::vec3 viewDir_{glm::vec3{0.0f}};
         glm::vec3 up_{0.0f, 0.0f, 1.0f};

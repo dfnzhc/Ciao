@@ -12,6 +12,3 @@
 
 #include "utils/Common.h"
 #include "utils/ReadFile.h"
-#include "utils/imgui_impl_glfw.h"
-#include "utils/imgui_impl_opengl3.h"
-#include "utils/imgui_impl_opengl3_loader.h"

@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "ImGuiRenderer.h"
 
-#include "utils/imgui_impl_glfw.h"
-#include "utils/imgui_impl_opengl3.h"
+#include "utils/imgui/imgui_impl_glfw.h"
+#include "utils/imgui/imgui_impl_opengl3.h"
 
 namespace Ciao
 {

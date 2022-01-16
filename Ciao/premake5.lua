@@ -28,6 +28,7 @@ project "Ciao"
         "%{IncDir.Tinydir}",
         "%{IncDir.Tinygltf}",
         "%{IncDir.Tinyobjloader}",
+        "%{IncDir.RadeonRays}",
 	}
 
     links
@@ -42,7 +43,8 @@ project "Ciao"
     defines
 	{
 		"_CRT_SECURE_NO_WARNINGS",
-		"GLFW_INCLUDE_NONE"
+		"GLFW_INCLUDE_NONE",
+        "IMGUI_IMPL_OPENGL_LOADER_CUSTOM"
 	}
 
     
