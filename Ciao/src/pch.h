@@ -37,6 +37,7 @@
 #include <numeric>
 #include <map>
 #include <windows.h>
+#include <limits>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -46,3 +47,5 @@
 
 #include "core/Logger.h"
 #include "utils/Common.h"
+
+#include "tiny_obj_loader.h"

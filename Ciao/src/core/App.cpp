@@ -103,6 +103,7 @@ namespace Ciao
 
         glViewport(0, 0, width_, height_);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(.5f, .7f, .2f, 1.f);
 
         imgui_renderer_->BeginRender();
 

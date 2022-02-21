@@ -9,6 +9,8 @@
 #include "render/GLTexture.h"
 #include "render/ImGuiRenderer.h"
 #include "render/Mouse.h"
+#include "render/Mesh.h"
+#include "render/Scene.h"
 
 #include "utils/Common.h"
 #include "utils/ReadFile.h"
