@@ -94,18 +94,15 @@ namespace Ciao
         uint8_t* dst = cubemap.data_.data();
 
         /*
-                ------
-                | +Y |
+              ------
+              | +Y |
          ---------------------
          | -X | -Z | +X | +Z |
          ---------------------
-                | -Y |
-                ------
-                
-                
+              | -Y |
+              ------
         */
         const int pixelSize = cubemap.comp_ * Bitmap::getBytesPerComponent(cubemap.fmt_);
-
         for (int face = 0; face != 6; ++face)
         {
             for (int j = 0; j != faceHeight; ++j)
@@ -114,7 +111,7 @@ namespace Ciao
                 {
                     int x = 0;
                     int y = 0;
-
+        
                     switch (face)
                     {
                     // GL_TEXTURE_CUBE_MAP_POSITIVE_X
@@ -122,40 +119,40 @@ namespace Ciao
                         x = i;
                         y = faceHeight + j;
                         break;
-
+        
                     // GL_TEXTURE_CUBE_MAP_NEGATIVE_X
                     case 1:
                         x = 2 * faceWidth + i;
                         y = 1 * faceHeight + j;
                         break;
-
+        
                     // GL_TEXTURE_CUBE_MAP_POSITIVE_Y
                     case 2:
                         x = 2 * faceWidth - (i + 1);
                         y = 1 * faceHeight - (j + 1);
                         break;
-
+        
                     // GL_TEXTURE_CUBE_MAP_NEGATIVE_Y
                     case 3:
                         x = 2 * faceWidth - (i + 1);
                         y = 3 * faceHeight - (j + 1);
                         break;
-
+        
                     // GL_TEXTURE_CUBE_MAP_POSITIVE_Z
                     case 4:
                         x = 3 * faceWidth + i;
                         y = 1 * faceHeight + j;
                         break;
-
+        
                     // GL_TEXTURE_CUBE_MAP_NEGATIVE_Z
                     case 5:
                         x = faceWidth + i;
                         y = faceHeight + j;
                         break;
                     }
-
+        
                     memcpy(dst, src + (y * b.w_ + x) * pixelSize, pixelSize);
-
+        
                     dst += pixelSize;
                 }
             }
