@@ -10,7 +10,7 @@ namespace Ciao
     App::App() : width_(800), height_(600), title_("We eat fish right.")
     {
         Logger::Init();
-
+        
         glfwSetErrorCallback([](int error, const char* description)
         {
             CIAO_CORE_ERROR("Error: {}.", description);

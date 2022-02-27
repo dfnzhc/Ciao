@@ -25,7 +25,7 @@ namespace Ciao
         ImFontConfig cfg = ImFontConfig();
         cfg.FontDataOwnedByAtlas = false;
         cfg.RasterizerMultiply = 1.5f;
-        cfg.SizePixels = 768.0f / 32.0f;
+        cfg.SizePixels = 17.0f;
         cfg.PixelSnapH = true;
         cfg.OversampleH = 4;
         cfg.OversampleV = 4;

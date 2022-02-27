@@ -1,5 +1,6 @@
 ﻿#include <Ciao.h>
 #include <iostream>
+#include <tbb/tbb.h>
 
 using namespace Ciao;
 
@@ -8,19 +9,19 @@ Camera camera(positioner);
 
 int main()
 {
-	App app;
+    App app;
 
-	while (app.beginRender())
-	{
-		positioner.update();
+    while (app.beginRender())
+    {
+        positioner.update();
 
-		if (ImGui::Begin("Control", nullptr))
-		{
-			ImGui::Text("Hello!");
-		}
-		ImGui::End();
+        if (ImGui::Begin("Control", nullptr))
+        {
+            ImGui::Text("Hello!");
+        }
+        ImGui::End();
 
-		
-		app.swapBuffers();
-	}
+
+        app.swapBuffers();
+    }
 }

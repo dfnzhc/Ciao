@@ -28,13 +28,12 @@ project "Sandbox"
         "%{IncDir.Tinydir}",
         "%{IncDir.Tinygltf}",
         "%{IncDir.Tinyobjloader}",
+        "%{IncDir.Tbb}",
 	}
 
 	links
 	{
 		"Ciao",
-		--"%{Library.glfw}",
-		--"Glad",
 	}
 
 	dpiawareness "HighPerMonitor"
@@ -56,11 +55,13 @@ project "Sandbox"
 
 		postbuildcommands
 		{
+			"{COPYDIR} \"%{Lib.Tbb12_dll_d}\" \"%{cfg.targetdir}\""
 		}
 
         links
         {
-
+            "%{Lib.Tbb_d}",
+            "%{Lib.Tbb12_d}",
         }
 
     filter "configurations:Release"
@@ -70,9 +71,11 @@ project "Sandbox"
 
 		postbuildcommands
 		{
+			"{COPYDIR} \"%{Lib.Tbb12_dll}\" \"%{cfg.targetdir}\""
 		}
 
         links
         {
-            
+            "%{Lib.Tbb}",
+            "%{Lib.Tbb12}",
         }

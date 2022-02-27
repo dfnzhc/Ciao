@@ -28,7 +28,7 @@ project "Ciao"
         "%{IncDir.Tinydir}",
         "%{IncDir.Tinygltf}",
         "%{IncDir.Tinyobjloader}",
-        "%{IncDir.RadeonRays}",
+        "%{IncDir.Tbb}",
 	}
 
     links
