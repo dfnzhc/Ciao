@@ -21,6 +21,7 @@ namespace Ciao
     using glm::vec2;
     using glm::vec3;
     using glm::vec4;
+    using glm::ivec2;
 
     constexpr std::string ResourceDir(const std::string& s) { return std::string("Assets/").append(s); }
     #define Res(s) ResourceDir(s).c_str()

@@ -2,6 +2,10 @@
 
 namespace Ciao
 {
+    constexpr GLuint kBufferIndex_PerFrameUniforms = 0;
+    constexpr GLuint kBufferIndex_ModelMatrices = 1;
+    constexpr GLuint kBufferIndex_Materials = 2;
+    
     class GLBuffer
     {
     public:

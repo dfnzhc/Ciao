@@ -7,7 +7,7 @@
 
 namespace Ciao
 {
-    App::App() : width_(800), height_(600), title_("We eat fish right.")
+    App::App() : width_(1920), height_(1080), title_("We eat fish right.")
     {
         Logger::Init();
         

@@ -180,32 +180,4 @@ namespace Ciao
         int Loc = glGetUniformLocation(handle_, sName.c_str());
         glUniformMatrix4fv(Loc, 1, GL_FALSE, (GLfloat*)&mMatrix);
     }
-
-
-    GLenum GLShaderTypeFromFileName(const char* fileName)
-    {
-        if (EndsWith(fileName, ".vert"))
-            return GL_VERTEX_SHADER;
-
-        if (EndsWith(fileName, ".frag"))
-            return GL_FRAGMENT_SHADER;
-
-        if (EndsWith(fileName, ".geom"))
-            return GL_GEOMETRY_SHADER;
-
-        if (EndsWith(fileName, ".tesc"))
-            return GL_TESS_CONTROL_SHADER;
-
-        if (EndsWith(fileName, ".tese"))
-            return GL_TESS_EVALUATION_SHADER;
-
-        if (EndsWith(fileName, ".comp"))
-            return GL_COMPUTE_SHADER;
-
-        CIAO_ASSERT(false, "Not support shader type.");
-
-        return 0;
-    }
-
-    
 }

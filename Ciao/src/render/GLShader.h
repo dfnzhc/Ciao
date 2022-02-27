@@ -20,7 +20,7 @@ namespace Ciao
         GLuint handle_;
     };
 
-    GLenum GetShaderTypeFromFileName(const char* fileName);
+    
 
     class GLProgram
     {

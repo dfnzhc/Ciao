@@ -6,16 +6,21 @@ namespace Ciao
     class GLTexture
     {
     public:
-        GLTexture() = default;
-        GLTexture(std::string texName, unsigned char* data, int w, int h, int c);
-        ~GLTexture() { }
+        GLTexture(GLenum type, const char* fileName);
+        GLTexture(GLenum type, int width, int height, GLenum internalFormat);
+        GLTexture(int w, int h, const void* img);
+        ~GLTexture();
+        GLTexture(const GLTexture&) = delete;
+        GLTexture(GLTexture&&);
         
-        bool loadTexture(const std::string_view& filename);
-
+        GLenum getType() const { return type_; }
+        GLuint getHandle() const { return handle_; }
+        GLuint64 getHandleBindless() const { return handleBindless_; }
+        
     private:
-        int width_ = 0, height_ = 0, components_ = 0;
-
-        std::vector<unsigned char> data_;
+        GLenum type_ = 0;
+        GLuint handle_ = 0;
+        GLuint64 handleBindless_ = 0;
         std::string name_ = "";
     };
 }

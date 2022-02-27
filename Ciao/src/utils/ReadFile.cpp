@@ -3,9 +3,35 @@
 
 namespace Ciao
 {
-    bool EndsWith(const char* s, const char* part)
+    bool EndsWith(const std::string &value, const std::string &ending) {
+        if (ending.size() > value.size())
+            return false;
+        return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
+    }
+
+    GLenum GetShaderTypeFromFileName(const char* fileName)
     {
-        return (strstr(s, part) - s) == (strlen(s) - strlen(part));
+        if (EndsWith(fileName, ".vert"))
+            return GL_VERTEX_SHADER;
+
+        if (EndsWith(fileName, ".frag"))
+            return GL_FRAGMENT_SHADER;
+
+        if (EndsWith(fileName, ".geom"))
+            return GL_GEOMETRY_SHADER;
+
+        if (EndsWith(fileName, ".tesc"))
+            return GL_TESS_CONTROL_SHADER;
+
+        if (EndsWith(fileName, ".tese"))
+            return GL_TESS_EVALUATION_SHADER;
+
+        if (EndsWith(fileName, ".comp"))
+            return GL_COMPUTE_SHADER;
+
+        CIAO_ASSERT(false, "Not support shader type.");
+
+        return 0;
     }
 
     std::string ReadShaderFile(const char* fileName)
