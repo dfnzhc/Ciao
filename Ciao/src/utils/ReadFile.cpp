@@ -90,4 +90,68 @@ namespace Ciao
 
         return code;
     }
+
+    std::string ReplaceAll(const std::string& str, const std::string& oldSubStr, const std::string& newSubStr)
+    {
+        std::string result = str;
+
+        for (size_t p = result.find(oldSubStr); p != std::string::npos; p = result.find(oldSubStr))
+            result.replace(p, oldSubStr.length(), newSubStr);
+
+        return result;
+    }
+
+    std::string LowercaseString(const std::string& s)
+    {
+        std::string out(s.length(), ' ');
+        std::transform(std::execution::par, s.begin(), s.end(), out.begin(), tolower);
+        return out;
+    }
+
+    void SaveStringList(FILE* f, const std::vector<std::string>& lines)
+    {
+        uint32_t sz = (uint32_t)lines.size();
+
+        fwrite(&sz, sizeof(uint32_t), 1, f);
+        for (const auto& s : lines)
+        {
+            sz = (uint32_t)s.length();
+            fwrite(&sz, sizeof(uint32_t), 1, f);
+            fwrite(s.c_str(), sz + 1, 1, f);
+        }
+    }
+
+    void LoadStringList(FILE* f, std::vector<std::string>& lines)
+    {
+        {
+            uint32_t sz = 0;
+            fread(&sz, sizeof(uint32_t), 1, f);
+            lines.resize(sz);
+        }
+        std::vector<char> inBytes;
+        for (auto& s : lines)
+        {
+            uint32_t sz = 0;
+            fread(&sz, sizeof(uint32_t), 1, f);
+            inBytes.resize(sz + 1);
+            fread(inBytes.data(), sz + 1, 1, f);
+            s = std::string(inBytes.data());
+        }
+    }
+
+    inline int AddUnique(std::vector<std::string>& files, const std::string& file)
+    {
+        if (file.empty())
+            return -1;
+
+        auto i = std::find(std::begin(files), std::end(files), file);
+
+        if (i == files.end())
+        {
+            files.push_back(file);
+            return (int)files.size() - 1;
+        }
+
+        return (int)std::distance(files.begin(), i);
+    }
 }
