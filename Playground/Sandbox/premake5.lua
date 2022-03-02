@@ -26,9 +26,8 @@ project "Sandbox"
         "%{IncDir.ImGuizmo}",
         "%{IncDir.Stb}",
         "%{IncDir.Tinydir}",
-        "%{IncDir.Tinygltf}",
-        "%{IncDir.Tinyobjloader}",
         "%{IncDir.Tbb}",
+        "%{IncDir.Meshoptimizer}",
 	}
 
 	links
@@ -55,13 +54,15 @@ project "Sandbox"
 
 		postbuildcommands
 		{
-			"{COPYDIR} \"%{Lib.Tbb12_dll_d}\" \"%{cfg.targetdir}\""
+			"{COPYDIR} \"%{Lib.Tbb12_dll_d}\" \"%{cfg.targetdir}\"",
+			"{COPYDIR} \"%{Lib.Assimp_dll_d}\" \"%{cfg.targetdir}\"",
 		}
 
         links
         {
             "%{Lib.Tbb_d}",
             "%{Lib.Tbb12_d}",
+            "%{Lib.Assimp_d}",
         }
 
     filter "configurations:Release"
@@ -71,11 +72,13 @@ project "Sandbox"
 
 		postbuildcommands
 		{
-			"{COPYDIR} \"%{Lib.Tbb12_dll}\" \"%{cfg.targetdir}\""
+			"{COPYDIR} \"%{Lib.Tbb12_dll}\" \"%{cfg.targetdir}\"",
+			"{COPYDIR} \"%{Lib.Assimp_dll}\" \"%{cfg.targetdir}\"",
 		}
 
         links
         {
             "%{Lib.Tbb}",
             "%{Lib.Tbb12}",
+            "%{Lib.Assimp}",
         }

@@ -10,6 +10,7 @@ include "Dependencies.lua"
 group "Dependencies"
     include "Deps/glad"
     include "Deps/imgui"
+    include "Deps/meshoptimizer"
 group ""
 
 characterset ("Unicode")

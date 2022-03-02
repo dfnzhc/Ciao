@@ -26,9 +26,9 @@ project "Ciao"
         "%{IncDir.ImGuizmo}",
         "%{IncDir.Stb}",
         "%{IncDir.Tinydir}",
-        "%{IncDir.Tinygltf}",
-        "%{IncDir.Tinyobjloader}",
         "%{IncDir.Tbb}",
+        "%{IncDir.Meshoptimizer}",
+        "%{IncDir.Assimp}",
 	}
 
     links
