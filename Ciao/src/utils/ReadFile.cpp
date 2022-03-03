@@ -1,9 +1,12 @@
 ﻿#include "pch.h"
 #include "ReadFile.h"
 
+#include "render/Scene.h"
+
 namespace Ciao
 {
-    bool EndsWith(const std::string &value, const std::string &ending) {
+    bool EndsWith(const std::string& value, const std::string& ending)
+    {
         if (ending.size() > value.size())
             return false;
         return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
@@ -153,5 +156,10 @@ namespace Ciao
         }
 
         return (int)std::distance(files.begin(), i);
+    }
+
+    void ReadSceneFile(const char* fileName)
+    {
+        
     }
 }
