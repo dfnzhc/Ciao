@@ -98,6 +98,8 @@ namespace Ciao
             replaceTexture(i, &m.metallicRoughnessTexID);
             replaceTexture(i, &m.normalmapTexID);
             replaceTexture(i, &m.emissionmapTexID);
+            replaceTexture(i, &m.opacityTexID);
+            replaceTexture(i, &m.ambientOcclusionTexID);
         }
 
         CIAO_CORE_TRACE("Merging material successfully! It costs {}.", timer.elapsedString());

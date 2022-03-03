@@ -39,6 +39,8 @@ namespace Ciao
         uint64_t metallicRoughnessTexID = INVALID_TEXTURE;
         uint64_t normalmapTexID = INVALID_TEXTURE;
         uint64_t emissionmapTexID = INVALID_TEXTURE;
+        uint64_t opacityTexID = INVALID_TEXTURE;
+        uint64_t ambientOcclusionTexID = INVALID_TEXTURE;
     };
 
     static_assert(sizeof(MaterialDescription) % 16 == 0, "MaterialDescription should be padded to 16 bytes");

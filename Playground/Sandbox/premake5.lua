@@ -28,6 +28,8 @@ project "Sandbox"
         "%{IncDir.Tinydir}",
         "%{IncDir.Tbb}",
         "%{IncDir.Meshoptimizer}",
+        "%{IncDir.Assimp}",
+        "%{IncDir.Rapidjson}",
 	}
 
 	links

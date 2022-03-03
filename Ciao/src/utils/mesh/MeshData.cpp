@@ -81,7 +81,25 @@ namespace Ciao
 
     void RecalculateBoundingBox(MeshData& m)
     {
-        
+        m.boxes.clear();
+
+        for (const auto& mesh : m.meshes)
+        {
+            const auto numIndices = mesh.GetLODIndicesCount(0);
+
+            glm::vec3 vmin(std::numeric_limits<float>::max());
+            glm::vec3 vmax(std::numeric_limits<float>::lowest());
+
+            for (auto i = 0; i != numIndices; i++)
+            {
+                auto vtxOffset = m.indexData[mesh.indexOffset + i] + mesh.vertexOffset;
+                const float* vf = &m.vertexData[vtxOffset * kMaxStreams];
+                vmin = glm::min(vmin, vec3(vf[0], vf[1], vf[2]));
+                vmax = glm::max(vmax, vec3(vf[0], vf[1], vf[2]));
+            }
+
+            m.boxes.emplace_back(vmin, vmax);
+        }
     }
 
     MeshFileHeader MergeMeshData(MeshData& m, const std::vector<MeshData*> mds)

@@ -29,6 +29,7 @@ project "Ciao"
         "%{IncDir.Tbb}",
         "%{IncDir.Meshoptimizer}",
         "%{IncDir.Assimp}",
+        "%{IncDir.Rapidjson}",
 	}
 
     links

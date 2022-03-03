@@ -47,6 +47,12 @@
 
 #include <tbb/tbb.h>
 
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <assimp/cimport.h>
+
+#include <meshoptimizer.h>
+
 #include "core/Logger.h"
 #include "utils/Common.h"
 #include "utils/Timer.h"

@@ -1,5 +1,7 @@
 #pragma once
 
+struct aiMesh;
+
 namespace Ciao
 {
     struct BoundingBox

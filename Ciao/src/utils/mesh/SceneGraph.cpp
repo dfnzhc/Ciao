@@ -7,86 +7,86 @@ namespace Ciao
 {
     inline std::string GetNodeName(const SceneGraph& scene, int node)
     {
-        int nameID = scene.nameForNode_.find(node) != scene.nameForNode_.end() ? scene.nameForNode_.at(node) : -1;
-        return (nameID != -1) ? scene.names_[nameID] : std::string();
+        int nameID = scene.nameForNode.find(node) != scene.nameForNode.end() ? scene.nameForNode.at(node) : -1;
+        return (nameID != -1) ? scene.names[nameID] : std::string();
     }
 
     inline void SetNodeName(SceneGraph& scene, int node, const std::string& name)
     {
-        uint32_t nameID = (uint32_t)scene.names_.size();
-        scene.names_.push_back(name);
-        scene.nameForNode_[node] = nameID;
+        uint32_t nameID = (uint32_t)scene.names.size();
+        scene.names.push_back(name);
+        scene.nameForNode[node] = nameID;
     }
 
     
     int AddNode(SceneGraph& scene, int parent, int level)
     {
         // 新添加节点的索引值
-        int node = (int)scene.hierarchy_.size();
+        int node = (int)scene.hierarchy.size();
         {
-            scene.localTransform_.push_back(mat4{ 1.0f });
-            scene.globalTransform_.push_back(mat4{ 1.0f });
+            scene.localTransform.push_back(mat4{ 1.0f });
+            scene.globalTransform.push_back(mat4{ 1.0f });
         }
 
-        scene.hierarchy_.push_back({ .parent_ = parent, .lastSibling_ = -1 });
+        scene.hierarchy.push_back({ .parent = parent, .lastSibling = -1 });
 
         // 把节点加入到层次结构之后，需要更新节点间的关系
         if (parent != -1)
         {
             // s 表示当前节点的兄弟
-            int s = scene.hierarchy_[parent].firstChild_;
+            int s = scene.hierarchy[parent].firstChild;
 
             // 如果父节点没有孩子，需要更新的信息有：
             // 父节点第一个孩子 是 自己
             // 自己的最后一个兄弟 是 自己
             if (s == -1)
             {
-                scene.hierarchy_[parent].firstChild_ = node;
-                scene.hierarchy_[node].lastSibling_ = node;
+                scene.hierarchy[parent].firstChild = node;
+                scene.hierarchy[node].lastSibling = node;
             }
             // 如果存在孩子节点，则需要更新：
             // 孩子节点所在层级加入的最后节点的下一个兄弟 是 新增节点
             // 孩子节点最后一个兄弟 是 新增节点
             else
             {
-                int dest = scene.hierarchy_[s].lastSibling_;
+                int dest = scene.hierarchy[s].lastSibling;
                 // 如果不缓存最后加入的兄弟节点索引，就需要用 nextSibling 迭代找出相关索引
                 if (dest <= -1)
                 {
-                    for (dest = s; scene.hierarchy_[dest].nextSibling_ != -1; dest = scene.hierarchy_[dest].nextSibling_);
+                    for (dest = s; scene.hierarchy[dest].nextSibling != -1; dest = scene.hierarchy[dest].nextSibling);
                 }
-                scene.hierarchy_[dest].nextSibling_ = node;
-                scene.hierarchy_[s].lastSibling_ = node;
+                scene.hierarchy[dest].nextSibling = node;
+                scene.hierarchy[s].lastSibling = node;
             }
         }
 
-        scene.hierarchy_[node].level_ = level;
-        scene.hierarchy_[node].nextSibling_ = -1;
-        scene.hierarchy_[node].firstChild_ = -1;
+        scene.hierarchy[node].level = level;
+        scene.hierarchy[node].nextSibling = -1;
+        scene.hierarchy[node].firstChild = -1;
         return node;
     }
 
     void MarkAsChanged(SceneGraph& scene, int node)
     {
         // 找出节点的相关层级，并在该层级的记录数据中标记此节点
-        int level = scene.hierarchy_[node].level_;
-        scene.changedAtThisFrame_[level].push_back(node);
+        int level = scene.hierarchy[node].level;
+        scene.changedAtThisFrame[level].push_back(node);
 
         // 本节点变化，其所有的孩子节点也会发生变化
-        for (int s = scene.hierarchy_[node].firstChild_; s != -1; s = scene.hierarchy_[s].nextSibling_)
+        for (int s = scene.hierarchy[node].firstChild; s != -1; s = scene.hierarchy[s].nextSibling)
             MarkAsChanged(scene, s);
     }
 
     // 通过名字查找节点
     int FindNodeByName(const SceneGraph& scene, const std::string& name)
     {
-        tbb::parallel_for(0, static_cast<int>(scene.localTransform_.size()), [&scene, &name](int i)
+        tbb::parallel_for(0, static_cast<int>(scene.localTransform.size()), [&scene, &name](int i)
         {
-            if (scene.nameForNode_.contains(i))
+            if (scene.nameForNode.contains(i))
             {
-                int strID = scene.nameForNode_.at(i);
+                int strID = scene.nameForNode.at(i);
                 if (strID > -1)
-                    if (scene.names_[strID] == name)
+                    if (scene.names[strID] == name)
                         return i;
             }
         });
@@ -99,23 +99,23 @@ namespace Ciao
     {
         // 第 0 层是整个场景的根节点
         // 如果这个节点改变，之后所有节点的变换都是在此基础发生的上
-        if (!scene.changedAtThisFrame_[0].empty())
+        if (!scene.changedAtThisFrame[0].empty())
         {
-            int c = scene.changedAtThisFrame_[0][0];
-            scene.globalTransform_[c] = scene.localTransform_[c];
-            scene.changedAtThisFrame_[0].clear();
+            int c = scene.changedAtThisFrame[0][0];
+            scene.globalTransform[c] = scene.localTransform[c];
+            scene.changedAtThisFrame[0].clear();
         }
 
         // 节点在全局的变换是在它父亲全局的变换的基础上，在进行自身的本地变化
-        for (int i = 1; i < MAX_NODE_LEVEL && (!scene.changedAtThisFrame_[i].empty()); i++)
+        for (int i = 1; i < MAX_NODE_LEVEL && (!scene.changedAtThisFrame[i].empty()); i++)
         {
-            tbb::parallel_for(0, static_cast<int>(scene.changedAtThisFrame_[i].size()), [&scene, i](int j)
+            tbb::parallel_for(0, static_cast<int>(scene.changedAtThisFrame[i].size()), [&scene, i](int j)
             {
-                int c = scene.changedAtThisFrame_[i][j];
-                int p = scene.hierarchy_[c].parent_;
-                scene.globalTransform_[c] = scene.globalTransform_[p] * scene.localTransform_[c];
+                int c = scene.changedAtThisFrame[i][j];
+                int p = scene.hierarchy[c].parent;
+                scene.globalTransform[c] = scene.globalTransform[p] * scene.localTransform[c];
             });
-            scene.changedAtThisFrame_[i].clear();
+            scene.changedAtThisFrame[i].clear();
         }
     }
 
@@ -148,23 +148,23 @@ namespace Ciao
         uint32_t sz = 0;
         fread(&sz, sizeof(sz), 1, f);
 
-        scene.hierarchy_.resize(sz);
-        scene.globalTransform_.resize(sz);
-        scene.localTransform_.resize(sz);
-        fread(scene.localTransform_.data(), sizeof(glm::mat4), sz, f);
-        fread(scene.globalTransform_.data(), sizeof(glm::mat4), sz, f);
-        fread(scene.hierarchy_.data(), sizeof(Hierarchy), sz, f);
+        scene.hierarchy.resize(sz);
+        scene.globalTransform.resize(sz);
+        scene.localTransform.resize(sz);
+        fread(scene.localTransform.data(), sizeof(glm::mat4), sz, f);
+        fread(scene.globalTransform.data(), sizeof(glm::mat4), sz, f);
+        fread(scene.hierarchy.data(), sizeof(Hierarchy), sz, f);
 
         // Mesh for node [index to some list of buffers]
-        LoadMap(f, scene.materialForNode_);
-        LoadMap(f, scene.meshes_);
+        LoadMap(f, scene.materialForNode);
+        LoadMap(f, scene.meshes);
 
         if (!feof(f))
         {
-            LoadMap(f, scene.nameForNode_);
-            LoadStringList(f, scene.names_);
+            LoadMap(f, scene.nameForNode);
+            LoadStringList(f, scene.names);
 
-            LoadStringList(f, scene.materialNames_);
+            LoadStringList(f, scene.materialNames);
         }
 
         fclose(f);
@@ -193,23 +193,23 @@ namespace Ciao
         
         FILE* f = fopen(fileName, "wb");
 
-        const uint32_t sz = (uint32_t)scene.hierarchy_.size();
+        const uint32_t sz = (uint32_t)scene.hierarchy.size();
         fwrite(&sz, sizeof(sz), 1, f);
 
-        fwrite(scene.localTransform_.data(), sizeof(glm::mat4), sz, f);
-        fwrite(scene.globalTransform_.data(), sizeof(glm::mat4), sz, f);
-        fwrite(scene.hierarchy_.data(), sizeof(Hierarchy), sz, f);
+        fwrite(scene.localTransform.data(), sizeof(glm::mat4), sz, f);
+        fwrite(scene.globalTransform.data(), sizeof(glm::mat4), sz, f);
+        fwrite(scene.hierarchy.data(), sizeof(Hierarchy), sz, f);
 
         // Mesh for node [index to some list of buffers]
-        SaveMap(f, scene.materialForNode_);
-        SaveMap(f, scene.meshes_);
+        SaveMap(f, scene.materialForNode);
+        SaveMap(f, scene.meshes);
 
-        if (!scene.names_.empty() && !scene.nameForNode_.empty())
+        if (!scene.names.empty() && !scene.nameForNode.empty())
         {
-            SaveMap(f, scene.nameForNode_);
-            SaveStringList(f, scene.names_);
+            SaveMap(f, scene.nameForNode);
+            SaveStringList(f, scene.names);
 
-            SaveStringList(f, scene.materialNames_);
+            SaveStringList(f, scene.materialNames);
         }
         fclose(f);
 
@@ -221,23 +221,23 @@ namespace Ciao
     {
         auto shiftNode = [shiftAmount](Hierarchy& node)
         {
-            if (node.parent_ > -1)
-                node.parent_ += shiftAmount;
-            if (node.firstChild_ > -1)
-                node.firstChild_ += shiftAmount;
-            if (node.nextSibling_ > -1)
-                node.nextSibling_ += shiftAmount;
-            if (node.lastSibling_ > -1)
-                node.lastSibling_ += shiftAmount;
+            if (node.parent > -1)
+                node.parent += shiftAmount;
+            if (node.firstChild > -1)
+                node.firstChild += shiftAmount;
+            if (node.nextSibling > -1)
+                node.nextSibling += shiftAmount;
+            if (node.lastSibling > -1)
+                node.lastSibling += shiftAmount;
             // node->level_ does not have to be shifted
             return node;
         };
 
         // 并行版本
         std::transform(std::execution::par,
-            scene.hierarchy_.begin() + startOffset,
-            scene.hierarchy_.begin() + startOffset + nodeCount,
-            scene.hierarchy_.begin() + startOffset,
+            scene.hierarchy.begin() + startOffset,
+            scene.hierarchy.begin() + startOffset + nodeCount,
+            scene.hierarchy.begin() + startOffset,
             shiftNode);
 
         // 串行版本
@@ -259,22 +259,22 @@ namespace Ciao
                      bool mergeMeshes, bool mergeMaterials)
     {
         // Create new root node
-        scene.hierarchy_ = {
+        scene.hierarchy = {
             {
-                .parent_ = -1,
-                .firstChild_ = 1,
-                .nextSibling_ = -1,
-                .lastSibling_ = -1,
-                .level_ = 0
+                .parent = -1,
+                .firstChild = 1,
+                .nextSibling = -1,
+                .lastSibling = -1,
+                .level = 0
             }
         };
 
         // 设置根节点信息
-        scene.nameForNode_[0] = 0;
-        scene.names_ = { "Root" };
+        scene.nameForNode[0] = 0;
+        scene.names = { "Root" };
 
-        scene.localTransform_.push_back(glm::mat4(1.f));
-        scene.globalTransform_.push_back(glm::mat4(1.f));
+        scene.localTransform.push_back(glm::mat4(1.f));
+        scene.globalTransform.push_back(glm::mat4(1.f));
 
         if (scenes.empty())
             return;
@@ -282,50 +282,50 @@ namespace Ciao
         // offs 代表节点的偏移
         int offs = 1;
         int meshOffs = 0;
-        int nameOffs = (int)scene.names_.size();
+        int nameOffs = (int)scene.names.size();
         int materialOffs = 0;
         auto meshCount = meshCounts.begin();
         int idx = 0;
 
         if (!mergeMaterials)
-            scene.materialNames_ = scenes[0]->materialNames_;
+            scene.materialNames = scenes[0]->materialNames;
 
         
         for (const SceneGraph* s : scenes)
         {
             // 将各数据附加到新的的场景图中
-            MergeVectors(scene.localTransform_, s->localTransform_);
-            MergeVectors(scene.globalTransform_, s->globalTransform_);
+            MergeVectors(scene.localTransform, s->localTransform);
+            MergeVectors(scene.globalTransform, s->globalTransform);
             
-            MergeVectors(scene.hierarchy_, s->hierarchy_);
+            MergeVectors(scene.hierarchy, s->hierarchy);
 
-            MergeVectors(scene.names_, s->names_);
+            MergeVectors(scene.names, s->names);
             if (mergeMaterials)
-                MergeVectors(scene.materialNames_, s->materialNames_);
+                MergeVectors(scene.materialNames, s->materialNames);
 
             // 新场景图中节点的个数，以此作为偏移
-            int nodeCount = (int)s->hierarchy_.size();
+            int nodeCount = (int)s->hierarchy.size();
             ShiftNodes(scene, offs, nodeCount, offs);
 
-            MergeMaps(scene.meshes_, s->meshes_, offs, mergeMeshes ? meshOffs : 0);
-            MergeMaps(scene.materialForNode_, s->materialForNode_, offs, mergeMaterials ? materialOffs : 0);
-            MergeMaps(scene.nameForNode_, s->nameForNode_, offs, nameOffs);
+            MergeMaps(scene.meshes, s->meshes, offs, mergeMeshes ? meshOffs : 0);
+            MergeMaps(scene.materialForNode, s->materialForNode, offs, mergeMaterials ? materialOffs : 0);
+            MergeMaps(scene.nameForNode, s->nameForNode, offs, nameOffs);
 
             // 重新计算节点的 nextSibling_ 缓存
             bool isLast = (idx == scenes.size() - 1);
             int next = isLast ? -1 : offs + nodeCount;
-            scene.hierarchy_[offs].nextSibling_ = next;
-            scene.hierarchy_[offs].parent_ = 0;         // 合成的场景图之间没有从属关系
+            scene.hierarchy[offs].nextSibling = next;
+            scene.hierarchy[offs].parent = 0;         // 合成的场景图之间没有从属关系
 
             // 施以矩阵变换
             if (!rootTransforms.empty())
-                scene.localTransform_[offs] = rootTransforms[idx] * scene.localTransform_[offs];
+                scene.localTransform[offs] = rootTransforms[idx] * scene.localTransform[offs];
 
             idx++;
             offs += nodeCount;
 
-            materialOffs += (int)s->materialNames_.size();
-            nameOffs += (int)s->names_.size();
+            materialOffs += (int)s->materialNames.size();
+            nameOffs += (int)s->names.size();
 
             if (mergeMeshes)
             {
@@ -335,9 +335,9 @@ namespace Ciao
         }
 
         // 位移根节点以下的所有节点
-        tbb::parallel_for(1, static_cast<int>(scene.hierarchy_.size()), [&scene](int i)
+        tbb::parallel_for(1, static_cast<int>(scene.hierarchy.size()), [&scene](int i)
         {
-            scene.hierarchy_[i].level_ += 1;
+            scene.hierarchy[i].level += 1;
         });
     }
 
@@ -353,7 +353,7 @@ namespace Ciao
     // 递归记录所有要被删除的节点
     void CollectNodesToDelete(const SceneGraph& scene, int node, std::vector<uint32_t>& nodes)
     {
-        for (int n = scene.hierarchy_[node].firstChild_; n != -1; n = scene.hierarchy_[n].nextSibling_)
+        for (int n = scene.hierarchy[node].firstChild; n != -1; n = scene.hierarchy[n].nextSibling)
         {
             AddUniqueIdx(nodes, n);
             CollectNodesToDelete(scene, n, nodes);
@@ -368,7 +368,7 @@ namespace Ciao
         if (node == -1)
             return -1;
 
-        return (newIndices[node] == -1) ? FindLastNonDeletedItem(scene, newIndices, scene.hierarchy_[node].nextSibling_) : newIndices[node];
+        return (newIndices[node] == -1) ? FindLastNonDeletedItem(scene, newIndices, scene.hierarchy[node].nextSibling) : newIndices[node];
     }
 
     void ShiftMapIndices(std::unordered_map<uint32_t, uint32_t>& items, const std::vector<int>& newIndices)
@@ -393,7 +393,7 @@ namespace Ciao
             CollectNodesToDelete(scene, i, indicesToDelete);
 
         // aux array with node indices to keep track of the moved ones [moved = [](node) { return (node != nodes[node]); ]
-        std::vector<int> nodes(scene.hierarchy_.size());
+        std::vector<int> nodes(scene.hierarchy.size());
         std::iota(nodes.begin(), nodes.end(), 0);
 
         // 1.a) Move all the indicesToDelete to the end of 'nodes' array (and cut them off, a variation of swap'n'pop for multiple elements)
@@ -409,27 +409,27 @@ namespace Ciao
         auto nodeMover = [&scene, &newIndices](Hierarchy& h)
         {
             return Hierarchy{
-                .parent_ = (h.parent_ != -1) ? newIndices[h.parent_] : -1,
-                .firstChild_ = FindLastNonDeletedItem(scene, newIndices, h.firstChild_),
-                .nextSibling_ = FindLastNonDeletedItem(scene, newIndices, h.nextSibling_),
-                .lastSibling_ = FindLastNonDeletedItem(scene, newIndices, h.lastSibling_)
+                .parent = (h.parent != -1) ? newIndices[h.parent] : -1,
+                .firstChild = FindLastNonDeletedItem(scene, newIndices, h.firstChild),
+                .nextSibling = FindLastNonDeletedItem(scene, newIndices, h.nextSibling),
+                .lastSibling = FindLastNonDeletedItem(scene, newIndices, h.lastSibling)
             };
         };
-        std::transform(scene.hierarchy_.begin(), scene.hierarchy_.end(), scene.hierarchy_.begin(), nodeMover);
+        std::transform(scene.hierarchy.begin(), scene.hierarchy.end(), scene.hierarchy.begin(), nodeMover);
 
         // 3) Finally throw away the hierarchy items
-        EraseSelected(scene.hierarchy_, indicesToDelete);
+        EraseSelected(scene.hierarchy, indicesToDelete);
 
         // 4) As in mergeScenes() routine we also have to adjust all the "components" (i.e., meshes, materials, names and transformations)
 
         // 4a) Transformations are stored in arrays, so we just erase the items as we did with the scene.hierarchy_
-        EraseSelected(scene.localTransform_, indicesToDelete);
-        EraseSelected(scene.globalTransform_, indicesToDelete);
+        EraseSelected(scene.localTransform, indicesToDelete);
+        EraseSelected(scene.globalTransform, indicesToDelete);
 
         // 4b) All the maps should change the key values with the newIndices[] array
-        ShiftMapIndices(scene.meshes_, newIndices);
-        ShiftMapIndices(scene.materialForNode_, newIndices);
-        ShiftMapIndices(scene.nameForNode_, newIndices);
+        ShiftMapIndices(scene.meshes, newIndices);
+        ShiftMapIndices(scene.materialForNode, newIndices);
+        ShiftMapIndices(scene.nameForNode, newIndices);
 
         // 5) scene node names list is not modified, but in principle it can be (remove all non-used items and adjust the nameForNode_ map)
         // 6) Material names list is not modified also, but if some materials fell out of use

@@ -10,6 +10,7 @@ DepsDir["Tinydir"]       = "%{wks.location}/Deps/tinydir"
 DepsDir["Tbb"]           = "%{wks.location}/Deps/tbb"
 DepsDir["Meshoptimizer"] = "%{wks.location}/Deps/meshoptimizer"
 DepsDir["Assimp"]        = "%{wks.location}/Deps/assimp"
+DepsDir["Rapidjson"]     = "%{wks.location}/Deps/rapidjson"
 
 IncDir = {}
 IncDir["Glfw"]          = "%{DepsDir.Glfw}/include"
@@ -25,6 +26,7 @@ IncDir["Tinyobjloader"] = "%{DepsDir.Tinyobjloader}"
 IncDir["Tbb"]           = "%{DepsDir.Tbb}/include"
 IncDir["Meshoptimizer"] = "%{DepsDir.Meshoptimizer}/src"
 IncDir["Assimp"]        = "%{DepsDir.Assimp}/include"
+IncDir["Rapidjson"]     = "%{DepsDir.Rapidjson}/include"
 
 
 LibDir = {}

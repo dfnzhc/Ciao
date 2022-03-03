@@ -8,47 +8,47 @@ namespace Ciao
     struct Hierarchy
     {
         // 父亲节点的索引，对根节点该值为 -1
-        int parent_ = -1;
+        int parent = -1;
         
         // 第一个孩子的索引
-        int firstChild_ = -1;
+        int firstChild = -1;
         
         // 下一个兄弟节点索引
-        int nextSibling_ = -1;
+        int nextSibling = -1;
         
         // 最后一个兄弟节点索引
-        int lastSibling_ = -1;
+        int lastSibling = -1;
         
         // 该节点所在层级
-        int level_ = -1;
+        int level = -1;
     };
     
     struct SceneGraph
     {
         // 所有节点的变换矩阵，分为本地和全局的
-        std::vector<mat4> localTransform_;
-        std::vector<mat4> globalTransform_;
+        std::vector<mat4> localTransform;
+        std::vector<mat4> globalTransform;
 
         // 每个级别需要更新的节点
-        std::vector<int> changedAtThisFrame_[MAX_NODE_LEVEL];
+        std::vector<int> changedAtThisFrame[MAX_NODE_LEVEL];
 
         // 层级结构组件
-        std::vector<Hierarchy> hierarchy_;
+        std::vector<Hierarchy> hierarchy;
 
         // 节点与 mesh 之间的映射
-        std::unordered_map<uint32_t, uint32_t> meshes_;
+        std::unordered_map<uint32_t, uint32_t> meshes;
 
         // 节点与材质间的映射
-        std::unordered_map<uint32_t, uint32_t> materialForNode_;
+        std::unordered_map<uint32_t, uint32_t> materialForNode;
 
         // 节点和命名之间的映射
-        std::unordered_map<uint32_t, uint32_t> nameForNode_;
+        std::unordered_map<uint32_t, uint32_t> nameForNode;
 
         // 场景图中节点的名字
-        std::vector<std::string> names_;
+        std::vector<std::string> names;
 
         // 场景图中材质的名字
-        std::vector<std::string> materialNames_;
+        std::vector<std::string> materialNames;
     };
 
     inline std::string GetNodeName(const SceneGraph& scene, int node);
