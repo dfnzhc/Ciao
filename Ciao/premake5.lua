@@ -37,6 +37,7 @@ project "Ciao"
         "opengl32.lib",
         "Glad",
         "ImGui",
+        "MeshOptimizer",
         "%{Lib.Glfw}",
     }
     

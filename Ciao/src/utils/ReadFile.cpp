@@ -1,7 +1,9 @@
 ﻿#include "pch.h"
 #include "ReadFile.h"
 
-#include "render/Scene.h"
+#include <rapidjson/istreamwrapper.h>
+#include <rapidjson/document.h>
+#include <rapidjson/rapidjson.h>
 
 namespace Ciao
 {
@@ -158,8 +160,42 @@ namespace Ciao
         return (int)std::distance(files.begin(), i);
     }
 
-    void ReadSceneFile(const char* fileName)
+    Scene ReadSceneFile(const char* fileName)
     {
+        std::ifstream ifs(fileName);
+        if (!ifs.is_open())
+        {
+            CIAO_CORE_ERROR("Failed to load configuration file.");
+            exit(EXIT_FAILURE);
+        }
+
+        rapidjson::IStreamWrapper isw(ifs);
+        rapidjson::Document document;
+        const rapidjson::ParseResult parseResult = document.ParseStream(isw);
+        assert(!parseResult.IsError());
+
+        CIAO_TRACE("Reading scene file {}...", fileName);
         
+        Scene scene;
+        assert(document["Camera_Pitch"].IsInt());
+        assert(document["Camera_Yaw"].IsInt());
+        scene.cameraConfig.pitch = document["Camera_Pitch"].GetInt();
+        scene.cameraConfig.yaw = document["Camera_Yaw"].GetInt();
+        CIAO_TRACE("Camera props: pitch- [{}], yaw- [{}]", scene.cameraConfig.pitch, scene.cameraConfig.yaw);
+
+        
+        assert(document["Meshes"].IsArray());
+        for (rapidjson::SizeType i = 0; i < document["Meshes"].Size(); i++)
+        {
+            MeshConfig mc;
+            mc.name = document["Meshes"][i]["Name"].GetString();
+            mc.source = document["Meshes"][i]["Source"].GetString();
+            mc.meshDataPath = document["Meshes"][i]["MeshData"].GetString();
+            CIAO_TRACE("Mesh {}: {} [{}]", i, mc.name, mc.source);
+            
+            scene.meshConfigs.push_back(mc);
+        }
+
+        return scene;
     }
 }

@@ -11,9 +11,13 @@
 #include "render/Mouse.h"
 #include "render/GLBuffer.h"
 #include "render/Cubemap.h"
+#include "render/Scene.h"
+#include "render/GLMesh.h"
 
 #include "utils/Common.h"
 #include "utils/ReadFile.h"
 #include "utils/Bitmap.h"
 #include "utils/Timer.h"
 #include "utils/CubemapUtils.h"
+#include "utils/mesh/MeshData.h"
+#include "utils/mesh/MeshConvert.h"

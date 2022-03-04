@@ -4,62 +4,35 @@
 
 namespace Ciao
 {
-    MeshFileHeader LoadMeshData(const char* fileName, MeshData& out)
+    bool LoadMeshData(const char* fileName, MeshData& out, MeshFileHeader& header)
     {
         Timer timer;
-        MeshFileHeader header;
 
-        FILE* f = fopen(fileName, "rb");
+        std::ifstream ifs{fileName, std::ios::in | std::ios::binary};
+        if (!ifs)
+            return false;
 
-        if (!f)
-        {
-            CIAO_CORE_ERROR("No such file: {}.", fileName);
-            CIAO_ASSERT(f, "Load mesh data file FAILED.");
-        }
-
-        if (fread(&header, 1, sizeof(header), f) != sizeof(header))
-        {
-            CIAO_CORE_ERROR("Can not read mesh in file: {}.", fileName);
-            exit(EXIT_FAILURE);
-        }
-
+        ifs.read(reinterpret_cast<char*>(&header), sizeof(header));
+        
         out.meshes.resize(header.meshCount);
-        if (fread(out.meshes.data(), sizeof(Mesh), header.meshCount, f) != header.meshCount)
-        {
-            CIAO_CORE_ERROR("Can not read mesh descriptors in file: {}.", fileName);
-            exit(EXIT_FAILURE);
-        }
-
-        out.boxes.resize(header.meshCount);
-        if (fread(out.boxes.data(), sizeof(BoundingBox), header.meshCount, f) != header.meshCount)
-        {
-            CIAO_CORE_ERROR("Can not read bounding boxes in file: {}.", fileName);
-            exit(EXIT_FAILURE);
-        }
-
         out.indexData.resize(header.indexDataSize / sizeof(uint32_t));
         out.vertexData.resize(header.vertexDataSize / sizeof(float));
-
-        if ((fread(out.indexData.data(), 1, header.indexDataSize, f) != header.indexDataSize) ||
-            (fread(out.vertexData.data(), 1, header.vertexDataSize, f) != header.vertexDataSize))
-        {
-            CIAO_CORE_ERROR("Can not read index/vertex data in file: {}.", fileName);
-            exit(EXIT_FAILURE);
-        }
-
-        fclose(f);
+        
+        ifs.read(reinterpret_cast<char*>(out.meshes.data()), sizeof(Mesh) * header.meshCount);
+        ifs.read(reinterpret_cast<char*>(out.indexData.data()), header.indexDataSize);
+        ifs.read(reinterpret_cast<char*>(out.vertexData.data()), header.vertexDataSize);
         
         CIAO_CORE_TRACE("Loading file {} successfully! It costs {}.", fileName, timer.elapsedString());
 
-        return header;
+        return true;
     }
 
     
     void SaveMeshData(const MeshData& md, const char* fileName)
     {
         Timer timer;
+        std::ofstream ofs{fileName, std::ios::out | std::ios::binary};
         
-        FILE* f = fopen(fileName, "wb");
         const MeshFileHeader header = {
             .magicNumber = 0x77777777,
             .meshCount = (uint32_t)md.meshes.size(),
@@ -68,38 +41,12 @@ namespace Ciao
             .vertexDataSize = (uint32_t)(md.vertexData.size() * sizeof(float))
         };
 
-        fwrite(&header, 1, sizeof(header), f);
-        fwrite(md.meshes.data(), sizeof(Mesh), header.meshCount, f);
-        fwrite(md.boxes.data(), sizeof(BoundingBox), header.meshCount, f);
-        fwrite(md.indexData.data(), 1, header.indexDataSize, f);
-        fwrite(md.vertexData.data(), 1, header.vertexDataSize, f);
-
-        fclose(f);
+        ofs.write(reinterpret_cast<const char*>(&header), sizeof(header));
+        ofs.write(reinterpret_cast<const char*>(md.meshes.data()), sizeof(Mesh) * header.meshCount);
+        ofs.write(reinterpret_cast<const char*>(md.indexData.data()), header.indexDataSize);
+        ofs.write(reinterpret_cast<const char*>(md.vertexData.data()), header.vertexDataSize);
         
         CIAO_CORE_TRACE("Saving file {} successfully! It costs {}.", fileName, timer.elapsedString());
-    }
-
-    void RecalculateBoundingBox(MeshData& m)
-    {
-        m.boxes.clear();
-
-        for (const auto& mesh : m.meshes)
-        {
-            const auto numIndices = mesh.GetLODIndicesCount(0);
-
-            glm::vec3 vmin(std::numeric_limits<float>::max());
-            glm::vec3 vmax(std::numeric_limits<float>::lowest());
-
-            for (auto i = 0; i != numIndices; i++)
-            {
-                auto vtxOffset = m.indexData[mesh.indexOffset + i] + mesh.vertexOffset;
-                const float* vf = &m.vertexData[vtxOffset * kMaxStreams];
-                vmin = glm::min(vmin, vec3(vf[0], vf[1], vf[2]));
-                vmax = glm::max(vmax, vec3(vf[0], vf[1], vf[2]));
-            }
-
-            m.boxes.emplace_back(vmin, vmax);
-        }
     }
 
     MeshFileHeader MergeMeshData(MeshData& m, const std::vector<MeshData*> mds)
@@ -115,7 +62,6 @@ namespace Ciao
             MergeVectors(m.indexData, i->indexData);
             MergeVectors(m.vertexData, i->vertexData);
             MergeVectors(m.meshes, i->meshes);
-            MergeVectors(m.boxes, i->boxes);
 
             /* 8 是顶点属性的大小: position, normal + UV */
             uint32_t vtxOffset = totalVertexDataSize / 8;

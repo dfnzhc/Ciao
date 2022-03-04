@@ -48,16 +48,6 @@
 
 #include <tbb/tbb.h>
 
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <assimp/cimport.h>
-#include <assimp/material.h>
-#include <assimp/pbrmaterial.h>
-
-#include <meshoptimizer.h>
-
-#include <rapidjson/rapidjson.h>
-
 #include "core/Logger.h"
 #include "utils/Common.h"
 #include "utils/Timer.h"

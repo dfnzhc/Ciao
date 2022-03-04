@@ -8,12 +8,6 @@ namespace Ciao
 
     struct Mesh final
     {
-        /* lod 层次的数量. 严格小于 MAX_LODS, 最后一个 LOD 偏移只作为标记 */
-        uint32_t lodCount = 1;
-
-        /* 顶点数据流的个数 */
-        uint32_t streamCount = 0;
-
         /* 索引的起始偏移位置 */
         uint32_t indexOffset = 0;
         
@@ -23,17 +17,9 @@ namespace Ciao
         /* 顶点的总数 */
         uint32_t vertexCount = 0;
 
-        /* LOD 层次数据的偏移量，最后一个偏移量作为标记，用来计算索引总数 */
-        uint32_t lodOffset[kMaxLODs] = {0};
+        /* 索引的总数 */
+        uint32_t indexCount = 0;
 
-        /* 数据流的偏移量，“指向”不同的流 */
-        uint32_t streamOffset[kMaxStreams] = {0};
-
-        /* 流数据的信息 */
-        uint32_t streamElementSize[kMaxStreams] = {0};
-
-        /* 获取每个 LOD 层级的索引个数 */
-        inline uint32_t GetLODIndicesCount(uint32_t lod) const { return lodOffset[lod + 1] - lodOffset[lod]; }
         /* ... */
     };
 
@@ -71,10 +57,8 @@ namespace Ciao
     {
         uint32_t meshIndex;
         uint32_t materialIndex;
-        uint32_t LOD;
         uint32_t indexOffset;
         uint32_t vertexOffset;
-        uint32_t transformIndex;
     };
 
     struct MeshData
@@ -82,13 +66,11 @@ namespace Ciao
         std::vector<uint32_t> indexData;
         std::vector<float> vertexData;
         std::vector<Mesh> meshes;
-        std::vector<BoundingBox> boxes;
     };
 
-    MeshFileHeader LoadMeshData(const char* fileName, MeshData& out);
+    bool LoadMeshData(const char* fileName, MeshData& out, MeshFileHeader& header);
+    
     void SaveMeshData(const MeshData& md, const char* fileName);
-
-    void RecalculateBoundingBox(MeshData& m);
 
     MeshFileHeader MergeMeshData(MeshData& m, const std::vector<MeshData*> mds);
 }

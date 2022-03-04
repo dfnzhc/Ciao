@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "render/Scene.h"
 
 namespace Ciao
 {
@@ -26,5 +27,5 @@ namespace Ciao
     // 唯一地加入字符串，然后返回它所在的位置
     inline int AddUnique(std::vector<std::string>& files, const std::string& file);
 
-    void ReadSceneFile(const char* fileName);
+    Scene ReadSceneFile(const char* fileName);
 }
