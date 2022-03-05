@@ -1,5 +1,5 @@
 #pragma once
-#include "GLMesh.h"
+#include "GLModel.h"
 #include "RenderOption.h"
 #include "utils/mesh/MeshData.h"
 

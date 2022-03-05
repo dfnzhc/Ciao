@@ -12,7 +12,8 @@
 #include "render/GLBuffer.h"
 #include "render/Cubemap.h"
 #include "render/Scene.h"
-#include "render/GLMesh.h"
+#include "render/GLModel.h"
+#include "render/ModelData.h"
 
 #include "utils/Common.h"
 #include "utils/ReadFile.h"

@@ -151,19 +151,23 @@ namespace Ciao
         // 环境光和自发光都存储到 emissiveColor 中，因为这个项直接与结果相加
         if (aiGetMaterialColor(M, AI_MATKEY_COLOR_AMBIENT, &Color) == AI_SUCCESS)
         {
-            mdesc.emission = {Color.r, Color.g, Color.b};
+            mdesc.emission = {Color.r, Color.g, Color.b, Color.a};
+            if (mdesc.emission.r > 1.0f) mdesc.emission.r = 1.0f;
         }
         if (aiGetMaterialColor(M, AI_MATKEY_COLOR_EMISSIVE, &Color) == AI_SUCCESS)
         {
             mdesc.emission.x += Color.r;
             mdesc.emission.y += Color.g;
             mdesc.emission.z += Color.b;
+            mdesc.emission.w += Color.a;
+            if (mdesc.emission.r > 1.0f) mdesc.emission.r = 1.0f;
         }
 
         // diffuse 颜色
         if (aiGetMaterialColor(M, AI_MATKEY_COLOR_DIFFUSE, &Color) == AI_SUCCESS)
         {
-            mdesc.baseColor = {Color.r, Color.g, Color.b};
+            mdesc.baseColor = {Color.r, Color.g, Color.b, Color.a};
+            if (mdesc.baseColor.r > 1.0f) mdesc.baseColor.r = 1.0f;
         }
         // 只要透明度大于 0.95 就认为是完全不透明物体
         float Opacity = 1.0f;

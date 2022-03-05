@@ -139,7 +139,7 @@ namespace Ciao
             uint32_t sz = 0;
             ifs.read(reinterpret_cast<char*>(&sz), sizeof(sz));
             inBytes.resize(sz + 1);
-            ifs.read(reinterpret_cast<char*>(inBytes.data()), sizeof(sz + 1));
+            ifs.read(reinterpret_cast<char*>(inBytes.data()), sz + 1);
             s = std::string(inBytes.data());
         }
     }

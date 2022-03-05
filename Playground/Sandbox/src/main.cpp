@@ -18,10 +18,9 @@ int main()
     App app;
     Timer timer;
 
-    GLShader shaderVertex  (Res("Shaders/GL03_mesh_inst.vert"));
-    GLShader shaderGeom  (Res("Shaders/GL03_mesh_inst.geom"));
-    GLShader shaderFragment(Res("Shaders/GL03_mesh_inst.frag"));
-    GLProgram program(shaderVertex, shaderGeom, shaderFragment);
+    GLShader shaderVertex  (Res("Shaders/GL01_scene_IBL.vert"));
+    GLShader shaderFragment(Res("Shaders/GL01_scene_IBL.frag"));
+    GLProgram program(shaderVertex, shaderFragment);
 
     const GLsizeiptr kUniformBufferSize = sizeof(PerFrameData);
     GLBuffer perFrameDataBuffer(kUniformBufferSize, nullptr, GL_DYNAMIC_STORAGE_BIT);
@@ -32,13 +31,9 @@ int main()
     CIAO_TRACE("Load hdr texture costs: {}.", timer.elapsedString());
 
     Scene scene = ReadSceneFile(Res("Scenes/scene.json"));
-    //scene.LoadMeshes();
-    MeshData mesh;
-    MeshFileHeader header;
-    LoadMeshFromFile(mesh, scene.meshConfigs[0]);
-    
-    LoadMeshData(Res(scene.meshConfigs[0].meshData), mesh, header);
-    GLMesh me{header, mesh.meshes.data(), mesh.indexData.data(), mesh.vertexData.data()};
+
+    ModelData m1{scene.meshConfigs[0]};
+    GLModel model{m1};
 
     const mat4 m(1.0f);
     GLBuffer modelMatrices(sizeof(mat4), value_ptr(m), GL_DYNAMIC_STORAGE_BIT);
@@ -58,10 +53,10 @@ int main()
 
         glNamedBufferSubData(perFrameDataBuffer.getHandle(), 0, kUniformBufferSize, &perFrameData);
 
-        glEnable(GL_DEPTH_TEST);
-        program.useProgram();
-        me.draw(header);
-
+        // glEnable(GL_DEPTH_TEST);
+        // program.useProgram();
+        // model.draw(m1.shapes_.size());
+        
         cubemap.Draw();
         
         if (ImGui::Begin("Control", nullptr))
