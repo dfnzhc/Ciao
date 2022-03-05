@@ -101,7 +101,7 @@ namespace Ciao
             }
         case GL_TEXTURE_CUBE_MAP:
             {
-                std::string fName = RawFilename(fileName).append(GetSuffix(SuffixType::CubeMap));
+                std::string fName = GetRidOfSuffix(fileName).append(GetSuffix(SuffixType::CubeMap));
                 
                 int w, h, comp;
                 const float* img = stbi_loadf(fName.c_str(), &w, &h, &comp, 3);

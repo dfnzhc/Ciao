@@ -5,7 +5,7 @@
 
 namespace Ciao
 {
-    void SaveMaterials(const char* fileName, const std::vector<MaterialDescription>& materials, const std::vector<std::string>& files)
+    void SaveMaterials(const char* fileName, const std::vector<MaterialDesc>& materials, const std::vector<std::string>& files)
     {
         Timer timer;
 
@@ -13,13 +13,13 @@ namespace Ciao
 
         uint32_t sz = (uint32_t)materials.size();
         ofs.write(reinterpret_cast<const char*>(&sz), sizeof(sz));
-        ofs.write(reinterpret_cast<const char*>(materials.data()), sizeof(MaterialDescription) * sz);
+        ofs.write(reinterpret_cast<const char*>(materials.data()), sizeof(MaterialDesc) * sz);
         SaveStringList(ofs, files);
 
         CIAO_CORE_TRACE("Saving materials successfully! It costs {}.", timer.elapsedString());
     }
     
-    bool LoadMaterials(const char* fileName, std::vector<MaterialDescription>& materials, std::vector<std::string>& files)
+    bool LoadMaterials(const char* fileName, std::vector<MaterialDesc>& materials, std::vector<std::string>& files)
     {
         Timer timer;
         
@@ -31,7 +31,7 @@ namespace Ciao
         ifs.read(reinterpret_cast<char*>(&sz), sizeof(sz));
         
         materials.resize(sz);
-        ifs.read(reinterpret_cast<char*>(materials.data()), sizeof(MaterialDescription) * materials.size());
+        ifs.read(reinterpret_cast<char*>(materials.data()), sizeof(MaterialDesc) * materials.size());
         LoadStringList(ifs, files);
         
         CIAO_CORE_TRACE("Saving materials successfully! It costs {}.", timer.elapsedString());
@@ -41,10 +41,10 @@ namespace Ciao
     
     void MergeMaterialLists(
         // Input:
-        const std::vector<std::vector<MaterialDescription>*>& oldMaterials,
+        const std::vector<std::vector<MaterialDesc>*>& oldMaterials,
         const std::vector<std::vector<std::string>*>& oldTextures,
         // Output:
-        std::vector<MaterialDescription>& allMaterials,
+        std::vector<MaterialDesc>& allMaterials,
         std::vector<std::string>& newTextures
     )
     {
@@ -56,8 +56,8 @@ namespace Ciao
 
         // 创建合并材质的列表（没有进行哈希散列，只是直接合并所有列表）
         int matIdx = 0;
-        for (const std::vector<MaterialDescription>* ml : oldMaterials) {
-            for (const MaterialDescription& m : *ml) {
+        for (const std::vector<MaterialDesc>* ml : oldMaterials) {
+            for (const MaterialDesc& m : *ml) {
                 allMaterials.push_back(m);
                 materialToTextureList[allMaterials.size() - 1] = matIdx;
             }
@@ -89,10 +89,10 @@ namespace Ciao
         for (size_t i = 0; i < allMaterials.size(); i++)
         {
             auto& m = allMaterials[i];
-            replaceTexture(i, &m.baseColorTexId);
+            replaceTexture(i, &m.albedoTexId);
             replaceTexture(i, &m.metallicRoughnessTexID);
-            replaceTexture(i, &m.normalmapTexID);
-            replaceTexture(i, &m.emissionmapTexID);
+            replaceTexture(i, &m.normalTexID);
+            replaceTexture(i, &m.emissionTexID);
             replaceTexture(i, &m.opacityTexID);
             replaceTexture(i, &m.ambientOcclusionTexID);
         }

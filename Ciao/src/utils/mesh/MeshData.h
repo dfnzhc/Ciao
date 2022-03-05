@@ -69,8 +69,6 @@ namespace Ciao
     };
 
     bool LoadMeshData(const char* fileName, MeshData& out, MeshFileHeader& header);
-    
     void SaveMeshData(const MeshData& md, const char* fileName);
-
     MeshFileHeader MergeMeshData(MeshData& m, const std::vector<MeshData*> mds);
 }

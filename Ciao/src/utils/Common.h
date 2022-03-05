@@ -69,9 +69,15 @@ namespace Ciao
         return (stat(fileName.c_str(), &buffer) == 0);
     }
     
-    inline std::string RawFilename(const std::string& f)
+    inline std::string GetRidOfSuffix(const std::string& f)
     {
         return f.substr(0, f.find_last_of("."));
+    }
+
+    inline std::string GetRawName(const std::string& f)
+    {
+        std::string s = GetRidOfSuffix(f);
+        return s.substr(s.find_last_of("/") + 1, std::string::npos);
     }
 
     enum SuffixType

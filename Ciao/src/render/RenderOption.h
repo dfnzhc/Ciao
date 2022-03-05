@@ -17,6 +17,8 @@ namespace Ciao
         std::string name;
         std::string source;
         std::string meshDataPath;
+        std::string meshData;
+        std::string materialData;
     };
 
     

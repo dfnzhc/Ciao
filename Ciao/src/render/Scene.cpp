@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Scene.h"
 
-#include "utils/mesh/MeshConvert.h"
+#include "utils/mesh/MeshLoader.h"
 
 namespace Ciao
 {
@@ -29,8 +29,8 @@ namespace Ciao
             }
             else
             {
-                LoadMeshFromFile(mesh, Res(cig.source.c_str()));
-                SaveMeshData(mesh, Res(cig.meshDataPath.c_str()));
+                // LoadMeshFromFile(mesh, Res(cig.source.c_str()));
+                // SaveMeshData(mesh, Res(cig.meshDataPath.c_str()));
             }
 
             //meshes.emplace_back(GLMesh{header, mesh.meshes.data(), mesh.indexData.data(), mesh.vertexData.data()});

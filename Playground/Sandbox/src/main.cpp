@@ -35,10 +35,9 @@ int main()
     //scene.LoadMeshes();
     MeshData mesh;
     MeshFileHeader header;
-    //LoadMeshFromFile(mesh, Res(scene.meshConfigs[0].source.c_str()));
-    //SaveMeshData(mesh, Res(scene.meshConfigs[0].meshDataPath.c_str()));
-    LoadMeshData(Res(scene.meshConfigs[0].meshDataPath), mesh, header);
-
+    LoadMeshFromFile(mesh, scene.meshConfigs[0]);
+    
+    LoadMeshData(Res(scene.meshConfigs[0].meshData), mesh, header);
     GLMesh me{header, mesh.meshes.data(), mesh.indexData.data(), mesh.vertexData.data()};
 
     const mat4 m(1.0f);

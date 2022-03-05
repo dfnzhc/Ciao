@@ -25,7 +25,7 @@ namespace Ciao
     void LoadStringList(std::ifstream& ifs, std::vector<std::string>& lines);
 
     // 唯一地加入字符串，然后返回它所在的位置
-    inline int AddUnique(std::vector<std::string>& files, const std::string& file);
+    int AddUnique(std::vector<std::string>& files, const std::string& file);
 
     Scene ReadSceneFile(const char* fileName);
 }

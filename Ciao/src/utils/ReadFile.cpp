@@ -144,7 +144,7 @@ namespace Ciao
         }
     }
 
-    inline int AddUnique(std::vector<std::string>& files, const std::string& file)
+    int AddUnique(std::vector<std::string>& files, const std::string& file)
     {
         if (file.empty())
             return -1;
@@ -190,7 +190,9 @@ namespace Ciao
             MeshConfig mc;
             mc.name = document["Meshes"][i]["Name"].GetString();
             mc.source = document["Meshes"][i]["Source"].GetString();
-            mc.meshDataPath = document["Meshes"][i]["MeshData"].GetString();
+            mc.meshDataPath = document["Meshes"][i]["MeshDataPath"].GetString();
+            mc.meshData = document["Meshes"][i]["MeshData"].GetString();
+            mc.materialData = document["Meshes"][i]["MaterialData"].GetString();
             CIAO_TRACE("Mesh {}: {} [{}]", i, mc.name, mc.source);
             
             scene.meshConfigs.push_back(mc);
