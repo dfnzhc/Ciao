@@ -8,40 +8,35 @@ namespace Ciao
     void SaveMaterials(const char* fileName, const std::vector<MaterialDescription>& materials, const std::vector<std::string>& files)
     {
         Timer timer;
-        FILE* f = fopen(fileName, "wb");
-        if (!f)
-        {
-            CIAO_CORE_ERROR("Cannot save material file {}.", fileName);
-            exit(EXIT_FAILURE);
-        }
+
+        std::ofstream ofs{fileName, std::ios::out | std::ios::binary};
 
         uint32_t sz = (uint32_t)materials.size();
-        fwrite(&sz, 1, sizeof(uint32_t), f);
-        fwrite(materials.data(), sizeof(MaterialDescription), sz, f);
-        SaveStringList(f, files);
-        fclose(f);
+        ofs.write(reinterpret_cast<const char*>(&sz), sizeof(sz));
+        ofs.write(reinterpret_cast<const char*>(materials.data()), sizeof(MaterialDescription) * sz);
+        SaveStringList(ofs, files);
 
         CIAO_CORE_TRACE("Saving materials successfully! It costs {}.", timer.elapsedString());
     }
     
-    void LoadMaterials(const char* fileName, std::vector<MaterialDescription>& materials, std::vector<std::string>& files)
+    bool LoadMaterials(const char* fileName, std::vector<MaterialDescription>& materials, std::vector<std::string>& files)
     {
         Timer timer;
-        FILE* f = fopen(fileName, "rb");
-        if (!f)
-        {
-            CIAO_CORE_ERROR("Cannot load material file {}.", fileName);
-            exit(EXIT_FAILURE);
-        }
+        
+        std::ifstream ifs{fileName, std::ios::in | std::ios::binary};
+        if (!ifs)
+            return false;
 
         uint32_t sz;
-        fread(&sz, 1, sizeof(uint32_t), f);
+        ifs.read(reinterpret_cast<char*>(&sz), sizeof(sz));
+        
         materials.resize(sz);
-        fread(materials.data(), sizeof(MaterialDescription), materials.size(), f);
-        LoadStringList(f, files);
-        fclose(f);
+        ifs.read(reinterpret_cast<char*>(materials.data()), sizeof(MaterialDescription) * materials.size());
+        LoadStringList(ifs, files);
         
         CIAO_CORE_TRACE("Saving materials successfully! It costs {}.", timer.elapsedString());
+        
+        return true;
     }
     
     void MergeMaterialLists(

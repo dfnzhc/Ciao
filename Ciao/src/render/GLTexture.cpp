@@ -101,11 +101,10 @@ namespace Ciao
             }
         case GL_TEXTURE_CUBE_MAP:
             {
-                std::string fName = fileName;
-                fName.erase(std::find(fName.begin(), fName.end(), '.'), fName.end());
+                std::string fName = RawFilename(fileName).append(GetSuffix(SuffixType::CubeMap));
                 
                 int w, h, comp;
-                const float* img = stbi_loadf((fName + "_Cross.hdr").c_str(), &w, &h, &comp, 3);
+                const float* img = stbi_loadf(fName.c_str(), &w, &h, &comp, 3);
                 Bitmap crossMap;
                 if (img == nullptr)
                 {
@@ -115,11 +114,11 @@ namespace Ciao
                     const bool isEquirectangular = w == 2 * h;
                     
                     crossMap = isEquirectangular ? ConvertEquirectangularMapToVerticalCross(in) : in;
-                    crossMap.SaveEXR(fName + "_Cross.hdr");
+                    crossMap.SaveEXR(fName);
                 } else
                 {
                     crossMap = Bitmap(w, h, comp, BitmapFormat::Float, img);
-                } 
+                }
                 
                 stbi_image_free((void*)img);
                 

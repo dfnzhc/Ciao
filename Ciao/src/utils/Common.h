@@ -58,4 +58,32 @@ namespace Ciao
                                           static_cast<Index>(static_cast<const T*>(&item) - &v[0]));
                                   })));
     }
+
+    inline bool CheckFileExist(const std::string& fileName)
+    {
+        //return std::filesystem::exists(fileName);
+
+        // fast check file if exists
+        // https://stackoverflow.com/questions/12774207/fastest-way-to-check-if-a-file-exists-using-standard-c-c11-14-17-c
+        struct stat buffer;
+        return (stat(fileName.c_str(), &buffer) == 0);
+    }
+    
+    inline std::string RawFilename(const std::string& f)
+    {
+        return f.substr(0, f.find_last_of("."));
+    }
+
+    enum SuffixType
+    {
+        CubeMap = 0,
+        
+    };
+
+    const std::string suffixs[] = {"_Cross.hdr",};
+
+    inline std::string GetSuffix(SuffixType s)
+    {
+        return suffixs[s];
+    }
 }

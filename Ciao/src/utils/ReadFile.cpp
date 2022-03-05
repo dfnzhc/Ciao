@@ -105,7 +105,7 @@ namespace Ciao
 
         return result;
     }
-
+    
     std::string LowercaseString(const std::string& s)
     {
         std::string out(s.length(), ' ');
@@ -113,33 +113,33 @@ namespace Ciao
         return out;
     }
 
-    void SaveStringList(FILE* f, const std::vector<std::string>& lines)
+    void SaveStringList(std::ofstream& ofs, const std::vector<std::string>& lines)
     {
         uint32_t sz = (uint32_t)lines.size();
 
-        fwrite(&sz, sizeof(uint32_t), 1, f);
+        ofs.write(reinterpret_cast<const char*>(&sz), sizeof(sz));
         for (const auto& s : lines)
         {
             sz = (uint32_t)s.length();
-            fwrite(&sz, sizeof(uint32_t), 1, f);
-            fwrite(s.c_str(), sz + 1, 1, f);
+            ofs.write(reinterpret_cast<const char*>(&sz), sizeof(sz));
+            ofs.write(reinterpret_cast<const char*>(s.c_str()), sz + 1);
         }
     }
 
-    void LoadStringList(FILE* f, std::vector<std::string>& lines)
+    void LoadStringList(std::ifstream& ifs, std::vector<std::string>& lines)
     {
         {
             uint32_t sz = 0;
-            fread(&sz, sizeof(uint32_t), 1, f);
+            ifs.read(reinterpret_cast<char*>(&sz), sizeof(sz));
             lines.resize(sz);
         }
         std::vector<char> inBytes;
         for (auto& s : lines)
         {
             uint32_t sz = 0;
-            fread(&sz, sizeof(uint32_t), 1, f);
+            ifs.read(reinterpret_cast<char*>(&sz), sizeof(sz));
             inBytes.resize(sz + 1);
-            fread(inBytes.data(), sz + 1, 1, f);
+            ifs.read(reinterpret_cast<char*>(inBytes.data()), sizeof(sz + 1));
             s = std::string(inBytes.data());
         }
     }

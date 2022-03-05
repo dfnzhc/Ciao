@@ -49,7 +49,7 @@ int main()
     {
         positioner.update();
 
-        const mat4 proj = glm::perspective(45.0f, app.getAspect(), 0.1f, 1000.0f);
+        const mat4 proj = glm::perspective(glm::radians(45.0f), app.getAspect(), 0.1f, 1000.0f);
         const mat4 view = camera.getViewMatrix();
 
         PerFrameData perFrameData = {

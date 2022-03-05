@@ -19,10 +19,10 @@ namespace Ciao
     std::string LowercaseString(const std::string& s);
 
     // 朝文件中保存字符串数组
-    void SaveStringList(FILE* f, const std::vector<std::string>& lines);
+    void SaveStringList(std::ofstream& ofs, const std::vector<std::string>& lines);
 
     // 从文件中读取字符串数组
-    void LoadStringList(FILE* f, std::vector<std::string>& lines);
+    void LoadStringList(std::ifstream& ifs, std::vector<std::string>& lines);
 
     // 唯一地加入字符串，然后返回它所在的位置
     inline int AddUnique(std::vector<std::string>& files, const std::string& file);

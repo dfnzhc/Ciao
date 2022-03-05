@@ -46,7 +46,7 @@ namespace Ciao
     static_assert(sizeof(MaterialDescription) % 16 == 0, "MaterialDescription should be padded to 16 bytes");
 
     void SaveMaterials(const char* fileName, const std::vector<MaterialDescription>& materials, const std::vector<std::string>& files);
-    void LoadMaterials(const char* fileName, std::vector<MaterialDescription>& materials, std::vector<std::string>& files);
+    bool LoadMaterials(const char* fileName, std::vector<MaterialDescription>& materials, std::vector<std::string>& files);
 
     // 合并多个材质及纹理，材质使用 MaterialDescription 记录，而纹理使用文件名
     void MergeMaterialLists(
